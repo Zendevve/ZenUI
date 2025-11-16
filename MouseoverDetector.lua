@@ -1,0 +1,19 @@
+﻿--------------------------------------------------------------------------------
+-- Mouseover Detection
+--------------------------------------------------------------------------------
+local ZenHUD = _G.ZenHUD
+local Utils = ZenHUD.Utils
+local StateManager = ZenHUD.StateManager
+
+local MouseoverDetector = {
+    checkFrame = nil,
+    lastState = false,
+}
+
+-- Hover hotspots for reliable detection when frames are hidden
+local hoverHotspots = {}
+
+local function CreateHoverHotspot(parentFrame, name)
+    if hoverHotspots[name] or not parentFrame then return end
+
+    local hotspot = CreateFrame("Frame", "ZenHUD_Hover_" .. name, UIParent)

@@ -1,0 +1,13 @@
+# ZenUI Local
+ref/
+ZenUI.zip
+ZenUI-1.2.0.zip
+*.zip
+.vscode/
+.gemini/
+.agent/
+brain/
+cortex/
+cortex.log
+cortex.db
+*.log
