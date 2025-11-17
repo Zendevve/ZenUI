@@ -27,3 +27,12 @@ local StateManager = {
     },
 
     -- Zone debouncing
+    lastZoneTime = 0,
+    pendingZoneCheck = false,
+    zoneDebounceTimer = nil,
+}
+
+function StateManager:OnZoneChanged()
+    local ZONE_DEBOUNCE = 0.6
+    local now = Utils.GetTime()
+

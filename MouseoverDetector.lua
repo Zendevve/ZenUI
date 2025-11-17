@@ -17,3 +17,4 @@ local function CreateHoverHotspot(parentFrame, name)
     if hoverHotspots[name] or not parentFrame then return end
 
     local hotspot = CreateFrame("Frame", "ZenHUD_Hover_" .. name, UIParent)
+    hotspot:SetFrameStrata("LOW")
