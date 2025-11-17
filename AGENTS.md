@@ -19,4 +19,3 @@ Only after updating the file you may produce the task output.
 If no new rule is detected â†’ do not update the file.
 
 **When to extract rules:**
-
