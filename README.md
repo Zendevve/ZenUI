@@ -17,13 +17,3 @@
 </p>
 
 ---
-
-## Table of Contents
-
-- [Why ZenHUD?](#why-ZenHUD)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [ElvUI / Tukui Support](#elvui--tukui-support)
-- [Architecture](#architecture)
