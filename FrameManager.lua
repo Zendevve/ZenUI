@@ -36,6 +36,3 @@ ZenHUD.ZoneText = ZoneText
 -- Failsafe Timer - Forces UI to show if logic breaks
 --------------------------------------------------------------------------------
 local Failsafe = {
-    timer = nil,
-    timeout = 4.0,
-    elapsed = 0,

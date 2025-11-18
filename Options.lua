@@ -44,3 +44,9 @@ local function CreateSlider(name, parent, label, minVal, maxVal, step)
     _G[name .. "Text"]:SetText(label)
     _G[name .. "Low"]:SetText(minVal)
     _G[name .. "High"]:SetText(maxVal)
+
+    return slider
+end
+
+--------------------------------------------------------------------------------
+-- Enable/Disable Checkbox
