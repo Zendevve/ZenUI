@@ -15,3 +15,10 @@ if not _G.ZenHUD then
 end
 
 local ZenHUD = _G.ZenHUD
+
+--------------------------------------------------------------------------------
+-- Config Module - Settings Management
+--------------------------------------------------------------------------------
+local Config = {
+    defaults = {
+        enabled = true,
