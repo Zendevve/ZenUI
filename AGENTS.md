@@ -17,5 +17,3 @@ Before doing ANY task, evaluate the latest user message.
 If you detect a new rule, correction, preference, or change â†’ update `agents.md` first.
 Only after updating the file you may produce the task output.
 If no new rule is detected â†’ do not update the file.
-
-**When to extract rules:**
