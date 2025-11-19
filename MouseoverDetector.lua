@@ -9,7 +9,3 @@ local MouseoverDetector = {
     checkFrame = nil,
     lastState = false,
 }
-
--- Hover hotspots for reliable detection when frames are hidden
-local hoverHotspots = {}
-
