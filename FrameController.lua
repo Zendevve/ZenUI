@@ -14,10 +14,3 @@ function FrameController:New(frame)
         name = frame:GetName() or "Unknown",
         visible = frame:IsShown(),
 
-        -- Animation state
-        animating = false,
-        startAlpha = frame:GetAlpha() or 1,
-        targetAlpha = 1,
-        currentAlpha = frame:GetAlpha() or 1,
-        duration = 0,
-        elapsed = 0,

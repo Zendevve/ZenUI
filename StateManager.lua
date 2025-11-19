@@ -43,5 +43,3 @@ function StateManager:OnZoneChanged()
         if not self.zoneDebounceTimer then
             self.zoneDebounceTimer = CreateFrame("Frame")
         end
-
-        local timeLeft = ZONE_DEBOUNCE - (now - self.lastZoneTime)
