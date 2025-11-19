@@ -27,3 +27,6 @@ If no new rule is detected â†’ do not update the file.
 - future words (from now on, going forward) or similar â†’ add permanent rule
 
 **Preferences â†’ add to Preferences section:**
+
+- positive (I like, I prefer, this is better) or similar â†’ Likes
+- negative (I don't like, I hate, this is bad) or similar â†’ Dislikes

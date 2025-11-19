@@ -24,14 +24,3 @@ local FrameManager = ZenHUD.FrameManager
 local StateManager = ZenHUD.StateManager
 local MouseoverDetector = ZenHUD.MouseoverDetector
 
---------------------------------------------------------------------------------
--- Slash Commands
---------------------------------------------------------------------------------
-SLASH_ZenHUD1 = "/ZenHUD"
-
-local function ShowHelp()
-    Utils.Print("Available commands:")
-    print("  /ZenHUD - Show this help")
-    print("  /ZenHUD options - Open options panel")
-    print("  /ZenHUD toggle - Enable/disable addon")
-    print("  /ZenHUD debug - Toggle debug mode")
