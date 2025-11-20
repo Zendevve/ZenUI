@@ -24,12 +24,3 @@ function ZoneText.IsFrameActive(frame)
     return true
 end
 
-function ZoneText.IsActive()
-    local zoneFrame = _G["ZoneTextFrame"]
-    local subZoneFrame = _G["SubZoneTextFrame"]
-    return ZoneText.IsFrameActive(zoneFrame) or ZoneText.IsFrameActive(subZoneFrame)
-end
-
-ZenHUD.ZoneText = ZoneText
-
---------------------------------------------------------------------------------

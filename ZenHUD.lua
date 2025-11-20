@@ -23,4 +23,3 @@ local Utils = ZenHUD.Utils
 local FrameManager = ZenHUD.FrameManager
 local StateManager = ZenHUD.StateManager
 local MouseoverDetector = ZenHUD.MouseoverDetector
-

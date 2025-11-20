@@ -7,4 +7,3 @@ local Utils = ZenHUD.Utils
 
 local MinimapButton = {}
 
--- Button configuration
