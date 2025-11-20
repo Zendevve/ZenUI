@@ -2,7 +2,3 @@
 
 **Status**: {{Draft / Proposed / In Progress / Implemented}}
 **Owner**: {{Team/Owner}}
-
-## 1. Purpose
-{{What does this feature do? Why is it needed?}}
-

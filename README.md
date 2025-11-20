@@ -15,26 +15,3 @@
   <a href="https://github.com/Zendevve/ZenHUD"><img src="https://img.shields.io/badge/WoW-3.3.5a-orange?style=flat-square" alt="WoW Version"></a>
   <a href="https://github.com/Zendevve/ZenHUD/commits/main"><img src="https://img.shields.io/github/last-commit/Zendevve/ZenHUD?style=flat-square" alt="Last Commit"></a>
 </p>
-
----
-
-## Table of Contents
-
-- [Why ZenHUD?](#why-ZenHUD)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [ElvUI / Tukui Support](#elvui--tukui-support)
-- [Architecture](#architecture)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Why ZenHUD?
-
-> **Problem**: The default WoW UI clutters your screen during exploration, obscuring the beautiful world Blizzard created.
->
-> **Solution**: ZenHUD automatically hides your action bars, unit frames, and buffs when you don't need them, and instantly shows them when combat starts, you target something, or hover over the UI area.
-
