@@ -30,4 +30,3 @@ local Config = {
             combat = 8.0,
             target = 2.0,
             mouseover = 2.0,
-        },

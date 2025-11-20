@@ -20,3 +20,10 @@ local function CreateHoverHotspot(parentFrame, name)
     hotspot:SetFrameStrata("LOW")
     hotspot:SetFrameLevel(1)
     hotspot:SetAllPoints(parentFrame)
+    hotspot:EnableMouse(true)
+    hotspot:Show()
+
+    hoverHotspots[name] = hotspot
+    Utils.Print("Created hover hotspot: " .. name, true)
+end
+

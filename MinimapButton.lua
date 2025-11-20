@@ -7,3 +7,18 @@ local Utils = ZenHUD.Utils
 
 local MinimapButton = {}
 
+-- Button configuration
+local BUTTON_RADIUS = 80  -- Distance from minimap center
+local BUTTON_SIZE = 31
+
+--------------------------------------------------------------------------------
+-- Create the button frame
+--------------------------------------------------------------------------------
+local button = CreateFrame("Button", "ZenHUDMinimapButton", Minimap)
+button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
+button:SetFrameStrata("MEDIUM")
+button:SetFrameLevel(8)
+button:EnableMouse(true)
+button:SetMovable(true)
+button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+button:RegisterForDrag("LeftButton")

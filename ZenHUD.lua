@@ -23,3 +23,36 @@ local Utils = ZenHUD.Utils
 local FrameManager = ZenHUD.FrameManager
 local StateManager = ZenHUD.StateManager
 local MouseoverDetector = ZenHUD.MouseoverDetector
+
+--------------------------------------------------------------------------------
+-- Slash Commands
+--------------------------------------------------------------------------------
+SLASH_ZenHUD1 = "/ZenHUD"
+
+local function ShowHelp()
+    Utils.Print("Available commands:")
+    print("  /ZenHUD - Show this help")
+    print("  /ZenHUD options - Open options panel")
+    print("  /ZenHUD toggle - Enable/disable addon")
+    print("  /ZenHUD debug - Toggle debug mode")
+    print("  /ZenHUD status - Show current state")
+    print("  /ZenHUD frames - List controlled frames")
+    print("  /ZenHUD minimap - Toggle minimap button")
+    print("  /ZenHUD reload - Reload configuration")
+    print(" ")
+    print("Settings:")
+    print("  /ZenHUD fade <seconds> - Set fade animation duration")
+    print("  /ZenHUD grace combat <seconds> - Post-combat grace period")
+    print("  /ZenHUD grace target <seconds> - Post-target grace period")
+    print("  /ZenHUD grace mouseover <seconds> - Post-mouseover grace period")
+    print("  /ZenHUD settings - Show all current settings")
+    print("  /ZenHUD character - Toggle per-character settings mode")
+    print(" ")
+    print("Profiles:")
+    print("  /ZenHUD profile save <name> - Save current settings")
+    print("  /ZenHUD profile load <name> - Load a profile")
+    print("  /ZenHUD profile delete <name> - Delete a profile")
+    print("  /ZenHUD profile list - List all profiles")
+end
+
+local function ShowSettings()

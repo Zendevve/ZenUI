@@ -15,3 +15,14 @@
   <a href="https://github.com/Zendevve/ZenHUD"><img src="https://img.shields.io/badge/WoW-3.3.5a-orange?style=flat-square" alt="WoW Version"></a>
   <a href="https://github.com/Zendevve/ZenHUD/commits/main"><img src="https://img.shields.io/github/last-commit/Zendevve/ZenHUD?style=flat-square" alt="Last Commit"></a>
 </p>
+
+---
+
+## Table of Contents
+
+- [Why ZenHUD?](#why-ZenHUD)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [ElvUI / Tukui Support](#elvui--tukui-support)
