@@ -42,3 +42,8 @@ local Failsafe = {
 }
 
 function Failsafe:Start()
+    if not self.timer then
+        self.timer = CreateFrame("Frame")
+        self.timer:SetScript("OnUpdate", function(_, dt)
+            self.elapsed = self.elapsed + dt
+            if self.elapsed >= self.timeout then
