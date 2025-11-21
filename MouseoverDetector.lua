@@ -27,5 +27,3 @@ local function CreateHoverHotspot(parentFrame, name)
     Utils.Print("Created hover hotspot: " .. name, true)
 end
 
-function MouseoverDetector:CreateHotspots()
-    -- Blizzard Action bars

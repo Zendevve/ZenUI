@@ -29,3 +29,9 @@ function FrameController:New(frame)
         -- Buff frame anti-flicker (defer system)
         deferFadeIn = false,
         deferFadeOut = false,
+        deferReason = nil,
+    }
+
+    setmetatable(instance, self)
+    return instance
+end

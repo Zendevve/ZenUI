@@ -62,5 +62,3 @@ enabledCheck:SetScript("OnClick", function(self)
     if enabled and ZenHUD.StateManager then
         ZenHUD.StateManager:Update()
     end
-end)
-
