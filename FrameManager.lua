@@ -42,4 +42,3 @@ local Failsafe = {
 }
 
 function Failsafe:Start()
-    if not self.timer then

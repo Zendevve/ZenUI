@@ -1,2 +1,3 @@
 ﻿# Testing Strategy
 
+## Philosophy

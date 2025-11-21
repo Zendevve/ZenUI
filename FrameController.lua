@@ -20,3 +20,12 @@ function FrameController:New(frame)
         targetAlpha = 1,
         currentAlpha = frame:GetAlpha() or 1,
         duration = 0,
+        elapsed = 0,
+
+        -- Behavior flags
+        fadeOnly = false,  -- Don't call Hide(), just set alpha to 0
+        conditional = false,  -- Don't force Show() if frame is hidden
+
+        -- Buff frame anti-flicker (defer system)
+        deferFadeIn = false,
+        deferFadeOut = false,
