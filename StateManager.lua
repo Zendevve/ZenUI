@@ -43,3 +43,15 @@ function StateManager:OnZoneChanged()
         if not self.zoneDebounceTimer then
             self.zoneDebounceTimer = CreateFrame("Frame")
         end
+
+        local timeLeft = ZONE_DEBOUNCE - (now - self.lastZoneTime)
+        if timeLeft < 0.05 then timeLeft = 0.05 end
+
+        Utils.Print(string.format("Zone debounce: %.2fs", timeLeft), true)
+
+        Utils.After(timeLeft, function()
+            if self.pendingZoneCheck then
+                self.pendingZoneCheck = false
+                self:SetResting(IsResting())
+            end
+        end)

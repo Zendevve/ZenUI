@@ -11,3 +11,11 @@ if not _G.ZenHUD then
         version = "1.2.0",
         loaded = false,
         startupDelay = 5.0,
+    }
+end
+
+local ZenHUD = _G.ZenHUD
+
+--------------------------------------------------------------------------------
+-- Config Module - Settings Management
+--------------------------------------------------------------------------------

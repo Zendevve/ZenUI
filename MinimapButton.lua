@@ -12,3 +12,4 @@ local BUTTON_RADIUS = 80  -- Distance from minimap center
 local BUTTON_SIZE = 31
 
 --------------------------------------------------------------------------------
+-- Create the button frame
