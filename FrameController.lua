@@ -33,5 +33,3 @@ function FrameController:New(frame)
     }
 
     setmetatable(instance, self)
-    return instance
-end

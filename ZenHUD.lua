@@ -47,12 +47,3 @@ local function ShowHelp()
     print("  /ZenHUD grace mouseover <seconds> - Post-mouseover grace period")
     print("  /ZenHUD settings - Show all current settings")
     print("  /ZenHUD character - Toggle per-character settings mode")
-    print(" ")
-    print("Profiles:")
-    print("  /ZenHUD profile save <name> - Save current settings")
-    print("  /ZenHUD profile load <name> - Load a profile")
-    print("  /ZenHUD profile delete <name> - Delete a profile")
-    print("  /ZenHUD profile list - List all profiles")
-end
-
-local function ShowSettings()
