@@ -30,23 +30,3 @@ local function CreateCheckbox(name, parent, label, tooltip)
     local check = CreateFrame("CheckButton", name, parent, "InterfaceOptionsCheckButtonTemplate")
     check.label = _G[name .. "Text"]
     check.label:SetText(label)
-    check.tooltipText = tooltip
-    return check
-end
-
-local function CreateSlider(name, parent, label, minVal, maxVal, step)
-    local slider = CreateFrame("Slider", name, parent, "OptionsSliderTemplate")
-    slider:SetMinMaxValues(minVal, maxVal)
-    slider:SetValueStep(step)
-    -- Note: SetObeyStepOnDrag() not available in WotLK 3.3.5a
-
-    -- Labels
-    _G[name .. "Text"]:SetText(label)
-    _G[name .. "Low"]:SetText(minVal)
-    _G[name .. "High"]:SetText(maxVal)
-
-    return slider
-end
-
---------------------------------------------------------------------------------
--- Enable/Disable Checkbox
