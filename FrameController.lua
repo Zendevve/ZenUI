@@ -19,3 +19,31 @@ function FrameController:New(frame)
         startAlpha = frame:GetAlpha() or 1,
         targetAlpha = 1,
         currentAlpha = frame:GetAlpha() or 1,
+        duration = 0,
+        elapsed = 0,
+
+        -- Behavior flags
+        fadeOnly = false,  -- Don't call Hide(), just set alpha to 0
+        conditional = false,  -- Don't force Show() if frame is hidden
+
+        -- Buff frame anti-flicker (defer system)
+        deferFadeIn = false,
+        deferFadeOut = false,
+        deferReason = nil,
+    }
+
+    setmetatable(instance, self)
+    return instance
+end
+
+function FrameController:SetFadeOnly(value)
+    self.fadeOnly = value
+    return self
+end
+
+function FrameController:SetConditional(value)
+    self.conditional = value
+    return self
+end
+
+function FrameController:FadeTo(alpha, duration)

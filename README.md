@@ -37,7 +37,3 @@
 > **Problem**: The default WoW UI clutters your screen during exploration, obscuring the beautiful world Blizzard created.
 >
 > **Solution**: ZenHUD automatically hides your action bars, unit frames, and buffs when you don't need them, and instantly shows them when combat starts, you target something, or hover over the UI area.
-
-| Feature | ZenHUD | Manual Hiding | Other Addons |
-|---------|:-----:|:-------------:|:------------:|
-| Zero Configuration | âœ… | âŒ | âš ï¸ |

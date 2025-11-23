@@ -50,3 +50,23 @@ function StateManager:OnZoneChanged()
         Utils.Print(string.format("Zone debounce: %.2fs", timeLeft), true)
 
         Utils.After(timeLeft, function()
+            if self.pendingZoneCheck then
+                self.pendingZoneCheck = false
+                self:SetResting(IsResting())
+            end
+        end)
+        return
+    end
+
+    -- Outside debounce window - update immediately
+    self.lastZoneTime = now
+    self:SetResting(IsResting())
+end
+
+function StateManager:Update()
+    -- Don't run until addon is fully loaded
+    if not ZenHUD.loaded then return end
+    if not Config:Get("enabled") then return end
+
+    local time = Utils.GetTime()
+    local inGrace = false
