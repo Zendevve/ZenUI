@@ -19,4 +19,3 @@ function FrameController:New(frame)
         startAlpha = frame:GetAlpha() or 1,
         targetAlpha = 1,
         currentAlpha = frame:GetAlpha() or 1,
-        duration = 0,

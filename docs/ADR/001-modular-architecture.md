@@ -8,3 +8,5 @@ Related Features: All
 ---
 
 ## Context
+WoW AddOns often devolve into monolithic "spaghetti code" files (`Core.lua` with 3000 lines). This makes maintenance, debugging, and feature addition difficult. We needed a structure that supports complex state logic and animation management without tight coupling.
+

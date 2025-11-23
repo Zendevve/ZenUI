@@ -28,3 +28,12 @@ local function CreateHoverHotspot(parentFrame, name)
 end
 
 function MouseoverDetector:CreateHotspots()
+    -- Blizzard Action bars
+    if MainMenuBar then CreateHoverHotspot(MainMenuBar, "MainMenuBar") end
+    if MultiBarBottomLeft then CreateHoverHotspot(MultiBarBottomLeft, "MultiBarBottomLeft") end
+    if MultiBarBottomRight then CreateHoverHotspot(MultiBarBottomRight, "MultiBarBottomRight") end
+    if MultiBarLeft then CreateHoverHotspot(MultiBarLeft, "MultiBarLeft") end
+    if MultiBarRight then CreateHoverHotspot(MultiBarRight, "MultiBarRight") end
+    if PetActionBarFrame then CreateHoverHotspot(PetActionBarFrame, "PetActionBarFrame") end
+    if ShapeshiftBarFrame then CreateHoverHotspot(ShapeshiftBarFrame, "ShapeshiftBarFrame") end
+

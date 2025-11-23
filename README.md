@@ -41,21 +41,3 @@
 | Feature | ZenHUD | Manual Hiding | Other Addons |
 |---------|:-----:|:-------------:|:------------:|
 | Zero Configuration | âœ… | âŒ | âš ï¸ |
-| Combat Safety | âœ… Instant | âŒ | âš ï¸ |
-| Smooth Animations | âœ… | âŒ | âš ï¸ |
-| ElvUI Support | âœ… | N/A | âŒ |
-| Lightweight (~900 LOC) | âœ… | N/A | âŒ |
-
----
-
-## Features
-
-### Smart Automation
-- **Combat**: UI appears instantly when combat starts
-- **Targeting**: UI shows when you select a living target
-- **Mouseover**: Hover action bars to reveal them
-- **Resting**: Full UI in cities and inns
-- **Grace Periods**: Smooth transitions, no flickering
-
-### Performance
-- **Throttled Detection**: 20Hz mouseover polling (not 60Hz)
