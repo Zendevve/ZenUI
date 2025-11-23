@@ -29,3 +29,28 @@ function ZoneText.IsActive()
     local subZoneFrame = _G["SubZoneTextFrame"]
     return ZoneText.IsFrameActive(zoneFrame) or ZoneText.IsFrameActive(subZoneFrame)
 end
+
+ZenHUD.ZoneText = ZoneText
+
+--------------------------------------------------------------------------------
+-- Failsafe Timer - Forces UI to show if logic breaks
+--------------------------------------------------------------------------------
+local Failsafe = {
+    timer = nil,
+    timeout = 4.0,
+    elapsed = 0,
+}
+
+function Failsafe:Start()
+    if not self.timer then
+        self.timer = CreateFrame("Frame")
+        self.timer:SetScript("OnUpdate", function(_, dt)
+            self.elapsed = self.elapsed + dt
+            if self.elapsed >= self.timeout then
+                self:Stop()
+                Utils.Print("Failsafe triggered - forcing UI show", true)
+                if ZenHUD.FrameManager then
+                    ZenHUD.FrameManager:ShowAll(false)
+                end
+            end
+        end)

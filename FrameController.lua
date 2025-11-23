@@ -20,6 +20,3 @@ function FrameController:New(frame)
         targetAlpha = 1,
         currentAlpha = frame:GetAlpha() or 1,
         duration = 0,
-        elapsed = 0,
-
-        -- Behavior flags
