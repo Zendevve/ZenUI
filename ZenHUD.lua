@@ -52,3 +52,20 @@ local function ShowHelp()
     print("  /ZenHUD profile save <name> - Save current settings")
     print("  /ZenHUD profile load <name> - Load a profile")
     print("  /ZenHUD profile delete <name> - Delete a profile")
+    print("  /ZenHUD profile list - List all profiles")
+end
+
+local function ShowSettings()
+    Utils.Print("Current Settings:")
+
+    -- Show which settings mode is active
+    local usingChar = Config:IsUsingCharacterSettings()
+    print(string.format("  Settings Mode: %s", usingChar and "Character-Specific" or "Account-Wide"))
+    print(" ")
+
+    print(string.format("  Fade Time: %.2fs", Config:Get("fadeTime")))
+
+    local grace = Config:Get("gracePeriods")
+    print(string.format("  Grace Period (Combat): %.1fs", grace.combat))
+    print(string.format("  Grace Period (Target): %.1fs", grace.target))
+    print(string.format("  Grace Period (Mouseover): %.1fs", grace.mouseover))

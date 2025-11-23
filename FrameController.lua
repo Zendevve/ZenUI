@@ -47,3 +47,5 @@ function FrameController:SetConditional(value)
 end
 
 function FrameController:FadeTo(alpha, duration)
+    -- Buff frame anti-flicker logic
+    local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")

@@ -16,13 +16,3 @@ local hoverHotspots = {}
 local function CreateHoverHotspot(parentFrame, name)
     if hoverHotspots[name] or not parentFrame then return end
 
-    local hotspot = CreateFrame("Frame", "ZenHUD_Hover_" .. name, UIParent)
-    hotspot:SetFrameStrata("LOW")
-    hotspot:SetFrameLevel(1)
-    hotspot:SetAllPoints(parentFrame)
-    hotspot:EnableMouse(true)
-    hotspot:Show()
-
-    hoverHotspots[name] = hotspot
-    Utils.Print("Created hover hotspot: " .. name, true)
-end
