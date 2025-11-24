@@ -24,3 +24,7 @@ function FrameController:New(frame)
 
         -- Behavior flags
         fadeOnly = false,  -- Don't call Hide(), just set alpha to 0
+        conditional = false,  -- Don't force Show() if frame is hidden
+
+        -- Buff frame anti-flicker (defer system)
+        deferFadeIn = false,

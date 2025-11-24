@@ -16,3 +16,31 @@ function ZoneText.IsFrameActive(frame)
         return false
     end
     if frame.GetAlpha then
+        local alpha = frame:GetAlpha() or 1
+        if alpha <= 0.1 then
+            return false
+        end
+    end
+    return true
+end
+
+function ZoneText.IsActive()
+    local zoneFrame = _G["ZoneTextFrame"]
+    local subZoneFrame = _G["SubZoneTextFrame"]
+    return ZoneText.IsFrameActive(zoneFrame) or ZoneText.IsFrameActive(subZoneFrame)
+end
+
+ZenHUD.ZoneText = ZoneText
+
+--------------------------------------------------------------------------------
+-- Failsafe Timer - Forces UI to show if logic breaks
+--------------------------------------------------------------------------------
+local Failsafe = {
+    timer = nil,
+    timeout = 4.0,
+    elapsed = 0,
+}
+
+function Failsafe:Start()
+    if not self.timer then
+        self.timer = CreateFrame("Frame")
