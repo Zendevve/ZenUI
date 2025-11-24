@@ -28,3 +28,4 @@ function FrameController:New(frame)
 
         -- Buff frame anti-flicker (defer system)
         deferFadeIn = false,
+        deferFadeOut = false,
