@@ -5,3 +5,5 @@
 2.  **Git**: Clone the repository into your `Interface/AddOns/` directory.
     ```bash
     cd "path/to/WoW/Interface/AddOns"
+    git clone https://github.com/Zendevve/ZenHUD.git
+    ```

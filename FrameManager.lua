@@ -16,8 +16,3 @@ function ZoneText.IsFrameActive(frame)
         return false
     end
     if frame.GetAlpha then
-        local alpha = frame:GetAlpha() or 1
-        if alpha <= 0.1 then
-            return false
-        end
-    end

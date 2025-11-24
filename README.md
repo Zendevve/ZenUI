@@ -18,3 +18,7 @@
 
 ---
 
+## Table of Contents
+
+- [Why ZenHUD?](#why-ZenHUD)
+- [Features](#features)

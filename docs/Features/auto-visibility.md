@@ -14,3 +14,4 @@ To automatically manage user interface visibility based on game state, ensuring 
 
 ## 3. User Flows / Interaction
 1.  **Exploration**: Player runs around -> UI is Hidden.
+2.  **Combat**: Player enters combat -> UI Fades In immediately.

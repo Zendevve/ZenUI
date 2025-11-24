@@ -61,3 +61,8 @@ function StateManager:OnZoneChanged()
     -- Outside debounce window - update immediately
     self.lastZoneTime = now
     self:SetResting(IsResting())
+end
+
+function StateManager:Update()
+    -- Don't run until addon is fully loaded
+    if not ZenHUD.loaded then return end
