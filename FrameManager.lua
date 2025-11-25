@@ -51,22 +51,3 @@ function Failsafe:Start()
                 Utils.Print("Failsafe triggered - forcing UI show", true)
                 if ZenHUD.FrameManager then
                     ZenHUD.FrameManager:ShowAll(false)
-                end
-            end
-        end)
-    end
-
-    self.elapsed = 0
-    self.timer:Show()
-end
-
-function Failsafe:Stop()
-    if self.timer then
-        self.timer:Hide()
-    end
-    self.elapsed = 0
-end
-
-ZenHUD.Failsafe = Failsafe
-
---------------------------------------------------------------------------------

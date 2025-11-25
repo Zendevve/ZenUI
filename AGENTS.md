@@ -23,3 +23,4 @@ If no new rule is detected â†’ do not update the file.
 - prohibition words (never, don't, stop, avoid) or similar â†’ add NEVER rule
 - requirement words (always, must, make sure, should) or similar â†’ add ALWAYS rule
 - memory words (remember, keep in mind, note that) or similar â†’ add rule
+- process words (the process is, the workflow is, we do it like) or similar â†’ add to workflow
