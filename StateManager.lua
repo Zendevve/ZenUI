@@ -68,3 +68,6 @@ function StateManager:Update()
     if not ZenHUD.loaded then return end
     if not Config:Get("enabled") then return end
 
+    local time = Utils.GetTime()
+    local inGrace = false
+    local graceReason = nil

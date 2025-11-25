@@ -25,3 +25,4 @@ local function CreateHoverHotspot(parentFrame, name)
 
     hoverHotspots[name] = hotspot
     Utils.Print("Created hover hotspot: " .. name, true)
+end

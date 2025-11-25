@@ -12,17 +12,3 @@ function FrameController:New(frame)
     local instance = {
         frame = frame,
         name = frame:GetName() or "Unknown",
-        visible = frame:IsShown(),
-
-        -- Animation state
-        animating = false,
-        startAlpha = frame:GetAlpha() or 1,
-        targetAlpha = 1,
-        currentAlpha = frame:GetAlpha() or 1,
-        duration = 0,
-        elapsed = 0,
-
-        -- Behavior flags
-        fadeOnly = false,  -- Don't call Hide(), just set alpha to 0
-        conditional = false,  -- Don't force Show() if frame is hidden
-
