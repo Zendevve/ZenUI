@@ -39,3 +39,27 @@ local function ShowHelp()
     print("  /ZenHUD frames - List controlled frames")
     print("  /ZenHUD minimap - Toggle minimap button")
     print("  /ZenHUD reload - Reload configuration")
+    print(" ")
+    print("Settings:")
+    print("  /ZenHUD fade <seconds> - Set fade animation duration")
+    print("  /ZenHUD grace combat <seconds> - Post-combat grace period")
+    print("  /ZenHUD grace target <seconds> - Post-target grace period")
+    print("  /ZenHUD grace mouseover <seconds> - Post-mouseover grace period")
+    print("  /ZenHUD settings - Show all current settings")
+    print("  /ZenHUD character - Toggle per-character settings mode")
+    print(" ")
+    print("Profiles:")
+    print("  /ZenHUD profile save <name> - Save current settings")
+    print("  /ZenHUD profile load <name> - Load a profile")
+    print("  /ZenHUD profile delete <name> - Delete a profile")
+    print("  /ZenHUD profile list - List all profiles")
+end
+
+local function ShowSettings()
+    Utils.Print("Current Settings:")
+
+    -- Show which settings mode is active
+    local usingChar = Config:IsUsingCharacterSettings()
+    print(string.format("  Settings Mode: %s", usingChar and "Character-Specific" or "Account-Wide"))
+    print(" ")
+

@@ -27,3 +27,18 @@ local StateManager = {
     },
 
     -- Zone debouncing
+    lastZoneTime = 0,
+    pendingZoneCheck = false,
+    zoneDebounceTimer = nil,
+}
+
+function StateManager:OnZoneChanged()
+    local ZONE_DEBOUNCE = 0.6
+    local now = Utils.GetTime()
+
+    -- If we're within debounce window, schedule delayed check
+    if now - self.lastZoneTime < ZONE_DEBOUNCE then
+        self.pendingZoneCheck = true
+
+        if not self.zoneDebounceTimer then
+            self.zoneDebounceTimer = CreateFrame("Frame")
