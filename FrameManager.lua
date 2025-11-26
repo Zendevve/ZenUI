@@ -69,3 +69,15 @@ end
 
 ZenHUD.Failsafe = Failsafe
 
+--------------------------------------------------------------------------------
+-- Frame Manager Implementation
+--------------------------------------------------------------------------------
+local FrameManager = {
+    controllers = {},
+    updateFrame = nil,
+}
+
+-- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars

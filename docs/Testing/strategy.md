@@ -5,3 +5,4 @@ Since we are developing for a legacy game client (WoW 3.3.5a) without a modern e
 
 ## 1. Static Analysis
 Run `luacheck` before every commit to catch:
+*   Global variable leaks (Critical in WoW AddOns).

@@ -33,15 +33,3 @@ function FrameController:New(frame)
     }
 
     setmetatable(instance, self)
-    return instance
-end
-
-function FrameController:SetFadeOnly(value)
-    self.fadeOnly = value
-    return self
-end
-
-function FrameController:SetConditional(value)
-    self.conditional = value
-    return self
-end

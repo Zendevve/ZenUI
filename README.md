@@ -72,11 +72,3 @@
 
 ## Installation
 
-### Prerequisites
-- World of Warcraft **3.3.5a** (WotLK)
-- No other dependencies
-
-### Steps
-
-```bash
-# 1. Download the latest release

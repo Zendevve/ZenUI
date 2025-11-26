@@ -24,15 +24,3 @@ local Config = {
         enabled = true,
         debug = false,
         showOnTarget = true,
-        fadeTime = 0.8,
-
-        gracePeriods = {
-            combat = 8.0,
-            target = 2.0,
-            mouseover = 2.0,
-        },
-
-        -- Per-character settings control
-        useCharacterSettings = false,  -- If true, use character-specific settings
-
-        -- New Features
