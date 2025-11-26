@@ -28,3 +28,47 @@ local StateManager = {
 
     -- Zone debouncing
     lastZoneTime = 0,
+    pendingZoneCheck = false,
+    zoneDebounceTimer = nil,
+}
+
+function StateManager:OnZoneChanged()
+    local ZONE_DEBOUNCE = 0.6
+    local now = Utils.GetTime()
+
+    -- If we're within debounce window, schedule delayed check
+    if now - self.lastZoneTime < ZONE_DEBOUNCE then
+        self.pendingZoneCheck = true
+
+        if not self.zoneDebounceTimer then
+            self.zoneDebounceTimer = CreateFrame("Frame")
+        end
+
+        local timeLeft = ZONE_DEBOUNCE - (now - self.lastZoneTime)
+        if timeLeft < 0.05 then timeLeft = 0.05 end
+
+        Utils.Print(string.format("Zone debounce: %.2fs", timeLeft), true)
+
+        Utils.After(timeLeft, function()
+            if self.pendingZoneCheck then
+                self.pendingZoneCheck = false
+                self:SetResting(IsResting())
+            end
+        end)
+        return
+    end
+
+    -- Outside debounce window - update immediately
+    self.lastZoneTime = now
+    self:SetResting(IsResting())
+end
+
+function StateManager:Update()
+    -- Don't run until addon is fully loaded
+    if not ZenHUD.loaded then return end
+    if not Config:Get("enabled") then return end
+
+    local time = Utils.GetTime()
+    local inGrace = false
+    local graceReason = nil
+

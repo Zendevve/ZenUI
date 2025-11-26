@@ -33,3 +33,23 @@ function FrameController:New(frame)
     }
 
     setmetatable(instance, self)
+    return instance
+end
+
+function FrameController:SetFadeOnly(value)
+    self.fadeOnly = value
+    return self
+end
+
+function FrameController:SetConditional(value)
+    self.conditional = value
+    return self
+end
+
+function FrameController:FadeTo(alpha, duration)
+    -- Buff frame anti-flicker logic
+    local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+
+    if isBuffFrame then
+        -- If fading IN and a fade OUT is requested, defer the OUT
+        local fadedAlpha = Config:Get("fadedAlpha")

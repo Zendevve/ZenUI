@@ -95,3 +95,8 @@ end)
 
 --------------------------------------------------------------------------------
 -- Fade Time Slider
+--------------------------------------------------------------------------------
+local fadeSlider = CreateSlider("ZenHUDOptionsFadeTime", OptionsPanel,
+    "Fade Animation Duration", 0.1, 2.0, 0.1)
+fadeSlider:SetPoint("TOPLEFT", targetCheck, "BOTTOMLEFT", 0, -24)
+fadeSlider:SetWidth(300)

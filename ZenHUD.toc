@@ -1,2 +1,6 @@
 ﻿## Interface: 30300
 ## Title: ZenHUD
+## Notes: Minimalist UI Automation for WotLK 3.3.5a
+## Author: Zendevve
+## Version: 1.2.0-wotlk
+## SavedVariables: ZenHUDDB
