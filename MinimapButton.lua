@@ -6,3 +6,5 @@ local Config = ZenHUD.Config
 local Utils = ZenHUD.Utils
 
 local MinimapButton = {}
+
+-- Button configuration
