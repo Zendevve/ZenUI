@@ -86,4 +86,3 @@ function StateManager:Update()
         or (Config:Get("showOnTarget") and self.hasLivingTarget)
         or self.mouseoverUI
         or inGrace
-        or self.isResting

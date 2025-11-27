@@ -5,3 +5,7 @@
 
 ## 1. Purpose
 To provide smooth, professional-grade transitions between visible and hidden states, rather than abrupt popping, reinforcing the "Zen" aesthetic.
+
+## 2. Business Rules & Constraints
+*   **Smoothness**: Alpha must interpolate linearly over `config.fadeTime`.
+*   **Interruption**: If a fade is interrupted (e.g., fading out, then sudden combat), it must reverse from the *current* alpha, not snap to 0 or 1.

@@ -21,3 +21,4 @@ local ZenHUD = _G.ZenHUD
 --------------------------------------------------------------------------------
 local Config = {
     defaults = {
+        enabled = true,

@@ -69,9 +69,3 @@ end
 
 ZenHUD.Failsafe = Failsafe
 
---------------------------------------------------------------------------------
--- Frame Manager Implementation
---------------------------------------------------------------------------------
-local FrameManager = {
-    controllers = {},
-    updateFrame = nil,
