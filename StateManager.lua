@@ -72,3 +72,8 @@ function StateManager:Update()
     local inGrace = false
     local graceReason = nil
 
+    -- Check grace periods
+    for reason, deadline in pairs(self.graceUntil) do
+        if deadline > time then
+            inGrace = true
+            graceReason = reason

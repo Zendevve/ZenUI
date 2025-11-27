@@ -15,18 +15,3 @@ if not _G.ZenHUD then
 end
 
 local ZenHUD = _G.ZenHUD
-
---------------------------------------------------------------------------------
--- Config Module - Settings Management
---------------------------------------------------------------------------------
-local Config = {
-    defaults = {
-        enabled = true,
-        debug = false,
-        showOnTarget = true,
-        fadeTime = 0.8,
-
-        gracePeriods = {
-            combat = 8.0,
-            target = 2.0,
-            mouseover = 2.0,
