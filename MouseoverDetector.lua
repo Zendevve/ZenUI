@@ -46,7 +46,3 @@ function MouseoverDetector:CreateHotspots()
     local count = 0
     for _ in pairs(hoverHotspots) do count = count + 1 end
     Utils.Print(string.format("Created %d hover hotspots", count), true)
-end
-
--- ElvUI hotspot patterns
-local ELVUI_HOTSPOT_PATTERNS = {
