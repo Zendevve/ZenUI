@@ -101,6 +101,7 @@ function FrameController:New(frame)
 
         -- Animation state
         animating = false,
+        startAlpha = frame:GetAlpha() or 1,
         targetAlpha = 1,
         currentAlpha = frame:GetAlpha() or 1,
         duration = 0,
@@ -137,6 +138,7 @@ function FrameController:FadeTo(alpha, duration)
     end
 
     self.targetAlpha = Utils.Clamp(alpha, 0, 1)
+    self.startAlpha = self.currentAlpha  -- Capture starting point for interpolation
     self.duration = math.max(0.05, duration or Config:Get("fadeTime"))
     self.elapsed = 0
     self.animating = true
@@ -154,8 +156,8 @@ function FrameController:Update(dt)
     self.elapsed = self.elapsed + dt
     local progress = math.min(1, self.elapsed / self.duration)
 
-    -- Smooth interpolation
-    self.currentAlpha = self.currentAlpha + (self.targetAlpha - self.currentAlpha) * progress
+    -- Linear interpolation from start to target
+    self.currentAlpha = self.startAlpha + (self.targetAlpha - self.startAlpha) * progress
     self.frame:SetAlpha(self.currentAlpha)
 
     -- Animation complete
