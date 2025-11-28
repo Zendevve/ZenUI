@@ -325,6 +325,8 @@ local StateManager = {
 }
 
 function StateManager:Update()
+    -- Don't run until addon is fully loaded
+    if not ZenUI.loaded then return end
     if not Config:Get("enabled") then return end
 
     local time = Utils.GetTime()
@@ -459,6 +461,14 @@ function MouseoverDetector:Initialize()
     self.checkFrame:SetScript("OnUpdate", function(_, elapsed)
         self:Check()
     end)
+    -- Start hidden, will be shown when addon activates
+    self.checkFrame:Hide()
+end
+
+function MouseoverDetector:Start()
+    if self.checkFrame then
+        self.checkFrame:Show()
+    end
 end
 
 function MouseoverDetector:Check()
@@ -517,14 +527,20 @@ function ZenUI:Initialize()
     Utils.Print(string.format("v%s loaded", VERSION))
     Utils.Print(string.format("Startup delay: %.1fs", self.startupDelay))
 
-    -- Initialize frame management
+    -- Initialize frame management (but don't start yet)
     FrameManager:Initialize()
     MouseoverDetector:Initialize()
 
     -- Delayed activation
     C_Timer.After(self.startupDelay, function()
         self.loaded = true
+
+        -- Set initial state
         StateManager:SetResting(IsResting())
+
+        -- Start mouseover detection
+        MouseoverDetector:Start()
+
         Utils.Print("Activated", true)
     end)
 end
