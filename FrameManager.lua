@@ -43,3 +43,51 @@ local Failsafe = {
 
 function Failsafe:Start()
     if not self.timer then
+        self.timer = CreateFrame("Frame")
+        self.timer:SetScript("OnUpdate", function(_, dt)
+            self.elapsed = self.elapsed + dt
+            if self.elapsed >= self.timeout then
+                self:Stop()
+                Utils.Print("Failsafe triggered - forcing UI show", true)
+                if ZenHUD.FrameManager then
+                    ZenHUD.FrameManager:ShowAll(false)
+                end
+            end
+        end)
+    end
+
+    self.elapsed = 0
+    self.timer:Show()
+end
+
+function Failsafe:Stop()
+    if self.timer then
+        self.timer:Hide()
+    end
+    self.elapsed = 0
+end
+
+ZenHUD.Failsafe = Failsafe
+
+--------------------------------------------------------------------------------
+-- Frame Manager Implementation
+--------------------------------------------------------------------------------
+local FrameManager = {
+    controllers = {},
+    updateFrame = nil,
+}
+
+-- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars
+    MainMenuBar = "actionBars",
+    MultiBarBottomLeft = "actionBars",
+    MultiBarBottomRight = "actionBars",
+    MultiBarLeft = "actionBars",
+    MultiBarRight = "actionBars",
+    PetActionBarFrame = "actionBars",
+    ShapeshiftBarFrame = "actionBars",
+    VehicleMenuBar = "actionBars",
+    BonusActionBarFrame = "actionBars",
+

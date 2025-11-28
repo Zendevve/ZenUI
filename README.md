@@ -51,3 +51,42 @@
 ## Features
 
 ### Smart Automation
+- **Combat**: UI appears instantly when combat starts
+- **Targeting**: UI shows when you select a living target
+- **Mouseover**: Hover action bars to reveal them
+- **Resting**: Full UI in cities and inns
+- **Grace Periods**: Smooth transitions, no flickering
+
+### Performance
+- **Throttled Detection**: 20Hz mouseover polling (not 60Hz)
+- **FadeOnly Mode**: Alpha-only changes for ElvUI (no taint)
+- **Single Update Loop**: Minimal CPU overhead
+
+### Customization
+- **Frame Groups**: Toggle action bars, unit frames, buffs independently
+- **Fade Time**: 0.1s to 2.0s configurable
+- **Faded Opacity**: 0% to 100% (ghost mode)
+- **Per-Character Settings**: Different configs per alt
+
+---
+
+## Installation
+
+### Prerequisites
+- World of Warcraft **3.3.5a** (WotLK)
+- No other dependencies
+
+### Steps
+
+```bash
+# 1. Download the latest release
+# 2. Extract to your AddOns folder
+<WoW Install>/Interface/AddOns/ZenHUD/
+
+# 3. Verify folder structure
+ZenHUD/
+  â”œâ”€â”€ ZenHUD.toc
+  â”œâ”€â”€ ZenHUD.lua
+  â”œâ”€â”€ Config.lua
+  â””â”€â”€ ... (other .lua files)
+```

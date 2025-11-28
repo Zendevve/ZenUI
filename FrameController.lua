@@ -44,6 +44,3 @@ end
 function FrameController:SetConditional(value)
     self.conditional = value
     return self
-end
-
-function FrameController:FadeTo(alpha, duration)
