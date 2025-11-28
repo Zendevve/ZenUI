@@ -25,3 +25,22 @@ local function CreateHoverHotspot(parentFrame, name)
 
     hoverHotspots[name] = hotspot
     Utils.Print("Created hover hotspot: " .. name, true)
+end
+
+function MouseoverDetector:CreateHotspots()
+    -- Blizzard Action bars
+    if MainMenuBar then CreateHoverHotspot(MainMenuBar, "MainMenuBar") end
+    if MultiBarBottomLeft then CreateHoverHotspot(MultiBarBottomLeft, "MultiBarBottomLeft") end
+    if MultiBarBottomRight then CreateHoverHotspot(MultiBarBottomRight, "MultiBarBottomRight") end
+    if MultiBarLeft then CreateHoverHotspot(MultiBarLeft, "MultiBarLeft") end
+    if MultiBarRight then CreateHoverHotspot(MultiBarRight, "MultiBarRight") end
+    if PetActionBarFrame then CreateHoverHotspot(PetActionBarFrame, "PetActionBarFrame") end
+    if ShapeshiftBarFrame then CreateHoverHotspot(ShapeshiftBarFrame, "ShapeshiftBarFrame") end
+
+    -- Player frame
+    if PlayerFrame then CreateHoverHotspot(PlayerFrame, "PlayerFrame") end
+
+    -- ElvUI / Tukui frames (scan dynamically)
+    self:CreateElvUIHotspots()
+
+    local count = 0
