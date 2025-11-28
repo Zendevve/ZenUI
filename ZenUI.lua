@@ -363,6 +363,11 @@ function StateManager:SetCombat(inCombat)
         -- Leaving combat - start grace period
         local grace = Config:Get("gracePeriods").combat
         self.graceUntil.combat = Utils.GetTime() + grace
+
+        -- Schedule update when grace expires
+        C_Timer.After(grace, function()
+            self:Update()
+        end)
     end
 
     self:Update()
@@ -376,6 +381,11 @@ function StateManager:SetTarget(hasTarget, isAlive)
         -- Lost living target - start grace period
         local grace = Config:Get("gracePeriods").target
         self.graceUntil.target = Utils.GetTime() + grace
+
+        -- Schedule update when grace expires
+        C_Timer.After(grace, function()
+            self:Update()
+        end)
     elseif self.hasLivingTarget then
         -- Acquired living target - clear grace
         self.graceUntil.target = 0
@@ -397,6 +407,11 @@ function StateManager:SetMouseover(mouseoverUI)
         -- Left UI - start grace period
         local grace = Config:Get("gracePeriods").mouseover
         self.graceUntil.mouseover = Utils.GetTime() + grace
+
+        -- Schedule update when grace expires
+        C_Timer.After(grace, function()
+            self:Update()
+        end)
     elseif mouseoverUI then
         -- Entered UI - clear grace
         self.graceUntil.mouseover = 0
