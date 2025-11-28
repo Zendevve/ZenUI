@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: ZenUI
+## Notes: Hides UI Elements when outside resting zones for more immersion.
+## Author: Zendevve
+## Version: 1.1.0-wotlk
+## SavedVariables: ZenUIDB
+
+ZenUI.lua
