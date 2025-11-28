@@ -74,8 +74,3 @@ debugCheck:SetPoint("TOPLEFT", enabledCheck, "BOTTOMLEFT", 0, -8)
 debugCheck:SetScript("OnClick", function(self)
     local debug = self:GetChecked()
     Config:Set("debug", debug)
-    Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
-end)
-
---------------------------------------------------------------------------------
--- Show on Target Checkbox

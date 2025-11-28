@@ -50,7 +50,3 @@ end
 
 -- ElvUI hotspot patterns
 local ELVUI_HOTSPOT_PATTERNS = {
-    "ElvUI_Bar%d+",
-    "ElvUI_StanceBar",
-    "ElvUI_PetBar",
-    "ElvUF_Player",

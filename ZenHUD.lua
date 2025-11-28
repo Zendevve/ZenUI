@@ -60,3 +60,22 @@ local function ShowSettings()
 
     -- Show which settings mode is active
     local usingChar = Config:IsUsingCharacterSettings()
+    print(string.format("  Settings Mode: %s", usingChar and "Character-Specific" or "Account-Wide"))
+    print(" ")
+
+    print(string.format("  Fade Time: %.2fs", Config:Get("fadeTime")))
+
+    local grace = Config:Get("gracePeriods")
+    print(string.format("  Grace Period (Combat): %.1fs", grace.combat))
+    print(string.format("  Grace Period (Target): %.1fs", grace.target))
+    print(string.format("  Grace Period (Mouseover): %.1fs", grace.mouseover))
+    print(" ")
+    print("  Show on Target: " .. (Config:Get("showOnTarget") and "Yes" or "No"))
+end
+
+local function ShowStatus()
+    Utils.Print("Current Status:")
+    print(string.format("  Enabled: %s", Config:Get("enabled") and "Yes" or "No"))
+    print(string.format("  Debug: %s", Config:Get("debug") and "Yes" or "No"))
+    print(string.format("  Loaded: %s", ZenHUD.loaded and "Yes" or "No"))
+    print(string.format("  In Combat: %s", StateManager.inCombat and "Yes" or "No"))

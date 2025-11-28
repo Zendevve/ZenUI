@@ -90,3 +90,5 @@ ZenHUD/
   â”œâ”€â”€ Config.lua
   â””â”€â”€ ... (other .lua files)
 ```
+
+4. Launch WoW â†’  ZenHUD activates automatically after 5 seconds

@@ -5,6 +5,3 @@
 
 local ADDON_NAME = "ZenHUD"
 local ZenHUD = _G.ZenHUD  -- Already created by Config.lua
-local Config = ZenHUD.Config  -- Already exported by Config.lua
-
---------------------------------------------------------------------------------
