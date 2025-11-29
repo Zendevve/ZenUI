@@ -88,6 +88,69 @@ end
 ZenUI.Utils = Utils
 
 --------------------------------------------------------------------------------
+-- Zone Text Detection & Failsafe
+--------------------------------------------------------------------------------
+local ZoneText = {}
+
+function ZoneText.IsFrameActive(frame)
+    if not frame or not frame.IsShown or not frame:IsShown() then
+        return false
+    end
+    if frame.GetAlpha then
+        local alpha = frame:GetAlpha() or 1
+        if alpha <= 0.1 then
+            return false
+        end
+    end
+    return true
+end
+
+function ZoneText.IsActive()
+    local zoneFrame = _G["ZoneTextFrame"]
+    local subZoneFrame = _G["SubZoneTextFrame"]
+    return ZoneText.IsFrameActive(zoneFrame) or ZoneText.IsFrameActive(subZoneFrame)
+end
+
+ZenUI.ZoneText = ZoneText
+
+--------------------------------------------------------------------------------
+-- Failsafe Timer - Forces UI to show if logic breaks
+--------------------------------------------------------------------------------
+local Failsafe = {
+    timer = nil,
+    timeout = 4.0,
+    elapsed = 0,
+}
+
+function Failsafe:Start()
+    if not self.timer then
+        self.timer = CreateFrame("Frame")
+        self.timer:SetScript("OnUpdate", function(_, dt)
+            self.elapsed = self.elapsed + dt
+            if self.elapsed >= self.timeout then
+                self:Stop()
+                Utils.Print("Failsafe triggered - forcing UI show", true)
+                if FrameManager then
+                    FrameManager:ShowAll(false)
+                end
+            end
+        end)
+    end
+
+    self.elapsed = 0
+    self.timer:Show()
+end
+
+function Failsafe:Stop()
+    if self.timer then
+        self.timer:Hide()
+    end
+    self.elapsed = 0
+end
+
+ZenUI.Failsafe = Failsafe
+
+--------------------------------------------------------------------------------
 -- Frame Controller - Manages fade animations for individual frames
 --------------------------------------------------------------------------------
 local FrameController = {}
@@ -286,12 +349,47 @@ function FrameManager:Update(dt)
 end
 
 function FrameManager:ShowAll(priority)
+    -- Check for zone text - delay if active
+    if ZoneText.IsActive() then
+        Utils.Print("Zone text active - delaying show", true)
+        Failsafe:Start()
+        C_Timer.After(0.2, function()
+            if not ZoneText.IsActive() then
+                self:ShowAll(priority)
+            else
+                -- Retry with timeout
+                C_Timer.After(3.0, function()
+                    Failsafe:Stop()
+                    self:ShowAll(priority)
+                end)
+            end
+        end)
+        return
+    end
+
+    Failsafe:Stop()
     for _, controller in pairs(self.controllers) do
         controller:Show(priority)
     end
 end
 
 function FrameManager:HideAll()
+    -- Check for zone text - delay if active
+    if ZoneText.IsActive() then
+        Utils.Print("Zone text active - delaying hide", true)
+        C_Timer.After(0.2, function()
+            if not ZoneText.IsActive() then
+                self:HideAll()
+            else
+                -- Retry with timeout
+                C_Timer.After(3.0, function()
+                    self:HideAll()
+                end)
+            end
+        end)
+        return
+    end
+
     for _, controller in pairs(self.controllers) do
         controller:Hide()
     end
@@ -434,6 +532,20 @@ local MouseoverDetector = {
     lastState = false,
 }
 
+-- PlayerFrame hover hotspot for reliable detection when faded
+local playerHoverFrame = nil
+local function CreatePlayerHoverHotspot()
+    if playerHoverFrame or not PlayerFrame then return end
+
+    playerHoverFrame = CreateFrame("Frame", "ZenUI_PlayerHoverFrame", UIParent)
+    playerHoverFrame:SetFrameStrata("LOW")
+    playerHoverFrame:SetAllPoints(PlayerFrame)
+    playerHoverFrame:EnableMouse(true)
+    playerHoverFrame:Show()
+
+    Utils.Print("Created PlayerFrame hover hotspot", true)
+end
+
 local function IsUIFrame(name)
     if not name then return false end
 
@@ -448,8 +560,8 @@ local function IsUIFrame(name)
         return true
     end
 
-    -- Player frame
-    if name == "PlayerFrame" or string.find(name, "^PlayerFrame") then
+    -- Player frame (including hover hotspot)
+    if name == "PlayerFrame" or name == "ZenUI_PlayerHoverFrame" or string.find(name, "^PlayerFrame") then
         return true
     end
 
@@ -530,6 +642,9 @@ function ZenUI:Initialize()
     -- Initialize frame management (but don't start yet)
     FrameManager:Initialize()
     MouseoverDetector:Initialize()
+
+    -- Create PlayerFrame hover hotspot for better mouseover detection
+    CreatePlayerHoverHotspot()
 
     -- Delayed activation
     C_Timer.After(self.startupDelay, function()
