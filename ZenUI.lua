@@ -606,6 +606,9 @@ EventHandler:RegisterEvent("PLAYER_REGEN_DISABLED")
 EventHandler:RegisterEvent("PLAYER_REGEN_ENABLED")
 EventHandler:RegisterEvent("PLAYER_TARGET_CHANGED")
 EventHandler:RegisterEvent("PLAYER_UPDATE_RESTING")
+EventHandler:RegisterEvent("ZONE_CHANGED")
+EventHandler:RegisterEvent("ZONE_CHANGED_INDOORS")
+EventHandler:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 
 EventHandler:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
@@ -623,6 +626,10 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
         StateManager:SetTarget(hasTarget, isAlive)
 
     elseif event == "PLAYER_UPDATE_RESTING" then
+        StateManager:SetResting(IsResting())
+
+    elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
+        -- Re-check resting state on zone change
         StateManager:SetResting(IsResting())
     end
 end)
