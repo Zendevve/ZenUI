@@ -62,24 +62,3 @@ function StateManager:OnZoneChanged()
     self.lastZoneTime = now
     self:SetResting(IsResting())
 end
-
-function StateManager:Update()
-    -- Don't run until addon is fully loaded
-    if not ZenHUD.loaded then return end
-    if not Config:Get("enabled") then return end
-
-    local time = Utils.GetTime()
-    local inGrace = false
-    local graceReason = nil
-
-    -- Check grace periods
-    for reason, deadline in pairs(self.graceUntil) do
-        if deadline > time then
-            inGrace = true
-            graceReason = reason
-            break
-        end
-    end
-
-    -- Determine visibility with clear priority
-    local shouldShow = self.inCombat

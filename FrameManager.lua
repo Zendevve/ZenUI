@@ -76,3 +76,11 @@ local FrameManager = {
     controllers = {},
     updateFrame = nil,
 }
+
+-- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars
+    MainMenuBar = "actionBars",
+    MultiBarBottomLeft = "actionBars",
+    MultiBarBottomRight = "actionBars",
