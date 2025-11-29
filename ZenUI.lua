@@ -173,6 +173,11 @@ function FrameController:New(frame)
         -- Behavior flags
         fadeOnly = false,  -- Don't call Hide(), just set alpha to 0
         conditional = false,  -- Don't force Show() if frame is hidden
+
+        -- Buff frame anti-flicker (defer system)
+        deferFadeIn = false,
+        deferFadeOut = false,
+        deferReason = nil,
     }
 
     setmetatable(instance, self)
@@ -190,6 +195,25 @@ function FrameController:SetConditional(value)
 end
 
 function FrameController:FadeTo(alpha, duration)
+    -- Buff frame anti-flicker logic
+    local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+
+    if isBuffFrame then
+        -- If fading IN and a fade OUT is requested, defer the OUT
+        if alpha == 0 and self.animating and self.targetAlpha == 1 then
+            self.deferFadeOut = true
+            self.deferReason = "deferred_buff_fadeout"
+            return
+        end
+
+        -- If fading OUT and a fade IN is requested, defer the IN
+        if alpha == 1 and self.animating and self.targetAlpha == 0 then
+            self.deferFadeIn = true
+            self.deferReason = "deferred_buff_fadein"
+            return
+        end
+    end
+
     -- Don't force show conditional frames
     if alpha > 0 and self.conditional and not self.frame:IsShown() then
         return
@@ -228,6 +252,29 @@ function FrameController:Update(dt)
         self.animating = false
         self.currentAlpha = self.targetAlpha
         self.frame:SetAlpha(self.targetAlpha)
+
+        local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+
+        -- Execute deferred fade-out after fade-in completes (buff frames only)
+        if self.targetAlpha == 1 and self.deferFadeOut and isBuffFrame then
+            local reason = self.deferReason or "deferred_buff_fadeout"
+            self.deferFadeOut = false
+            self.deferReason = nil
+            self:FadeTo(0, Config:Get("fadeTime"))
+            return
+        end
+
+        -- Execute deferred fade-in after fade-out completes (buff frames only)
+        if self.targetAlpha == 0 and self.deferFadeIn and isBuffFrame then
+            local reason = self.deferReason or "deferred_buff_fadein"
+            self.deferFadeIn = false
+            self.deferReason = nil
+            -- Show at alpha 0 then fade in
+            self.frame:Show()
+            self.frame:SetAlpha(0)
+            self:FadeTo(1, Config:Get("fadeTime"))
+            return
+        end
 
         -- Hide frame at end of fade-out (unless fade-only)
         if self.targetAlpha == 0 and not self.fadeOnly then
@@ -420,7 +467,43 @@ local StateManager = {
         target = 0,
         mouseover = 0,
     },
+
+    -- Zone debouncing
+    lastZoneTime = 0,
+    pendingZoneCheck = false,
+    zoneDebounceTimer = nil,
 }
+
+function StateManager:OnZoneChanged()
+    local ZONE_DEBOUNCE = 0.6
+    local now = Utils.GetTime()
+
+    -- If we're within debounce window, schedule delayed check
+    if now - self.lastZoneTime < ZONE_DEBOUNCE then
+        self.pendingZoneCheck = true
+
+        if not self.zoneDebounceTimer then
+            self.zoneDebounceTimer = CreateFrame("Frame")
+        end
+
+        local timeLeft = ZONE_DEBOUNCE - (now - self.lastZoneTime)
+        if timeLeft < 0.05 then timeLeft = 0.05 end
+
+        Utils.Print(string.format("Zone debounce: %.2fs", timeLeft), true)
+
+        C_Timer.After(timeLeft, function()
+            if self.pendingZoneCheck then
+                self.pendingZoneCheck = false
+                self:SetResting(IsResting())
+            end
+        end)
+        return
+    end
+
+    -- Outside debounce window - update immediately
+    self.lastZoneTime = now
+    self:SetResting(IsResting())
+end
 
 function StateManager:Update()
     -- Don't run until addon is fully loaded
@@ -655,8 +738,8 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
         end
 
     elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
-        -- Re-check resting state on zone change
-        StateManager:SetResting(IsResting())
+        -- Use debounced zone handling
+        StateManager:OnZoneChanged()
     end
 end)
 
