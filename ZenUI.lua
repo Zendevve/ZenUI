@@ -499,6 +499,7 @@ local StateManager = {
     inCombat = false,
     hasLivingTarget = false,
     isResting = false,
+    isMounted = false,
     mouseoverUI = false,
 
     -- Grace period tracking
@@ -630,6 +631,11 @@ function StateManager:SetResting(isResting)
     self:Update()
 end
 
+function StateManager:SetMounted(isMounted)
+    self.isMounted = isMounted
+    self:Update()
+end
+
 function StateManager:SetMouseover(mouseoverUI)
     local wasMouseover = self.mouseoverUI
     self.mouseoverUI = mouseoverUI
@@ -744,6 +750,7 @@ EventHandler:RegisterEvent("PLAYER_UPDATE_RESTING")
 EventHandler:RegisterEvent("ZONE_CHANGED")
 EventHandler:RegisterEvent("ZONE_CHANGED_INDOORS")
 EventHandler:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+EventHandler:RegisterEvent("UNIT_AURA")
 
 EventHandler:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
@@ -780,6 +787,12 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
     elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
         -- Use debounced zone handling
         StateManager:OnZoneChanged()
+
+    elseif event == "UNIT_AURA" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetMounted(IsMounted())
+        end
     end
 end)
 
@@ -832,6 +845,7 @@ local function ShowStatus()
     print(string.format("  In Combat: %s", StateManager.inCombat and "Yes" or "No"))
     print(string.format("  Has Target: %s", StateManager.hasLivingTarget and "Yes" or "No"))
     print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
+    print(string.format("  Mounted: %s", StateManager.isMounted and "Yes" or "No"))
     print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
 
     -- Grace periods
@@ -989,6 +1003,7 @@ function ZenUI:Initialize()
         StateManager.inCombat = false
         StateManager.hasLivingTarget = false
         StateManager.isResting = IsResting()
+        StateManager.isMounted = IsMounted()
         StateManager.mouseoverUI = false
 
         -- Force initial evaluation
