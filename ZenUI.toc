@@ -1,8 +1,9 @@
 ## Interface: 30300
 ## Title: ZenUI
-## Notes: Hides UI Elements when outside resting zones for more immersion.
+## Notes: Modern UI automation for WotLK 3.3.5a
 ## Author: Zendevve
-## Version: 1.1.0-wotlk
+## Version: 1.0.0
 ## SavedVariables: ZenUIDB
+## SavedVariablesPerCharacter: ZenUICharDB
 
 ZenUI.lua

@@ -20,23 +20,28 @@ local ZenUI = {
 _G.ZenUI = ZenUI
 
 --------------------------------------------------------------------------------
--- Configuration
+-- Config Module - Settings Management
 --------------------------------------------------------------------------------
 local Config = {
     defaults = {
         enabled = true,
         debug = false,
         showOnTarget = true,
-        fadeTime = 3.0,
+        fadeTime = 0.8,
+
         gracePeriods = {
             combat = 8.0,
             target = 2.0,
             mouseover = 2.0,
         },
+
+        -- Per-character settings control
+        useCharacterSettings = false,  -- If true, use character-specific settings
     }
 }
 
 function Config:Initialize()
+    -- Initialize account-wide settings
     if type(ZenUIDB) ~= "table" then
         ZenUIDB = self:Clone(self.defaults)
     else
@@ -46,6 +51,11 @@ function Config:Initialize()
                 ZenUIDB[k] = type(v) == "table" and self:Clone(v) or v
             end
         end
+    end
+
+    -- Initialize per-character settings
+    if type(ZenUICharDB) ~= "table" then
+        ZenUICharDB = {}
     end
 end
 
@@ -58,11 +68,30 @@ function Config:Clone(tbl)
 end
 
 function Config:Get(key)
+    -- If using character settings and key exists in character DB, use it
+    if ZenUIDB.useCharacterSettings and ZenUICharDB[key] ~= nil then
+        return ZenUICharDB[key]
+    end
+    -- Otherwise use account-wide setting
     return ZenUIDB[key]
 end
 
 function Config:Set(key, value)
-    ZenUIDB[key] = value
+    -- Set to appropriate DB based on mode
+    if ZenUIDB.useCharacterSettings then
+        ZenUICharDB[key] = value
+    else
+        ZenUIDB[key] = value
+    end
+end
+
+function Config:ToggleCharacterSettings()
+    ZenUIDB.useCharacterSettings = not ZenUIDB.useCharacterSettings
+    return ZenUIDB.useCharacterSettings
+end
+
+function Config:IsUsingCharacterSettings()
+    return ZenUIDB.useCharacterSettings == true
 end
 
 ZenUI.Config = Config
@@ -774,10 +803,17 @@ local function ShowHelp()
     print("  /zenui grace target <seconds> - Post-target grace period")
     print("  /zenui grace mouseover <seconds> - Post-mouseover grace period")
     print("  /zenui settings - Show all current settings")
+    print("  /zenui character - Toggle per-character settings mode")
 end
 
 local function ShowSettings()
     Utils.Print("Current Settings:")
+
+    -- Show which settings mode is active
+    local usingChar = Config:IsUsingCharacterSettings()
+    print(string.format("  Settings Mode: %s", usingChar and "Character-Specific" or "Account-Wide"))
+    print(" ")
+
     print(string.format("  Fade Time: %.2fs", Config:Get("fadeTime")))
 
     local grace = Config:Get("gracePeriods")
@@ -898,6 +934,16 @@ SlashCmdList["ZENUI"] = function(msg)
 
         grace[graceType] = value
         Utils.Print(string.format("Grace period (%s) set to %.1fs", graceType, value))
+
+    elseif cmd == "character" then
+        local enabled = Config:ToggleCharacterSettings()
+        if enabled then
+            Utils.Print("Switched to character-specific settings")
+            Utils.Print("Settings will now be saved per-character")
+        else
+            Utils.Print("Switched to account-wide settings")
+            Utils.Print("Settings will be shared across all characters")
+        end
 
     elseif cmd == "reload" then
         Config:Initialize()
