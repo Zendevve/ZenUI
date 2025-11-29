@@ -357,6 +357,11 @@ local CONDITIONAL_FRAMES = {
     PetFrame = true,
     TargetFrameToT = true,
     PetCastingBarFrame = true,
+
+    -- WotLK conditionals
+    VehicleMenuBar = true,      -- Only when in vehicle
+    RuneFrame = true,           -- Only for Death Knights
+    BonusActionBarFrame = true, -- Only when vehicle/special abilities active
 }
 
 function FrameManager:Initialize()
