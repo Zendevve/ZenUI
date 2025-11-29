@@ -39,3 +39,40 @@ local Failsafe = {
     timer = nil,
     timeout = 4.0,
     elapsed = 0,
+}
+
+function Failsafe:Start()
+    if not self.timer then
+        self.timer = CreateFrame("Frame")
+        self.timer:SetScript("OnUpdate", function(_, dt)
+            self.elapsed = self.elapsed + dt
+            if self.elapsed >= self.timeout then
+                self:Stop()
+                Utils.Print("Failsafe triggered - forcing UI show", true)
+                if ZenHUD.FrameManager then
+                    ZenHUD.FrameManager:ShowAll(false)
+                end
+            end
+        end)
+    end
+
+    self.elapsed = 0
+    self.timer:Show()
+end
+
+function Failsafe:Stop()
+    if self.timer then
+        self.timer:Hide()
+    end
+    self.elapsed = 0
+end
+
+ZenHUD.Failsafe = Failsafe
+
+--------------------------------------------------------------------------------
+-- Frame Manager Implementation
+--------------------------------------------------------------------------------
+local FrameManager = {
+    controllers = {},
+    updateFrame = nil,
+}

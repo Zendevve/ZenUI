@@ -47,3 +47,17 @@ function FrameController:SetConditional(value)
 end
 
 function FrameController:FadeTo(alpha, duration)
+    -- Buff frame anti-flicker logic
+    local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+
+    if isBuffFrame then
+        -- If fading IN and a fade OUT is requested, defer the OUT
+        local fadedAlpha = Config:Get("fadedAlpha")
+        if alpha == fadedAlpha and self.animating and self.targetAlpha == 1 then
+            self.deferFadeOut = true
+            self.deferReason = "deferred_buff_fadeout"
+            return
+        end
+
+        -- If fading OUT and a fade IN is requested, defer the IN
+        if alpha == 1 and self.animating and self.targetAlpha == fadedAlpha then

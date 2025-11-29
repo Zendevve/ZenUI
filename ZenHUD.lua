@@ -73,39 +73,3 @@ local function ShowSettings()
     print("  Show on Target: " .. (Config:Get("showOnTarget") and "Yes" or "No"))
 end
 
-local function ShowStatus()
-    Utils.Print("Current Status:")
-    print(string.format("  Enabled: %s", Config:Get("enabled") and "Yes" or "No"))
-    print(string.format("  Debug: %s", Config:Get("debug") and "Yes" or "No"))
-    print(string.format("  Loaded: %s", ZenHUD.loaded and "Yes" or "No"))
-    print(string.format("  In Combat: %s", StateManager.inCombat and "Yes" or "No"))
-    print(string.format("  Has Target: %s", StateManager.hasLivingTarget and "Yes" or "No"))
-    print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
-    print(string.format("  Mounted: %s", StateManager.isMounted and "Yes" or "No"))
-    print(string.format("  Dead/Ghost: %s", StateManager.isDead and "Yes" or "No"))
-    print(string.format("  On Taxi: %s", StateManager.onTaxi and "Yes" or "No"))
-    print(string.format("  In Vehicle: %s", StateManager.inVehicle and "Yes" or "No"))
-    print(string.format("  AFK/DND: %s", StateManager.isAFK and "Yes" or "No"))
-    print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
-
-    -- Grace periods
-    local now = Utils.GetTime()
-    local hasGrace = false
-    for name, deadline in pairs(StateManager.graceUntil) do
-        if deadline > now then
-            local remaining = deadline - now
-            print(string.format("  Grace (%s): %.1fs", name, remaining))
-            hasGrace = true
-        end
-    end
-    if not hasGrace then
-        print("  Grace: None")
-    end
-end
-
-local function ListFrames()
-    local count = FrameManager:Count()
-    Utils.Print(string.format("Controlling %d frames:", count))
-
-    local frameList = {}
-    for frame, controller in pairs(FrameManager.controllers) do

@@ -83,7 +83,3 @@ function StateManager:Update()
 
     -- Determine visibility with clear priority
     local shouldShow = self.inCombat
-        or (Config:Get("showOnTarget") and self.hasLivingTarget)
-        or self.mouseoverUI
-        or inGrace
-        or self.isResting

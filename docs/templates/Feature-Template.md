@@ -9,6 +9,3 @@
 ## 2. Business Rules & Constraints
 *   **{{Rule 1}}**: {{Description}}
 *   **{{Rule 2}}**: {{Description}}
-*   **Constraint**: {{Constraint}}
-
-## 3. User Flows / Interaction
