@@ -640,6 +640,20 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
     elseif event == "PLAYER_UPDATE_RESTING" then
         StateManager:SetResting(IsResting())
 
+        -- Failsafe timers to ensure UI shows when entering city
+        if IsResting() then
+            C_Timer.After(1.0, function()
+                if ZenUI.loaded and IsResting() then
+                    StateManager:Update()
+                end
+            end)
+            C_Timer.After(3.5, function()
+                if ZenUI.loaded and IsResting() then
+                    StateManager:Update()
+                end
+            end)
+        end
+
     elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
         -- Re-check resting state on zone change
         StateManager:SetResting(IsResting())
@@ -660,6 +674,12 @@ function ZenUI:Initialize()
 
     -- Initialize frame management (but don't start yet)
     FrameManager:Initialize()
+
+    -- Retry after 300ms for late-loading frames (some frames load after PEW)
+    C_Timer.After(0.3, function()
+        FrameManager:Initialize()
+    end)
+
     MouseoverDetector:Initialize()
 
     -- Create PlayerFrame hover hotspot for better mouseover detection
