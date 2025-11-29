@@ -457,18 +457,21 @@ function StateManager:SetCombat(inCombat)
     self.inCombat = inCombat
 
     if inCombat then
-        -- Entering combat - clear grace periods
+        -- Entering combat - clear all grace periods
         for k in pairs(self.graceUntil) do
             self.graceUntil[k] = 0
         end
     else
-        -- Leaving combat - start grace period
+        -- Leaving combat - start grace period with timer callback
         local grace = Config:Get("gracePeriods").combat
         self.graceUntil.combat = Utils.GetTime() + grace
 
-        -- Schedule update when grace expires
+        -- Timer callback to hide UI after grace expires
         C_Timer.After(grace, function()
-            self:Update()
+            if not self.inCombat then
+                self.graceUntil.combat = 0
+                self:Update()
+            end
         end)
     end
 
@@ -479,18 +482,21 @@ function StateManager:SetTarget(hasTarget, isAlive)
     local hadLivingTarget = self.hasLivingTarget
     self.hasLivingTarget = hasTarget and isAlive
 
-    if not hasTarget and hadLivingTarget then
-        -- Lost living target - start grace period
+    if hasTarget and isAlive then
+        -- Acquired living target - clear grace
+        self.graceUntil.target = 0
+    elseif not hasTarget and hadLivingTarget then
+        -- Lost living target - start grace period with timer callback
         local grace = Config:Get("gracePeriods").target
         self.graceUntil.target = Utils.GetTime() + grace
 
-        -- Schedule update when grace expires
+        -- Timer callback to hide UI after grace expires
         C_Timer.After(grace, function()
-            self:Update()
+            if not (UnitExists("target")) and not self.inCombat then
+                self.graceUntil.target = 0
+                self:Update()
+            end
         end)
-    elseif self.hasLivingTarget then
-        -- Acquired living target - clear grace
-        self.graceUntil.target = 0
     end
 
     self:Update()
@@ -505,18 +511,24 @@ function StateManager:SetMouseover(mouseoverUI)
     local wasMouseover = self.mouseoverUI
     self.mouseoverUI = mouseoverUI
 
-    if not mouseoverUI and wasMouseover then
-        -- Left UI - start grace period
-        local grace = Config:Get("gracePeriods").mouseover
-        self.graceUntil.mouseover = Utils.GetTime() + grace
-
-        -- Schedule update when grace expires
-        C_Timer.After(grace, function()
-            self:Update()
-        end)
-    elseif mouseoverUI then
-        -- Entered UI - clear grace
+    if mouseoverUI then
+        -- Entered UI - cancel grace period
         self.graceUntil.mouseover = 0
+    else
+        -- Left UI - start grace period with timer callback
+        if wasMouseover then
+            local grace = Config:Get("gracePeriods").mouseover
+            local now = Utils.GetTime()
+            self.graceUntil.mouseover = now + grace
+
+            -- Timer callback to hide UI after grace expires
+            C_Timer.After(grace, function()
+                if not self.mouseoverUI and not self.inCombat then
+                    self.graceUntil.mouseover = 0
+                    self:Update()
+                end
+            end)
+        end
     end
 
     self:Update()
