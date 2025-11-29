@@ -755,6 +755,100 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
 end)
 
 --------------------------------------------------------------------------------
+-- Slash Commands
+--------------------------------------------------------------------------------
+SLASH_ZENUI1 = "/zenui"
+
+local function ShowHelp()
+    Utils.Print("Available commands:")
+    print("  /zenui - Show this help")
+    print("  /zenui toggle - Enable/disable addon")
+    print("  /zenui debug - Toggle debug mode")
+    print("  /zenui status - Show current state")
+    print("  /zenui frames - List controlled frames")
+    print("  /zenui reload - Reload configuration")
+end
+
+local function ShowStatus()
+    Utils.Print("Current Status:")
+    print(string.format("  Enabled: %s", Config:Get("enabled") and "Yes" or "No"))
+    print(string.format("  Debug: %s", Config:Get("debug") and "Yes" or "No"))
+    print(string.format("  Loaded: %s", ZenUI.loaded and "Yes" or "No"))
+    print(string.format("  In Combat: %s", StateManager.inCombat and "Yes" or "No"))
+    print(string.format("  Has Target: %s", StateManager.hasLivingTarget and "Yes" or "No"))
+    print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
+    print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
+
+    -- Grace periods
+    local now = Utils.GetTime()
+    local hasGrace = false
+    for name, deadline in pairs(StateManager.graceUntil) do
+        if deadline > now then
+            local remaining = deadline - now
+            print(string.format("  Grace (%s): %.1fs", name, remaining))
+            hasGrace = true
+        end
+    end
+    if not hasGrace then
+        print("  Grace: None")
+    end
+end
+
+local function ListFrames()
+    local count = FrameManager:Count()
+    Utils.Print(string.format("Controlling %d frames:", count))
+
+    local frameList = {}
+    for frame, controller in pairs(FrameManager.controllers) do
+        local name = controller.name
+        local visible = controller.visible and "visible" or "hidden"
+        local animating = controller.animating and " (animating)" or ""
+        table.insert(frameList, string.format("  %s - %s%s", name, visible, animating))
+    end
+
+    table.sort(frameList)
+    for _, line in ipairs(frameList) do
+        print(line)
+    end
+end
+
+SlashCmdList["ZENUI"] = function(msg)
+    msg = string.lower(msg or "")
+
+    if msg == "" or msg == "help" then
+        ShowHelp()
+
+    elseif msg == "toggle" then
+        local enabled = not Config:Get("enabled")
+        Config:Set("enabled", enabled)
+        Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
+        if enabled then
+            StateManager:Update()
+        end
+
+    elseif msg == "debug" then
+        local debug = not Config:Get("debug")
+        Config:Set("debug", debug)
+        Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
+
+    elseif msg == "status" then
+        ShowStatus()
+
+    elseif msg == "frames" then
+        ListFrames()
+
+    elseif msg == "reload" then
+        Config:Initialize()
+        Utils.Print("Configuration reloaded")
+        StateManager:Update()
+
+    else
+        Utils.Print(string.format("Unknown command: %s", msg))
+        ShowHelp()
+    end
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --------------------------------------------------------------------------------
 function ZenUI:Initialize()
