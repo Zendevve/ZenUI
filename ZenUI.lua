@@ -767,6 +767,25 @@ local function ShowHelp()
     print("  /zenui status - Show current state")
     print("  /zenui frames - List controlled frames")
     print("  /zenui reload - Reload configuration")
+    print(" ")
+    print("Settings:")
+    print("  /zenui fade <seconds> - Set fade animation duration")
+    print("  /zenui grace combat <seconds> - Post-combat grace period")
+    print("  /zenui grace target <seconds> - Post-target grace period")
+    print("  /zenui grace mouseover <seconds> - Post-mouseover grace period")
+    print("  /zenui settings - Show all current settings")
+end
+
+local function ShowSettings()
+    Utils.Print("Current Settings:")
+    print(string.format("  Fade Time: %.2fs", Config:Get("fadeTime")))
+
+    local grace = Config:Get("gracePeriods")
+    print(string.format("  Grace Period (Combat): %.1fs", grace.combat))
+    print(string.format("  Grace Period (Target): %.1fs", grace.target))
+    print(string.format("  Grace Period (Mouseover): %.1fs", grace.mouseover))
+    print(" ")
+    print("  Show on Target: " .. (Config:Get("showOnTarget") and "Yes" or "No"))
 end
 
 local function ShowStatus()
@@ -815,10 +834,18 @@ end
 SlashCmdList["ZENUI"] = function(msg)
     msg = string.lower(msg or "")
 
-    if msg == "" or msg == "help" then
+    -- Split message into arguments
+    local args = {}
+    for word in string.gmatch(msg, "%S+") do
+        table.insert(args, word)
+    end
+
+    local cmd = args[1] or ""
+
+    if cmd == "" or cmd == "help" then
         ShowHelp()
 
-    elseif msg == "toggle" then
+    elseif cmd == "toggle" then
         local enabled = not Config:Get("enabled")
         Config:Set("enabled", enabled)
         Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
@@ -826,24 +853,59 @@ SlashCmdList["ZENUI"] = function(msg)
             StateManager:Update()
         end
 
-    elseif msg == "debug" then
+    elseif cmd == "debug" then
         local debug = not Config:Get("debug")
         Config:Set("debug", debug)
         Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
 
-    elseif msg == "status" then
+    elseif cmd == "status" then
         ShowStatus()
 
-    elseif msg == "frames" then
+    elseif cmd == "frames" then
         ListFrames()
 
-    elseif msg == "reload" then
+    elseif cmd == "settings" then
+        ShowSettings()
+
+    elseif cmd == "fade" then
+        local value = tonumber(args[2])
+        if not value or value <= 0 then
+            Utils.Print("Usage: /zenui fade <seconds>")
+            Utils.Print("Example: /zenui fade 0.5")
+            return
+        end
+
+        Config:Set("fadeTime", value)
+        Utils.Print(string.format("Fade time set to %.2fs", value))
+
+    elseif cmd == "grace" then
+        local graceType = args[2]  -- combat, target, or mouseover
+        local value = tonumber(args[3])
+
+        if not graceType or not value or value < 0 then
+            Utils.Print("Usage: /zenui grace <type> <seconds>")
+            Utils.Print("Types: combat, target, mouseover")
+            Utils.Print("Example: /zenui grace combat 10.0")
+            return
+        end
+
+        local grace = Config:Get("gracePeriods")
+        if not grace[graceType] then
+            Utils.Print(string.format("Unknown grace type: %s", graceType))
+            Utils.Print("Valid types: combat, target, mouseover")
+            return
+        end
+
+        grace[graceType] = value
+        Utils.Print(string.format("Grace period (%s) set to %.1fs", graceType, value))
+
+    elseif cmd == "reload" then
         Config:Initialize()
         Utils.Print("Configuration reloaded")
         StateManager:Update()
 
     else
-        Utils.Print(string.format("Unknown command: %s", msg))
+        Utils.Print(string.format("Unknown command: %s", cmd))
         ShowHelp()
     end
 end
