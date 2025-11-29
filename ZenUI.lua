@@ -572,9 +572,7 @@ function StateManager:Update()
         or self.mouseoverUI
         or inGrace
         or self.isResting
-        or self.isDead
         or self.inVehicle
-        or self.isAFK
 
     if shouldShow then
         local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
