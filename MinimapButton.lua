@@ -38,4 +38,3 @@ icon:SetPoint("CENTER", 0, 1)
 
 local pushed = button:CreateTexture(nil, "ARTWORK")
 pushed:SetSize(BUTTON_SIZE, BUTTON_SIZE)
-pushed:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
