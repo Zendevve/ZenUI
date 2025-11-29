@@ -500,6 +500,10 @@ local StateManager = {
     hasLivingTarget = false,
     isResting = false,
     isMounted = false,
+    isDead = false,
+    onTaxi = false,
+    inVehicle = false,
+    isAFK = false,
     mouseoverUI = false,
 
     -- Grace period tracking
@@ -568,6 +572,9 @@ function StateManager:Update()
         or self.mouseoverUI
         or inGrace
         or self.isResting
+        or self.isDead
+        or self.inVehicle
+        or self.isAFK
 
     if shouldShow then
         local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
@@ -633,6 +640,26 @@ end
 
 function StateManager:SetMounted(isMounted)
     self.isMounted = isMounted
+    self:Update()
+end
+
+function StateManager:SetDead(isDead)
+    self.isDead = isDead
+    self:Update()
+end
+
+function StateManager:SetTaxi(onTaxi)
+    self.onTaxi = onTaxi
+    self:Update()
+end
+
+function StateManager:SetVehicle(inVehicle)
+    self.inVehicle = inVehicle
+    self:Update()
+end
+
+function StateManager:SetAFK(isAFK)
+    self.isAFK = isAFK
     self:Update()
 end
 
@@ -751,6 +778,14 @@ EventHandler:RegisterEvent("ZONE_CHANGED")
 EventHandler:RegisterEvent("ZONE_CHANGED_INDOORS")
 EventHandler:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 EventHandler:RegisterEvent("UNIT_AURA")
+EventHandler:RegisterEvent("PLAYER_DEAD")
+EventHandler:RegisterEvent("PLAYER_ALIVE")
+EventHandler:RegisterEvent("PLAYER_UNGHOST")
+EventHandler:RegisterEvent("PLAYER_CONTROL_LOST")
+EventHandler:RegisterEvent("PLAYER_CONTROL_GAINED")
+EventHandler:RegisterEvent("UNIT_ENTERED_VEHICLE")
+EventHandler:RegisterEvent("UNIT_EXITED_VEHICLE")
+EventHandler:RegisterEvent("PLAYER_FLAGS_CHANGED")
 
 EventHandler:SetScript("OnEvent", function(self, event, ...)
     if event == "PLAYER_ENTERING_WORLD" then
@@ -793,6 +828,30 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
         if unit == "player" then
             StateManager:SetMounted(IsMounted())
         end
+
+    elseif event == "PLAYER_DEAD" then
+        StateManager:SetDead(true)
+
+    elseif event == "PLAYER_ALIVE" or event == "PLAYER_UNGHOST" then
+        StateManager:SetDead(UnitIsDeadOrGhost("player"))
+
+    elseif event == "PLAYER_CONTROL_LOST" or event == "PLAYER_CONTROL_GAINED" then
+        StateManager:SetTaxi(UnitOnTaxi("player"))
+
+    elseif event == "UNIT_ENTERED_VEHICLE" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetVehicle(true)
+        end
+
+    elseif event == "UNIT_EXITED_VEHICLE" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetVehicle(false)
+        end
+
+    elseif event == "PLAYER_FLAGS_CHANGED" then
+        StateManager:SetAFK(UnitIsAFK("player") or UnitIsDND("player"))
     end
 end)
 
@@ -846,6 +905,10 @@ local function ShowStatus()
     print(string.format("  Has Target: %s", StateManager.hasLivingTarget and "Yes" or "No"))
     print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
     print(string.format("  Mounted: %s", StateManager.isMounted and "Yes" or "No"))
+    print(string.format("  Dead/Ghost: %s", StateManager.isDead and "Yes" or "No"))
+    print(string.format("  On Taxi: %s", StateManager.onTaxi and "Yes" or "No"))
+    print(string.format("  In Vehicle: %s", StateManager.inVehicle and "Yes" or "No"))
+    print(string.format("  AFK/DND: %s", StateManager.isAFK and "Yes" or "No"))
     print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
 
     -- Grace periods
@@ -1004,6 +1067,10 @@ function ZenUI:Initialize()
         StateManager.hasLivingTarget = false
         StateManager.isResting = IsResting()
         StateManager.isMounted = IsMounted()
+        StateManager.isDead = UnitIsDeadOrGhost("player")
+        StateManager.onTaxi = UnitOnTaxi("player")
+        StateManager.inVehicle = false  -- Can't reliably detect on load
+        StateManager.isAFK = UnitIsAFK("player") or UnitIsDND("player")
         StateManager.mouseoverUI = false
 
         -- Force initial evaluation
