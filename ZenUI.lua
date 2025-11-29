@@ -338,6 +338,12 @@ local CONTROLLED_FRAMES = {
 
     -- Cast bars
     "PetCastingBarFrame",
+
+    -- WotLK-specific frames
+    "VehicleMenuBar",           -- Vehicle encounters (Flame Leviathan, etc.)
+    "RuneFrame",                -- Death Knight rune cooldowns
+    "QuestTimerFrame",          -- Timed quest indicators
+    "BonusActionBarFrame",      -- Vehicle/special abilities bar
 }
 
 -- Frames that should only fade (not hide)
