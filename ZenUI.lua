@@ -535,8 +535,14 @@ function ZenUI:Initialize()
     C_Timer.After(self.startupDelay, function()
         self.loaded = true
 
-        -- Set initial state
-        StateManager:SetResting(IsResting())
+        -- Set initial states
+        StateManager.inCombat = false
+        StateManager.hasLivingTarget = false
+        StateManager.isResting = IsResting()
+        StateManager.mouseoverUI = false
+
+        -- Force initial evaluation
+        StateManager:Update()
 
         -- Start mouseover detection
         MouseoverDetector:Start()
