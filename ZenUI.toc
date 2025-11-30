@@ -1,9 +1,12 @@
 ## Interface: 30300
 ## Title: ZenUI
-## Notes: Modern UI automation for WotLK 3.3.5a
+## Notes: Minimalist UI Automation for WotLK 3.3.5a
 ## Author: Zendevve
-## Version: 1.0.0
+## Version: 1.1.0-wotlk
 ## SavedVariables: ZenUIDB
 ## SavedVariablesPerCharacter: ZenUICharDB
 
+# Load order is important - modules first, then main file
+Config.lua
+Utils.lua
 ZenUI.lua

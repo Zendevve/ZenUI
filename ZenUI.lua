@@ -8,126 +8,21 @@ local ADDON_NAME = "ZenUI"
 local VERSION = "1.1.0"
 
 --------------------------------------------------------------------------------
--- Core Namespace
+-- Core Namespace (created by Config.lua, now just reference it)
 --------------------------------------------------------------------------------
-local ZenUI = {
-    version = VERSION,
-    loaded = false,
-    startupDelay = 5.0,
-}
-
--- Store in global namespace
-_G.ZenUI = ZenUI
+local ZenUI = _G.ZenUI
+-- Update version info
+ZenUI.version = VERSION
 
 --------------------------------------------------------------------------------
--- Config Module - Settings Management
+-- Module References (loaded from separate files via .toc)
 --------------------------------------------------------------------------------
-local Config = {
-    defaults = {
-        enabled = true,
-        debug = false,
-        showOnTarget = true,
-        fadeTime = 0.8,
+-- Config.lua and Utils.lua are loaded first (see .toc file)
+-- They export themselves to ZenUI.Config and ZenUI.Utils
+-- We grab local references here for convenience
+local Config = ZenUI.Config
+local Utils = ZenUI.Utils
 
-        gracePeriods = {
-            combat = 8.0,
-            target = 2.0,
-            mouseover = 2.0,
-        },
-
-        -- Per-character settings control
-        useCharacterSettings = false,  -- If true, use character-specific settings
-    }
-}
-
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenUIDB) ~= "table" then
-        ZenUIDB = self:Clone(self.defaults)
-    else
-        -- Merge with defaults for any missing keys
-        for k, v in pairs(self.defaults) do
-            if ZenUIDB[k] == nil then
-                ZenUIDB[k] = type(v) == "table" and self:Clone(v) or v
-            end
-        end
-    end
-
-    -- Initialize per-character settings
-    if type(ZenUICharDB) ~= "table" then
-        ZenUICharDB = {}
-    end
-end
-
-function Config:Clone(tbl)
-    local copy = {}
-    for k, v in pairs(tbl) do
-        copy[k] = type(v) == "table" and self:Clone(v) or v
-    end
-    return copy
-end
-
-function Config:Get(key)
-    -- If using character settings and key exists in character DB, use it
-    if ZenUIDB.useCharacterSettings and ZenUICharDB[key] ~= nil then
-        return ZenUICharDB[key]
-    end
-    -- Otherwise use account-wide setting
-    return ZenUIDB[key]
-end
-
-function Config:Set(key, value)
-    -- Set to appropriate DB based on mode
-    if ZenUIDB.useCharacterSettings then
-        ZenUICharDB[key] = value
-    else
-        ZenUIDB[key] = value
-    end
-end
-
-function Config:ToggleCharacterSettings()
-    ZenUIDB.useCharacterSettings = not ZenUIDB.useCharacterSettings
-    return ZenUIDB.useCharacterSettings
-end
-
-function Config:IsUsingCharacterSettings()
-    return ZenUIDB.useCharacterSettings == true
-end
-
-ZenUI.Config = Config
-
---------------------------------------------------------------------------------
--- Utilities
---------------------------------------------------------------------------------
-local Utils = {}
-
-function Utils.Print(msg, debugOnly)
-    if debugOnly and not Config:Get("debug") then return end
-    DEFAULT_CHAT_FRAME:AddMessage("|cFF66C2FF[ZenUI]|r " .. msg)
-end
-
-function Utils.Clamp(value, min, max)
-    return math.max(min, math.min(max, value))
-end
-
-function Utils.GetTime()
-    return GetTime and GetTime() or 0
-end
-
--- WotLK-compatible timer (C_Timer doesn't exist in 3.3.5a)
-function Utils.After(delay, callback)
-    local frame = CreateFrame("Frame")
-    local elapsed = 0
-    frame:SetScript("OnUpdate", function(self, dt)
-        elapsed = elapsed + dt
-        if elapsed >= delay then
-            self:SetScript("OnUpdate", nil)
-            callback()
-        end
-    end)
-end
-
-ZenUI.Utils = Utils
 
 --------------------------------------------------------------------------------
 -- Zone Text Detection & Failsafe
