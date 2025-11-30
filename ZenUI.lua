@@ -717,22 +717,46 @@ local MouseoverDetector = {
     lastState = false,
 }
 
--- PlayerFrame hover hotspot for reliable detection when faded
-local playerHoverFrame = nil
-local function CreatePlayerHoverHotspot()
-    if playerHoverFrame or not PlayerFrame then return end
+-- Hover hotspots for reliable detection when frames are hidden
+local hoverHotspots = {}
 
-    playerHoverFrame = CreateFrame("Frame", "ZenUI_PlayerHoverFrame", UIParent)
-    playerHoverFrame:SetFrameStrata("LOW")
-    playerHoverFrame:SetAllPoints(PlayerFrame)
-    playerHoverFrame:EnableMouse(true)
-    playerHoverFrame:Show()
+local function CreateHoverHotspot(parentFrame, name)
+    if hoverHotspots[name] or not parentFrame then return end
 
-    Utils.Print("Created PlayerFrame hover hotspot", true)
+    local hotspot = CreateFrame("Frame", "ZenUI_Hover_" .. name, UIParent)
+    hotspot:SetFrameStrata("LOW")
+    hotspot:SetFrameLevel(1)
+    hotspot:SetAllPoints(parentFrame)
+    hotspot:EnableMouse(true)
+    hotspot:Show()
+
+    hoverHotspots[name] = hotspot
+    Utils.Print("Created hover hotspot: " .. name, true)
+end
+
+local function CreateAllHoverHotspots()
+    -- Action bars
+    if MainMenuBar then CreateHoverHotspot(MainMenuBar, "MainMenuBar") end
+    if MultiBarBottomLeft then CreateHoverHotspot(MultiBarBottomLeft, "MultiBarBottomLeft") end
+    if MultiBarBottomRight then CreateHoverHotspot(MultiBarBottomRight, "MultiBarBottomRight") end
+    if MultiBarLeft then CreateHoverHotspot(MultiBarLeft, "MultiBarLeft") end
+    if MultiBarRight then CreateHoverHotspot(MultiBarRight, "MultiBarRight") end
+    if PetActionBarFrame then CreateHoverHotspot(PetActionBarFrame, "PetActionBarFrame") end
+    if ShapeshiftBarFrame then CreateHoverHotspot(ShapeshiftBarFrame, "ShapeshiftBarFrame") end
+
+    -- Player frame
+    if PlayerFrame then CreateHoverHotspot(PlayerFrame, "PlayerFrame") end
+
+    Utils.Print(string.format("Created %d hover hotspots", #hoverHotspots), true)
 end
 
 local function IsUIFrame(name)
     if not name then return false end
+
+    -- Hover hotspots (always active, even when frames are hidden)
+    if string.find(name, "^ZenUI_Hover_") then
+        return true
+    end
 
     -- Action buttons
     if string.find(name, "ActionButton") or string.find(name, "MultiBar") or
@@ -745,8 +769,8 @@ local function IsUIFrame(name)
         return true
     end
 
-    -- Player frame (including hover hotspot)
-    if name == "PlayerFrame" or name == "ZenUI_PlayerHoverFrame" or string.find(name, "^PlayerFrame") then
+    -- Player frame
+    if name == "PlayerFrame" or string.find(name, "^PlayerFrame") then
         return true
     end
 
@@ -1072,8 +1096,8 @@ function ZenUI:Initialize()
 
     MouseoverDetector:Initialize()
 
-    -- Create PlayerFrame hover hotspot for better mouseover detection
-    CreatePlayerHoverHotspot()
+    -- Create hover hotspots for all action bars
+    CreateAllHoverHotspots()
 
     -- Delayed activation
     Utils.After(self.startupDelay, function()
