@@ -114,6 +114,19 @@ function Utils.GetTime()
     return GetTime and GetTime() or 0
 end
 
+-- WotLK-compatible timer (C_Timer doesn't exist in 3.3.5a)
+function Utils.After(delay, callback)
+    local frame = CreateFrame("Frame")
+    local elapsed = 0
+    frame:SetScript("OnUpdate", function(self, dt)
+        elapsed = elapsed + dt
+        if elapsed >= delay then
+            self:SetScript("OnUpdate", nil)
+            callback()
+        end
+    end)
+end
+
 ZenUI.Utils = Utils
 
 --------------------------------------------------------------------------------
@@ -305,8 +318,8 @@ function FrameController:Update(dt)
             return
         end
 
-        -- Hide frame at end of fade-out (unless fade-only)
-        if self.targetAlpha == 0 and not self.fadeOnly then
+        -- Hide frame at end of fade-out for performance
+        if self.targetAlpha == 0 then
             self.frame:Hide()
         end
     end
@@ -375,7 +388,9 @@ local CONTROLLED_FRAMES = {
     "BonusActionBarFrame",      -- Vehicle/special abilities bar
 }
 
--- Frames that should only fade (not hide)
+-- Frames that should only fade (not hide) - DISABLED for performance
+-- All frames now actually hide at alpha=0 for ~20fps boost
+--[[
 local FADE_ONLY_FRAMES = {
     MainMenuBar = true,
     MultiBarBottomLeft = true,
@@ -386,6 +401,7 @@ local FADE_ONLY_FRAMES = {
     ShapeshiftBarFrame = true,
     PetFrame = true,
 }
+--]]
 
 -- Conditional frames (don't force show)
 local CONDITIONAL_FRAMES = {
@@ -405,9 +421,12 @@ function FrameManager:Initialize()
         if frame and frame.SetAlpha and frame.Show and frame.Hide then
             local controller = FrameController:New(frame)
 
+            -- FADE_ONLY logic disabled for performance
+            --[[
             if FADE_ONLY_FRAMES[frameName] then
                 controller:SetFadeOnly(true)
             end
+            --]]
 
             if CONDITIONAL_FRAMES[frameName] then
                 controller:SetConditional(true)
@@ -440,12 +459,12 @@ function FrameManager:ShowAll(priority)
     if ZoneText.IsActive() then
         Utils.Print("Zone text active - delaying show", true)
         Failsafe:Start()
-        C_Timer.After(0.2, function()
+        Utils.After(0.2, function()
             if not ZoneText.IsActive() then
                 self:ShowAll(priority)
             else
                 -- Retry with timeout
-                C_Timer.After(3.0, function()
+                Utils.After(3.0, function()
                     Failsafe:Stop()
                     self:ShowAll(priority)
                 end)
@@ -464,12 +483,12 @@ function FrameManager:HideAll()
     -- Check for zone text - delay if active
     if ZoneText.IsActive() then
         Utils.Print("Zone text active - delaying hide", true)
-        C_Timer.After(0.2, function()
+        Utils.After(0.2, function()
             if not ZoneText.IsActive() then
                 self:HideAll()
             else
                 -- Retry with timeout
-                C_Timer.After(3.0, function()
+                Utils.After(3.0, function()
                     self:HideAll()
                 end)
             end
@@ -536,7 +555,7 @@ function StateManager:OnZoneChanged()
 
         Utils.Print(string.format("Zone debounce: %.2fs", timeLeft), true)
 
-        C_Timer.After(timeLeft, function()
+        Utils.After(timeLeft, function()
             if self.pendingZoneCheck then
                 self.pendingZoneCheck = false
                 self:SetResting(IsResting())
@@ -596,7 +615,7 @@ function StateManager:SetCombat(inCombat)
         self.graceUntil.combat = Utils.GetTime() + grace
 
         -- Timer callback to hide UI after grace expires
-        C_Timer.After(grace, function()
+        Utils.After(grace, function()
             if not self.inCombat then
                 self.graceUntil.combat = 0
                 self:Update()
@@ -620,7 +639,7 @@ function StateManager:SetTarget(hasTarget, isAlive)
         self.graceUntil.target = Utils.GetTime() + grace
 
         -- Timer callback to hide UI after grace expires
-        C_Timer.After(grace, function()
+        Utils.After(grace, function()
             if not (UnitExists("target")) and not self.inCombat then
                 self.graceUntil.target = 0
                 self:Update()
@@ -676,7 +695,7 @@ function StateManager:SetMouseover(mouseoverUI)
             self.graceUntil.mouseover = now + grace
 
             -- Timer callback to hide UI after grace expires
-            C_Timer.After(grace, function()
+            Utils.After(grace, function()
                 if not self.mouseoverUI and not self.inCombat then
                     self.graceUntil.mouseover = 0
                     self:Update()
@@ -805,12 +824,12 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
 
         -- Failsafe timers to ensure UI shows when entering city
         if IsResting() then
-            C_Timer.After(1.0, function()
+            Utils.After(1.0, function()
                 if ZenUI.loaded and IsResting() then
                     StateManager:Update()
                 end
             end)
-            C_Timer.After(3.5, function()
+            Utils.After(3.5, function()
                 if ZenUI.loaded and IsResting() then
                     StateManager:Update()
                 end
@@ -1047,7 +1066,7 @@ function ZenUI:Initialize()
     FrameManager:Initialize()
 
     -- Retry after 300ms for late-loading frames (some frames load after PEW)
-    C_Timer.After(0.3, function()
+    Utils.After(0.3, function()
         FrameManager:Initialize()
     end)
 
@@ -1057,7 +1076,7 @@ function ZenUI:Initialize()
     CreatePlayerHoverHotspot()
 
     -- Delayed activation
-    C_Timer.After(self.startupDelay, function()
+    Utils.After(self.startupDelay, function()
         self.loaded = true
 
         -- Set initial states
