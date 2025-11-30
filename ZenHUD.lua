@@ -103,3 +103,22 @@ local function ShowStatus()
     end
 end
 
+local function ListFrames()
+    local count = FrameManager:Count()
+    Utils.Print(string.format("Controlling %d frames:", count))
+
+    local frameList = {}
+    for frame, controller in pairs(FrameManager.controllers) do
+        local name = controller.name
+        local visible = controller.visible and "visible" or "hidden"
+        local animating = controller.animating and " (animating)" or ""
+        table.insert(frameList, string.format("  %s - %s%s", name, visible, animating))
+    end
+
+    table.sort(frameList)
+    for _, line in ipairs(frameList) do
+        print(line)
+    end
+end
+
+SlashCmdList["ZenHUD"] = function(msg)

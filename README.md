@@ -61,3 +61,14 @@
 - **Throttled Detection**: 20Hz mouseover polling (not 60Hz)
 - **FadeOnly Mode**: Alpha-only changes for ElvUI (no taint)
 - **Single Update Loop**: Minimal CPU overhead
+
+### Customization
+- **Frame Groups**: Toggle action bars, unit frames, buffs independently
+- **Fade Time**: 0.1s to 2.0s configurable
+- **Faded Opacity**: 0% to 100% (ghost mode)
+- **Per-Character Settings**: Different configs per alt
+
+---
+
+## Installation
+

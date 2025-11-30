@@ -33,25 +33,3 @@ local Config = {
         },
 
         -- Per-character settings control
-        useCharacterSettings = false,  -- If true, use character-specific settings
-
-        -- New Features
-        fadedAlpha = 0.0, -- Alpha level when "hidden" (0.0 to 1.0)
-
-        frameGroups = {
-            actionBars = true,
-            unitFrames = true,
-            minimap = true,
-            chat = true,
-            buffs = true,
-            quest = true,
-            misc = true,
-            elvui = true,  -- ElvUI frames (if detected)
-        },
-
-        -- Minimap button
-        showMinimapButton = true,
-        minimapAngle = 220,
-
-        -- Zone-based behavior
-        zoneOverrides = {

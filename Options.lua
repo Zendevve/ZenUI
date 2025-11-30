@@ -128,3 +128,6 @@ fadedAlphaSlider:SetScript("OnValueChanged", function(self, value)
     if ZenHUD.StateManager then ZenHUD.StateManager:Update() end
 end)
 
+--------------------------------------------------------------------------------
+-- Grace Period Sliders
+--------------------------------------------------------------------------------
