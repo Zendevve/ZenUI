@@ -261,13 +261,21 @@ function FrameController:FadeTo(alpha, duration)
         return
     end
 
-    -- Skip if already at target
+    -- Skip if already at target AND not animating
     if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
         return
     end
 
-    self.targetAlpha = Utils.Clamp(alpha, 0, 1)
-    self.startAlpha = self.currentAlpha  -- Capture starting point for interpolation
+    -- Smooth interruption: if animating to opposite direction, start from current position
+    local newTarget = Utils.Clamp(alpha, 0, 1)
+    if self.animating and newTarget ~= self.targetAlpha then
+        -- Interrupting animation - start from current position for smooth transition
+        self.startAlpha = self.currentAlpha
+    else
+        self.startAlpha = self.currentAlpha
+    end
+
+    self.targetAlpha = newTarget
     self.duration = math.max(0.05, duration or Config:Get("fadeTime"))
     self.elapsed = 0
     self.animating = true
@@ -522,6 +530,9 @@ local StateManager = {
     isDead = false,
     onTaxi = false,
     inVehicle = false,
+
+    -- Transition tracking
+    lastVisibilityDecision = nil,  -- Track last show/hide decision to avoid redundant calls
     isAFK = false,
     mouseoverUI = false,
 
@@ -576,16 +587,18 @@ function StateManager:Update()
 
     local time = Utils.GetTime()
     local inGrace = false
+    local graceReason = nil
 
     -- Check grace periods
-    for _, deadline in pairs(self.graceUntil) do
+    for reason, deadline in pairs(self.graceUntil) do
         if deadline > time then
             inGrace = true
+            graceReason = reason
             break
         end
     end
 
-    -- Determine visibility
+    -- Determine visibility with clear priority
     local shouldShow = self.inCombat
         or (Config:Get("showOnTarget") and self.hasLivingTarget)
         or self.mouseoverUI
@@ -593,11 +606,20 @@ function StateManager:Update()
         or self.isResting
         or self.inVehicle
 
-    if shouldShow then
-        local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
-        FrameManager:ShowAll(priority)
-    else
-        FrameManager:HideAll()
+    -- Only call Show/Hide if decision has changed (avoid redundant calls)
+    if shouldShow ~= self.lastVisibilityDecision then
+        self.lastVisibilityDecision = shouldShow
+
+        if shouldShow then
+            local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
+            Utils.Print(string.format("Showing UI (combat=%s, target=%s, mouseover=%s, grace=%s, resting=%s, vehicle=%s)",
+                tostring(self.inCombat), tostring(self.hasLivingTarget), tostring(self.mouseoverUI),
+                graceReason or "none", tostring(self.isResting), tostring(self.inVehicle)), true)
+            FrameManager:ShowAll(priority)
+        else
+            Utils.Print("Hiding UI", true)
+            FrameManager:HideAll()
+        end
     end
 end
 
@@ -605,21 +627,24 @@ function StateManager:SetCombat(inCombat)
     self.inCombat = inCombat
 
     if inCombat then
-        -- Entering combat - clear all grace periods
+        -- Entering combat - clear all grace periods for immediate UI response
         for k in pairs(self.graceUntil) do
             self.graceUntil[k] = 0
         end
+        Utils.Print("Combat: ENTERING combat", true)
     else
         -- Leaving combat - start grace period with timer callback
         local grace = Config:Get("gracePeriods").combat
         self.graceUntil.combat = Utils.GetTime() + grace
 
+        Utils.Print(string.format("Combat: LEAVING combat, %.1fs grace period", grace), true)
+
         -- Timer callback to hide UI after grace expires
         Utils.After(grace, function()
-            if not self.inCombat then
-                self.graceUntil.combat = 0
-                self:Update()
-            end
+            -- Clear this grace period and force update
+            self.graceUntil.combat = 0
+            Utils.Print("Combat grace expired, updating visibility", true)
+            self:Update()
         end)
     end
 
@@ -633,17 +658,20 @@ function StateManager:SetTarget(hasTarget, isAlive)
     if hasTarget and isAlive then
         -- Acquired living target - clear grace
         self.graceUntil.target = 0
+        Utils.Print("Target: acquired living target", true)
     elseif not hasTarget and hadLivingTarget then
         -- Lost living target - start grace period with timer callback
         local grace = Config:Get("gracePeriods").target
         self.graceUntil.target = Utils.GetTime() + grace
 
+        Utils.Print(string.format("Target: lost target, %.1fs grace period", grace), true)
+
         -- Timer callback to hide UI after grace expires
         Utils.After(grace, function()
-            if not (UnitExists("target")) and not self.inCombat then
-                self.graceUntil.target = 0
-                self:Update()
-            end
+            -- Clear this grace period and force update
+            self.graceUntil.target = 0
+            Utils.Print("Target grace expired, updating visibility", true)
+            self:Update()
         end)
     end
 
@@ -685,8 +713,9 @@ function StateManager:SetMouseover(mouseoverUI)
     self.mouseoverUI = mouseoverUI
 
     if mouseoverUI then
-        -- Entered UI - cancel grace period
+        -- Entered UI - cancel grace period immediately for instant response
         self.graceUntil.mouseover = 0
+        Utils.Print("Mouseover: entering UI area", true)
     else
         -- Left UI - start grace period with timer callback
         if wasMouseover then
@@ -694,12 +723,14 @@ function StateManager:SetMouseover(mouseoverUI)
             local now = Utils.GetTime()
             self.graceUntil.mouseover = now + grace
 
+            Utils.Print(string.format("Mouseover: left UI, %.1fs grace period", grace), true)
+
             -- Timer callback to hide UI after grace expires
             Utils.After(grace, function()
-                if not self.mouseoverUI and not self.inCombat then
-                    self.graceUntil.mouseover = 0
-                    self:Update()
-                end
+                -- Clear this grace period and force update
+                self.graceUntil.mouseover = 0
+                Utils.Print("Mouseover grace expired, updating visibility", true)
+                self:Update()
             end)
         end
     end
