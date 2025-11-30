@@ -59,3 +59,65 @@ local function ShowSettings()
     Utils.Print("Current Settings:")
 
     -- Show which settings mode is active
+    local usingChar = Config:IsUsingCharacterSettings()
+    print(string.format("  Settings Mode: %s", usingChar and "Character-Specific" or "Account-Wide"))
+    print(" ")
+
+    print(string.format("  Fade Time: %.2fs", Config:Get("fadeTime")))
+
+    local grace = Config:Get("gracePeriods")
+    print(string.format("  Grace Period (Combat): %.1fs", grace.combat))
+    print(string.format("  Grace Period (Target): %.1fs", grace.target))
+    print(string.format("  Grace Period (Mouseover): %.1fs", grace.mouseover))
+    print(" ")
+    print("  Show on Target: " .. (Config:Get("showOnTarget") and "Yes" or "No"))
+end
+
+local function ShowStatus()
+    Utils.Print("Current Status:")
+    print(string.format("  Enabled: %s", Config:Get("enabled") and "Yes" or "No"))
+    print(string.format("  Debug: %s", Config:Get("debug") and "Yes" or "No"))
+    print(string.format("  Loaded: %s", ZenHUD.loaded and "Yes" or "No"))
+    print(string.format("  In Combat: %s", StateManager.inCombat and "Yes" or "No"))
+    print(string.format("  Has Target: %s", StateManager.hasLivingTarget and "Yes" or "No"))
+    print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
+    print(string.format("  Mounted: %s", StateManager.isMounted and "Yes" or "No"))
+    print(string.format("  Dead/Ghost: %s", StateManager.isDead and "Yes" or "No"))
+    print(string.format("  On Taxi: %s", StateManager.onTaxi and "Yes" or "No"))
+    print(string.format("  In Vehicle: %s", StateManager.inVehicle and "Yes" or "No"))
+    print(string.format("  AFK/DND: %s", StateManager.isAFK and "Yes" or "No"))
+    print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
+
+    -- Grace periods
+    local now = Utils.GetTime()
+    local hasGrace = false
+    for name, deadline in pairs(StateManager.graceUntil) do
+        if deadline > now then
+            local remaining = deadline - now
+            print(string.format("  Grace (%s): %.1fs", name, remaining))
+            hasGrace = true
+        end
+    end
+    if not hasGrace then
+        print("  Grace: None")
+    end
+end
+
+local function ListFrames()
+    local count = FrameManager:Count()
+    Utils.Print(string.format("Controlling %d frames:", count))
+
+    local frameList = {}
+    for frame, controller in pairs(FrameManager.controllers) do
+        local name = controller.name
+        local visible = controller.visible and "visible" or "hidden"
+        local animating = controller.animating and " (animating)" or ""
+        table.insert(frameList, string.format("  %s - %s%s", name, visible, animating))
+    end
+
+    table.sort(frameList)
+    for _, line in ipairs(frameList) do
+        print(line)
+    end
+end
+

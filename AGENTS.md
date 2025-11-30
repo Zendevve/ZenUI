@@ -28,3 +28,6 @@ If no new rule is detected â†’ do not update the file.
 
 **Preferences â†’ add to Preferences section:**
 
+- positive (I like, I prefer, this is better) or similar â†’ Likes
+- negative (I don't like, I hate, this is bad) or similar â†’ Dislikes
+- comparison (prefer X over Y, use X instead of Y) or similar â†’ preference rule

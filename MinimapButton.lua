@@ -18,3 +18,9 @@ local button = CreateFrame("Button", "ZenHUDMinimapButton", Minimap)
 button:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 button:SetFrameStrata("MEDIUM")
 button:SetFrameLevel(8)
+button:EnableMouse(true)
+button:SetMovable(true)
+button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+button:RegisterForDrag("LeftButton")
+
+-- Button textures

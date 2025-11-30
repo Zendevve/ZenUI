@@ -62,3 +62,8 @@ function StateManager:OnZoneChanged()
     self.lastZoneTime = now
     self:SetResting(IsResting())
 end
+
+function StateManager:Update()
+    -- Don't run until addon is fully loaded
+    if not ZenHUD.loaded then return end
+    if not Config:Get("enabled") then return end

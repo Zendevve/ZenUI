@@ -84,3 +84,18 @@ local FRAME_GROUPS = {
     MainMenuBar = "actionBars",
     MultiBarBottomLeft = "actionBars",
     MultiBarBottomRight = "actionBars",
+    MultiBarLeft = "actionBars",
+    MultiBarRight = "actionBars",
+    PetActionBarFrame = "actionBars",
+    ShapeshiftBarFrame = "actionBars",
+    VehicleMenuBar = "actionBars",
+    BonusActionBarFrame = "actionBars",
+
+    -- Unit Frames
+    PlayerFrame = "unitFrames",
+    PetFrame = "unitFrames",
+    TargetFrameToT = "unitFrames",
+    RuneFrame = "unitFrames",
+    PetCastingBarFrame = "unitFrames",
+
+    -- Buffs

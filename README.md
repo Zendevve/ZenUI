@@ -63,3 +63,26 @@
 - **Single Update Loop**: Minimal CPU overhead
 
 ### Customization
+- **Frame Groups**: Toggle action bars, unit frames, buffs independently
+- **Fade Time**: 0.1s to 2.0s configurable
+- **Faded Opacity**: 0% to 100% (ghost mode)
+- **Per-Character Settings**: Different configs per alt
+
+---
+
+## Installation
+
+### Prerequisites
+- World of Warcraft **3.3.5a** (WotLK)
+- No other dependencies
+
+### Steps
+
+```bash
+# 1. Download the latest release
+# 2. Extract to your AddOns folder
+<WoW Install>/Interface/AddOns/ZenHUD/
+
+# 3. Verify folder structure
+ZenHUD/
+  â”œâ”€â”€ ZenHUD.toc
