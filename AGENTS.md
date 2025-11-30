@@ -31,3 +31,26 @@ If no new rule is detected â†’ do not update the file.
 - positive (I like, I prefer, this is better) or similar â†’ Likes
 - negative (I don't like, I hate, this is bad) or similar â†’ Dislikes
 - comparison (prefer X over Y, use X instead of Y) or similar â†’ preference rule
+
+**Corrections â†’ update or add rule:**
+
+- error indication (this is wrong, incorrect, broken) or similar â†’ fix and add rule
+- repetition frustration (don't do this again, you ignored, you missed) or similar â†’ emphatic rule
+- manual fixes by user â†’ extract what changed and why
+
+**Strong signal (add IMMEDIATELY):**
+
+- swearing, frustration, anger, sarcasm â†’ critical rule
+- ALL CAPS, excessive punctuation (!!!, ???) â†’ high priority
+- same mistake twice â†’ permanent emphatic rule
+- user undoes your changes â†’ understand why, prevent
+
+**Ignore (do NOT add):**
+
+- temporary scope (only for now, just this time, for this task) or similar
+- one-off exceptions
+- context-specific instructions for current task only
+
+**Rule format:**
+
+- One instruction per bullet

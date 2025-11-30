@@ -19,3 +19,7 @@ To automatically manage user interface visibility based on game state, ensuring 
 4.  **Mouseover**: Player moves mouse to bottom/side of screen -> UI Fades In.
 5.  **Idle**: Player enters an Inn -> UI Fades In (Resting state).
 
+```mermaid
+stateDiagram-v2
+    Hidden --> Visible: Combat / Target / Mouseover
+    Visible --> GracePeriod: Condition Lost
