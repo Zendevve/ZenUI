@@ -86,16 +86,3 @@ function StateManager:Update()
         or (Config:Get("showOnTarget") and self.hasLivingTarget)
         or self.mouseoverUI
         or inGrace
-        or self.isResting
-        or self.inVehicle
-        or Config:ShouldShowInZone()  -- Zone-based override (dungeons, raids, etc.)
-
-    -- Only call Show/Hide if decision has changed (avoid redundant calls)
-    if shouldShow ~= self.lastVisibilityDecision then
-        self.lastVisibilityDecision = shouldShow
-
-        if shouldShow then
-            local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
-            Utils.Print(string.format("Showing UI (combat=%s, target=%s, mouseover=%s, grace=%s, resting=%s, vehicle=%s)",
-                tostring(self.inCombat), tostring(self.hasLivingTarget), tostring(self.mouseoverUI),
-                graceReason or "none", tostring(self.isResting), tostring(self.inVehicle)), true)

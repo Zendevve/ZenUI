@@ -71,23 +71,3 @@
 ---
 
 ## Installation
-
-### Prerequisites
-- World of Warcraft **3.3.5a** (WotLK)
-- No other dependencies
-
-### Steps
-
-```bash
-# 1. Download the latest release
-# 2. Extract to your AddOns folder
-<WoW Install>/Interface/AddOns/ZenHUD/
-
-# 3. Verify folder structure
-ZenHUD/
-  â”œâ”€â”€ ZenHUD.toc
-  â”œâ”€â”€ ZenHUD.lua
-  â”œâ”€â”€ Config.lua
-  â””â”€â”€ ... (other .lua files)
-```
-

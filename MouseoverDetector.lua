@@ -36,3 +36,15 @@ function MouseoverDetector:CreateHotspots()
     if MultiBarRight then CreateHoverHotspot(MultiBarRight, "MultiBarRight") end
     if PetActionBarFrame then CreateHoverHotspot(PetActionBarFrame, "PetActionBarFrame") end
     if ShapeshiftBarFrame then CreateHoverHotspot(ShapeshiftBarFrame, "ShapeshiftBarFrame") end
+
+    -- Player frame
+    if PlayerFrame then CreateHoverHotspot(PlayerFrame, "PlayerFrame") end
+
+    -- ElvUI / Tukui frames (scan dynamically)
+    self:CreateElvUIHotspots()
+
+    local count = 0
+    for _ in pairs(hoverHotspots) do count = count + 1 end
+    Utils.Print(string.format("Created %d hover hotspots", count), true)
+end
+

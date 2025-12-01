@@ -40,3 +40,25 @@ local Config = {
 
         frameGroups = {
             actionBars = true,
+            unitFrames = true,
+            minimap = true,
+            chat = true,
+            buffs = true,
+            quest = true,
+            misc = true,
+            elvui = true,  -- ElvUI frames (if detected)
+        },
+
+        -- Minimap button
+        showMinimapButton = true,
+        minimapAngle = 220,
+
+        -- Zone-based behavior
+        zoneOverrides = {
+            alwaysShowInDungeons = true,
+            alwaysShowInRaids = true,
+            alwaysShowInArena = true,
+            alwaysShowInBattleground = true,
+        },
+
+        -- Profiles
