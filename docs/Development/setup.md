@@ -7,3 +7,4 @@
     cd "path/to/WoW/Interface/AddOns"
     git clone https://github.com/Zendevve/ZenHUD.git
     ```
+3.  **Folder Name**: The folder MUST be named `ZenHUD` for the `.toc` file to load correctly.

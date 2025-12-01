@@ -90,3 +90,8 @@ local FRAME_GROUPS = {
     ShapeshiftBarFrame = "actionBars",
     VehicleMenuBar = "actionBars",
     BonusActionBarFrame = "actionBars",
+
+    -- Unit Frames
+    PlayerFrame = "unitFrames",
+    PetFrame = "unitFrames",
+    TargetFrameToT = "unitFrames",
