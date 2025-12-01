@@ -48,3 +48,17 @@ function MouseoverDetector:CreateHotspots()
     Utils.Print(string.format("Created %d hover hotspots", count), true)
 end
 
+-- ElvUI hotspot patterns
+local ELVUI_HOTSPOT_PATTERNS = {
+    "ElvUI_Bar%d+",
+    "ElvUI_StanceBar",
+    "ElvUI_PetBar",
+    "ElvUF_Player",
+    "ElvUF_Target",
+    "TukuiActionBar%d+",
+    "TukuiPlayer",
+    "TukuiTarget",
+}
+
+function MouseoverDetector:CreateElvUIHotspots()
+    -- Only run if ElvUI or Tukui is loaded

@@ -20,3 +20,4 @@ To automatically manage user interface visibility based on game state, ensuring 
 5.  **Idle**: Player enters an Inn -> UI Fades In (Resting state).
 
 ```mermaid
+stateDiagram-v2

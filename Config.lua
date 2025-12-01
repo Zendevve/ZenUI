@@ -59,6 +59,3 @@ local Config = {
             alwaysShowInRaids = true,
             alwaysShowInArena = true,
             alwaysShowInBattleground = true,
-        },
-
-        -- Profiles

@@ -60,21 +60,3 @@ enabledCheck:SetScript("OnClick", function(self)
     Config:Set("enabled", enabled)
     Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
     if enabled and ZenHUD.StateManager then
-        ZenHUD.StateManager:Update()
-    end
-end)
-
---------------------------------------------------------------------------------
--- Debug Mode Checkbox
---------------------------------------------------------------------------------
-local debugCheck = CreateCheckbox("ZenHUDOptionsDebug", OptionsPanel,
-    "Debug Mode", "Show detailed debug messages in chat")
-debugCheck:SetPoint("TOPLEFT", enabledCheck, "BOTTOMLEFT", 0, -8)
-
-debugCheck:SetScript("OnClick", function(self)
-    local debug = self:GetChecked()
-    Config:Set("debug", debug)
-    Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
-end)
-
---------------------------------------------------------------------------------
