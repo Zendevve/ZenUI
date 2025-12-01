@@ -91,5 +91,15 @@ function Config:IsUsingCharacterSettings()
     return ZenUIDB.useCharacterSettings == true
 end
 
+function Config:ResetToDefaults()
+    -- Clear current settings and restore defaults
+    if ZenUIDB.useCharacterSettings then
+        ZenUICharDB = {}
+    else
+        ZenUIDB = self:Clone(self.defaults)
+    end
+    self:Initialize()
+end
+
 -- Export to ZenUI namespace
 ZenUI.Config = Config

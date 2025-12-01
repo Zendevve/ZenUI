@@ -9,4 +9,10 @@
 # Load order is important - modules first, then main file
 Config.lua
 Utils.lua
+FrameController.lua
+FrameManager.lua
+StateManager.lua
+MouseoverDetector.lua
+EventHandler.lua
+Options.lua
 ZenUI.lua
