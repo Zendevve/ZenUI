@@ -26,5 +26,3 @@ EventHandler:RegisterEvent("PLAYER_FLAGS_CHANGED")
 EventHandler:RegisterEvent("ADDON_LOADED")  -- For ElvUI detection
 
 EventHandler:SetScript("OnEvent", function(self, event, ...)
-    -- Re-fetch StateManager if needed
-    StateManager = ZenHUD.StateManager

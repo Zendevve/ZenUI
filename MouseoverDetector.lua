@@ -55,10 +55,3 @@ local ELVUI_HOTSPOT_PATTERNS = {
     "ElvUI_PetBar",
     "ElvUF_Player",
     "ElvUF_Target",
-    "TukuiActionBar%d+",
-    "TukuiPlayer",
-    "TukuiTarget",
-}
-
-function MouseoverDetector:CreateElvUIHotspots()
-    -- Only run if ElvUI or Tukui is loaded

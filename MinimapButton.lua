@@ -20,15 +20,3 @@ button:SetFrameStrata("MEDIUM")
 button:SetFrameLevel(8)
 button:EnableMouse(true)
 button:SetMovable(true)
-button:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-button:RegisterForDrag("LeftButton")
-
--- Button textures
-button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
-
-local overlay = button:CreateTexture(nil, "OVERLAY")
-overlay:SetSize(53, 53)
-overlay:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
-overlay:SetPoint("TOPLEFT")
-
-local icon = button:CreateTexture(nil, "BACKGROUND")

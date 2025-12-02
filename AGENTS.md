@@ -61,3 +61,7 @@ If no new rule is detected â†’ do not update the file.
 ---
 
 ## Rules to follow (Mandatory, no exceptions)
+
+### Commands
+
+<!-- CUSTOMIZE (remove after): your build/test/format commands -->
