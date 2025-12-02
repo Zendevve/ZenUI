@@ -5,3 +5,10 @@
 2.  **Git**: Clone the repository into your `Interface/AddOns/` directory.
     ```bash
     cd "path/to/WoW/Interface/AddOns"
+    git clone https://github.com/Zendevve/ZenHUD.git
+    ```
+3.  **Folder Name**: The folder MUST be named `ZenHUD` for the `.toc` file to load correctly.
+
+## 2. Tools
+*   **Editor**: VS Code is recommended.
+*   **Extensions**:

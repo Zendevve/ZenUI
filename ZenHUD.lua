@@ -83,3 +83,63 @@ local function ShowStatus()
     print(string.format("  Resting: %s", StateManager.isResting and "Yes" or "No"))
     print(string.format("  Mounted: %s", StateManager.isMounted and "Yes" or "No"))
     print(string.format("  Dead/Ghost: %s", StateManager.isDead and "Yes" or "No"))
+    print(string.format("  On Taxi: %s", StateManager.onTaxi and "Yes" or "No"))
+    print(string.format("  In Vehicle: %s", StateManager.inVehicle and "Yes" or "No"))
+    print(string.format("  AFK/DND: %s", StateManager.isAFK and "Yes" or "No"))
+    print(string.format("  Mouseover: %s", StateManager.mouseoverUI and "Yes" or "No"))
+
+    -- Grace periods
+    local now = Utils.GetTime()
+    local hasGrace = false
+    for name, deadline in pairs(StateManager.graceUntil) do
+        if deadline > now then
+            local remaining = deadline - now
+            print(string.format("  Grace (%s): %.1fs", name, remaining))
+            hasGrace = true
+        end
+    end
+    if not hasGrace then
+        print("  Grace: None")
+    end
+end
+
+local function ListFrames()
+    local count = FrameManager:Count()
+    Utils.Print(string.format("Controlling %d frames:", count))
+
+    local frameList = {}
+    for frame, controller in pairs(FrameManager.controllers) do
+        local name = controller.name
+        local visible = controller.visible and "visible" or "hidden"
+        local animating = controller.animating and " (animating)" or ""
+        table.insert(frameList, string.format("  %s - %s%s", name, visible, animating))
+    end
+
+    table.sort(frameList)
+    for _, line in ipairs(frameList) do
+        print(line)
+    end
+end
+
+SlashCmdList["ZenHUD"] = function(msg)
+    msg = string.lower(msg or "")
+
+    -- Split message into arguments
+    local args = {}
+    for word in string.gmatch(msg, "%S+") do
+        table.insert(args, word)
+    end
+
+    local cmd = args[1] or ""
+
+    if cmd == "" or cmd == "help" then
+        ShowHelp()
+
+    elseif cmd == "options" or cmd == "config" or cmd == "settings" then
+        -- Open the Blizzard Interface Options panel
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")  -- Called twice due to Blizzard bug
+        Utils.Print("Opening options panel...")
+
+    elseif cmd == "toggle" then
+        local enabled = not Config:Get("enabled")

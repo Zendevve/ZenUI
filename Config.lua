@@ -58,17 +58,3 @@ local Config = {
             alwaysShowInDungeons = true,
             alwaysShowInRaids = true,
             alwaysShowInArena = true,
-            alwaysShowInBattleground = true,
-        },
-
-        -- Profiles
-        activeProfile = "Default",
-    },
-
-    -- Profile storage (separate from settings)
-    profiles = {},
-}
-
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenHUDDB) ~= "table" then

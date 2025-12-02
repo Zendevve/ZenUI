@@ -58,4 +58,3 @@ function FrameController:FadeTo(alpha, duration)
             self.deferReason = "deferred_buff_fadeout"
             return
         end
-

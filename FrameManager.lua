@@ -62,3 +62,9 @@ end
 
 function Failsafe:Stop()
     if self.timer then
+        self.timer:Hide()
+    end
+    self.elapsed = 0
+end
+
+ZenHUD.Failsafe = Failsafe
