@@ -52,14 +52,15 @@ function FrameController:FadeTo(alpha, duration)
 
     if isBuffFrame then
         -- If fading IN and a fade OUT is requested, defer the OUT
-        if alpha == 0 and self.animating and self.targetAlpha == 1 then
+        local fadedAlpha = Config:Get("fadedAlpha")
+        if alpha == fadedAlpha and self.animating and self.targetAlpha == 1 then
             self.deferFadeOut = true
             self.deferReason = "deferred_buff_fadeout"
             return
         end
 
         -- If fading OUT and a fade IN is requested, defer the IN
-        if alpha == 1 and self.animating and self.targetAlpha == 0 then
+        if alpha == 1 and self.animating and self.targetAlpha == fadedAlpha then
             self.deferFadeIn = true
             self.deferReason = "deferred_buff_fadein"
             return
@@ -120,23 +121,23 @@ function FrameController:Update(dt)
             local reason = self.deferReason or "deferred_buff_fadeout"
             self.deferFadeOut = false
             self.deferReason = nil
-            self:FadeTo(0, Config:Get("fadeTime"))
+            self:FadeTo(Config:Get("fadedAlpha"), Config:Get("fadeTime"))
             return
         end
 
         -- Execute deferred fade-in after fade-out completes (buff frames only)
-        if self.targetAlpha == 0 and self.deferFadeIn and isBuffFrame then
+        if self.targetAlpha == Config:Get("fadedAlpha") and self.deferFadeIn and isBuffFrame then
             local reason = self.deferReason or "deferred_buff_fadein"
             self.deferFadeIn = false
             self.deferReason = nil
             -- Show at alpha 0 then fade in
             self.frame:Show()
-            self.frame:SetAlpha(0)
+            self.frame:SetAlpha(Config:Get("fadedAlpha"))
             self:FadeTo(1, Config:Get("fadeTime"))
             return
         end
 
-        -- Hide frame at end of fade-out for performance
+        -- Hide frame at end of fade-out for performance ONLY if alpha is 0
         if self.targetAlpha == 0 then
             self.frame:Hide()
         end
@@ -150,7 +151,7 @@ function FrameController:Show(priority)
 end
 
 function FrameController:Hide()
-    self:FadeTo(0, Config:Get("fadeTime"))
+    self:FadeTo(Config:Get("fadedAlpha"), Config:Get("fadeTime"))
     self.visible = false
 end
 

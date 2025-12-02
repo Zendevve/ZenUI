@@ -78,45 +78,80 @@ local FrameManager = {
 }
 
 -- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars
+    MainMenuBar = "actionBars",
+    MultiBarBottomLeft = "actionBars",
+    MultiBarBottomRight = "actionBars",
+    MultiBarLeft = "actionBars",
+    MultiBarRight = "actionBars",
+    PetActionBarFrame = "actionBars",
+    ShapeshiftBarFrame = "actionBars",
+    VehicleMenuBar = "actionBars",
+    BonusActionBarFrame = "actionBars",
+
+    -- Unit Frames
+    PlayerFrame = "unitFrames",
+    PetFrame = "unitFrames",
+    TargetFrameToT = "unitFrames",
+    RuneFrame = "unitFrames",
+    PetCastingBarFrame = "unitFrames",
+
+    -- Buffs
+    BuffFrame = "buffs",
+    TemporaryEnchantFrame = "buffs",
+
+    -- Quest
+    WatchFrame = "quest",
+    QuestWatchFrame = "quest",
+    QuestTimerFrame = "quest",
+
+    -- Chat
+    ChatFrameMenuButton = "chat",
+    ChatFrame1UpButton = "chat",
+    ChatFrame1DownButton = "chat",
+    ChatFrame1BottomButton = "chat",
+
+    -- Misc (everything else defaults to misc if not in this list)
+    MainMenuExpBar = "misc",
+    MainMenuBarMaxLevelBar = "misc",
+    ReputationWatchBar = "misc",
+    MainMenuBarArtFrame = "misc",
+    CharacterMicroButton = "misc",
+    SpellbookMicroButton = "misc",
+    TalentMicroButton = "misc",
+    QuestLogMicroButton = "misc",
+    SocialsMicroButton = "misc",
+    WorldMapMicroButton = "misc",
+    MainMenuMicroButton = "misc",
+    HelpMicroButton = "misc",
+    MainMenuBarBackpackButton = "misc",
+    CharacterBag0Slot = "misc",
+    CharacterBag1Slot = "misc",
+    CharacterBag2Slot = "misc",
+    CharacterBag3Slot = "misc",
+    KeyRingButton = "misc",
+}
+
+-- Frames to control (List for iteration)
 local CONTROLLED_FRAMES = {
-    -- Action bars
     "MainMenuBar", "MultiBarBottomLeft", "MultiBarBottomRight",
     "MultiBarLeft", "MultiBarRight", "PetActionBarFrame", "ShapeshiftBarFrame",
-
-    -- XP/Rep
     "MainMenuExpBar", "MainMenuBarMaxLevelBar", "ReputationWatchBar",
     "MainMenuBarArtFrame",
-
-    -- Micro menu
     "CharacterMicroButton", "SpellbookMicroButton", "TalentMicroButton",
     "QuestLogMicroButton", "SocialsMicroButton", "WorldMapMicroButton",
     "MainMenuMicroButton", "HelpMicroButton",
-
-    -- Bags
     "MainMenuBarBackpackButton", "CharacterBag0Slot", "CharacterBag1Slot",
     "CharacterBag2Slot", "CharacterBag3Slot", "KeyRingButton",
-
-    -- Unit frames
     "PlayerFrame", "PetFrame", "TargetFrameToT",
-
-    -- Buffs
     "BuffFrame", "TemporaryEnchantFrame",
-
-    -- Quest tracker
     "WatchFrame", "QuestWatchFrame",
-
-    -- Chat buttons
     "ChatFrameMenuButton", "ChatFrame1UpButton", "ChatFrame1DownButton",
     "ChatFrame1BottomButton",
-
-    -- Cast bars
     "PetCastingBarFrame",
-
-    -- WotLK-specific frames
-    "VehicleMenuBar",           -- Vehicle encounters (Flame Leviathan, etc.)
-    "RuneFrame",                -- Death Knight rune cooldowns
-    "QuestTimerFrame",          -- Timed quest indicators
-    "BonusActionBarFrame",      -- Vehicle/special abilities bar
+    "VehicleMenuBar", "RuneFrame", "QuestTimerFrame", "BonusActionBarFrame",
 }
 
 -- Conditional frames (don't force show)
@@ -124,32 +159,16 @@ local CONDITIONAL_FRAMES = {
     PetFrame = true,
     TargetFrameToT = true,
     PetCastingBarFrame = true,
-
-    -- WotLK conditionals
-    VehicleMenuBar = true,      -- Only when in vehicle
-    RuneFrame = true,           -- Only for Death Knights
-    BonusActionBarFrame = true, -- Only when vehicle/special abilities active
+    VehicleMenuBar = true,
+    RuneFrame = true,
+    BonusActionBarFrame = true,
 }
 
 function FrameManager:Initialize()
-    -- Re-fetch FrameController in case it wasn't ready at load time (though it should be)
+    -- Re-fetch FrameController in case it wasn't ready at load time
     FrameController = ZenUI.FrameController
 
-    for _, frameName in ipairs(CONTROLLED_FRAMES) do
-        local frame = _G[frameName]
-        if frame and frame.SetAlpha and frame.Show and frame.Hide then
-            local controller = FrameController:New(frame)
-
-            if CONDITIONAL_FRAMES[frameName] then
-                controller:SetConditional(true)
-            end
-
-            self.controllers[frame] = controller
-            Utils.Print("Controlling: " .. frameName, true)
-        else
-            Utils.Print("Skipped: " .. frameName .. " (not found)", true)
-        end
-    end
+    self:UpdateConfig()
 
     -- Create update frame
     self.updateFrame = CreateFrame("Frame")
@@ -158,6 +177,40 @@ function FrameManager:Initialize()
     end)
 
     Utils.Print(string.format("Managing %d frames", self:Count()), true)
+end
+
+function FrameManager:UpdateConfig()
+    local groups = Config:Get("frameGroups")
+
+    for _, frameName in ipairs(CONTROLLED_FRAMES) do
+        local frame = _G[frameName]
+        if frame and frame.SetAlpha and frame.Show and frame.Hide then
+            local group = FRAME_GROUPS[frameName] or "misc"
+            local isEnabled = groups[group]
+
+            if isEnabled then
+                -- Should be controlled
+                if not self.controllers[frame] then
+                    local controller = FrameController:New(frame)
+                    if CONDITIONAL_FRAMES[frameName] then
+                        controller:SetConditional(true)
+                    end
+                    self.controllers[frame] = controller
+                    -- Utils.Print("Added control: " .. frameName, true)
+                end
+            else
+                -- Should NOT be controlled
+                if self.controllers[frame] then
+                    -- Release control: Show frame and remove controller
+                    local frameObj = self.controllers[frame].frame
+                    frameObj:Show()
+                    frameObj:SetAlpha(1)
+                    self.controllers[frame] = nil
+                    -- Utils.Print("Released control: " .. frameName, true)
+                end
+            end
+        end
+    end
 end
 
 function FrameManager:Update(dt)

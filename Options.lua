@@ -111,12 +111,30 @@ fadeSlider:SetScript("OnValueChanged", function(self, value)
 end)
 
 --------------------------------------------------------------------------------
+-- Faded Opacity Slider
+--------------------------------------------------------------------------------
+local fadedAlphaSlider = CreateSlider("ZenUIOptionsFadedAlpha", OptionsPanel,
+    "Faded Opacity (Resting Alpha)", 0.0, 1.0, 0.1)
+fadedAlphaSlider:SetPoint("TOPLEFT", fadeSlider, "BOTTOMLEFT", 0, -32)
+fadedAlphaSlider:SetWidth(300)
+
+local fadedAlphaValue = fadedAlphaSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+fadedAlphaValue:SetPoint("TOP", fadedAlphaSlider, "BOTTOM", 0, 0)
+
+fadedAlphaSlider:SetScript("OnValueChanged", function(self, value)
+    fadedAlphaValue:SetText(string.format("%d%%", value * 100))
+    Config:Set("fadedAlpha", value)
+    -- Force update to apply new alpha immediately if resting
+    if ZenUI.StateManager then ZenUI.StateManager:Update() end
+end)
+
+--------------------------------------------------------------------------------
 -- Grace Period Sliders
 --------------------------------------------------------------------------------
 -- Combat Grace Period
 local combatGraceSlider = CreateSlider("ZenUIOptionsCombatGrace", OptionsPanel,
     "Post-Combat Grace Period", 0, 15, 0.5)
-combatGraceSlider:SetPoint("TOPLEFT", fadeSlider, "BOTTOMLEFT", 0, -32)
+combatGraceSlider:SetPoint("TOPLEFT", fadedAlphaSlider, "BOTTOMLEFT", 0, -32)
 combatGraceSlider:SetWidth(300)
 
 local combatGraceValue = combatGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
@@ -181,6 +199,8 @@ charSettingsBtn:SetScript("OnClick", function(self)
     end
 end)
 
+
+
 --------------------------------------------------------------------------------
 -- Panel callbacks to load/save settings
 --------------------------------------------------------------------------------
@@ -191,6 +211,7 @@ OptionsPanel.refresh = function()
     targetCheck:SetChecked(Config:Get("showOnTarget"))
 
     fadeSlider:SetValue(Config:Get("fadeTime"))
+    fadedAlphaSlider:SetValue(Config:Get("fadedAlpha"))
 
     local grace = Config:Get("gracePeriods")
     combatGraceSlider:SetValue(grace.combat)
@@ -203,6 +224,7 @@ OptionsPanel.refresh = function()
     else
         charSettingsLabel:SetText("(Currently: Account-Wide)")
     end
+
 end
 
 OptionsPanel.okay = function()
@@ -222,7 +244,71 @@ OptionsPanel.default = function()
     Utils.Print("Settings reset to defaults")
 end
 
--- Register the panel
+-- Register the main panel
 InterfaceOptions_AddCategory(OptionsPanel)
 
 ZenUI.OptionsPanel = OptionsPanel
+
+--------------------------------------------------------------------------------
+-- Frame Control Sub-Panel
+--------------------------------------------------------------------------------
+local FrameControlPanel = CreateFrame("Frame", "ZenUIFrameControlPanel", UIParent)
+FrameControlPanel.name = "Frame Control"
+FrameControlPanel.parent = "ZenUI"
+
+-- Title
+local fcTitle = FrameControlPanel:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
+fcTitle:SetPoint("TOPLEFT", 16, -16)
+fcTitle:SetText("ZenUI - Frame Control")
+
+-- Subtitle
+local fcSubtitle = FrameControlPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+fcSubtitle:SetPoint("TOPLEFT", fcTitle, "BOTTOMLEFT", 0, -8)
+fcSubtitle:SetText("Select which frame groups should be automated by ZenUI")
+
+-- Description
+local fcDesc = FrameControlPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+fcDesc:SetPoint("TOPLEFT", fcSubtitle, "BOTTOMLEFT", 0, -8)
+fcDesc:SetText("Unchecked groups will remain fully visible at all times.")
+
+-- Checkbox Helper for Sub-panel
+local function CreateGroupCheckbox(key, label, relativeTo, x, y)
+    local check = CreateCheckbox("ZenUIOptionsGroup" .. key, FrameControlPanel, label, "Toggle automation for " .. label)
+    check:SetPoint("TOPLEFT", relativeTo, "BOTTOMLEFT", x, y)
+
+    check:SetScript("OnClick", function(self)
+        local groups = Config:Get("frameGroups")
+        groups[key] = self:GetChecked()
+        Config:Set("frameGroups", groups)
+
+        if ZenUI.FrameManager then
+            ZenUI.FrameManager:UpdateConfig()
+        end
+    end)
+
+    return check
+end
+
+local actionBarsCheck = CreateGroupCheckbox("actionBars", "Action Bars", fcDesc, 0, -16)
+local unitFramesCheck = CreateGroupCheckbox("unitFrames", "Unit Frames", actionBarsCheck, 0, -8)
+local minimapCheck = CreateGroupCheckbox("minimap", "Minimap", unitFramesCheck, 0, -8)
+local chatCheck = CreateGroupCheckbox("chat", "Chat", minimapCheck, 0, -8)
+local buffsCheck = CreateGroupCheckbox("buffs", "Buffs", chatCheck, 0, -8)
+local questCheck = CreateGroupCheckbox("quest", "Quest Tracker", buffsCheck, 0, -8)
+local miscCheck = CreateGroupCheckbox("misc", "Miscellaneous", questCheck, 0, -8)
+
+-- Refresh for Sub-panel
+FrameControlPanel.refresh = function()
+    local groups = Config:Get("frameGroups")
+    _G["ZenUIOptionsGroupactionBars"]:SetChecked(groups.actionBars)
+    _G["ZenUIOptionsGroupunitFrames"]:SetChecked(groups.unitFrames)
+    _G["ZenUIOptionsGroupminimap"]:SetChecked(groups.minimap)
+    _G["ZenUIOptionsGroupchat"]:SetChecked(groups.chat)
+    _G["ZenUIOptionsGroupbuffs"]:SetChecked(groups.buffs)
+    _G["ZenUIOptionsGroupquest"]:SetChecked(groups.quest)
+    _G["ZenUIOptionsGroupmisc"]:SetChecked(groups.misc)
+end
+
+-- Register the sub-panel
+InterfaceOptions_AddCategory(FrameControlPanel)
+ZenUI.FrameControlPanel = FrameControlPanel
