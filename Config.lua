@@ -54,7 +54,3 @@ local Config = {
         minimapAngle = 220,
 
         -- Zone-based behavior
-        zoneOverrides = {
-            alwaysShowInDungeons = true,
-            alwaysShowInRaids = true,
-            alwaysShowInArena = true,

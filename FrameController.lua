@@ -56,5 +56,3 @@ function FrameController:FadeTo(alpha, duration)
         if alpha == fadedAlpha and self.animating and self.targetAlpha == 1 then
             self.deferFadeOut = true
             self.deferReason = "deferred_buff_fadeout"
-            return
-        end
