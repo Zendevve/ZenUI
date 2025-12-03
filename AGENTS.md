@@ -38,3 +38,8 @@ If no new rule is detected â†’ do not update the file.
 - repetition frustration (don't do this again, you ignored, you missed) or similar â†’ emphatic rule
 - manual fixes by user â†’ extract what changed and why
 
+**Strong signal (add IMMEDIATELY):**
+
+- swearing, frustration, anger, sarcasm â†’ critical rule
+- ALL CAPS, excessive punctuation (!!!, ???) â†’ high priority
+- same mistake twice â†’ permanent emphatic rule

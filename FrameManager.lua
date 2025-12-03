@@ -56,3 +56,51 @@ function Failsafe:Start()
         end)
     end
 
+    self.elapsed = 0
+    self.timer:Show()
+end
+
+function Failsafe:Stop()
+    if self.timer then
+        self.timer:Hide()
+    end
+    self.elapsed = 0
+end
+
+ZenHUD.Failsafe = Failsafe
+
+--------------------------------------------------------------------------------
+-- Frame Manager Implementation
+--------------------------------------------------------------------------------
+local FrameManager = {
+    controllers = {},
+    updateFrame = nil,
+}
+
+-- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars
+    MainMenuBar = "actionBars",
+    MultiBarBottomLeft = "actionBars",
+    MultiBarBottomRight = "actionBars",
+    MultiBarLeft = "actionBars",
+    MultiBarRight = "actionBars",
+    PetActionBarFrame = "actionBars",
+    ShapeshiftBarFrame = "actionBars",
+    VehicleMenuBar = "actionBars",
+    BonusActionBarFrame = "actionBars",
+
+    -- Unit Frames
+    PlayerFrame = "unitFrames",
+    PetFrame = "unitFrames",
+    TargetFrameToT = "unitFrames",
+    RuneFrame = "unitFrames",
+    PetCastingBarFrame = "unitFrames",
+
+    -- Buffs
+    BuffFrame = "buffs",
+    TemporaryEnchantFrame = "buffs",
+
+    -- Quest
+    WatchFrame = "quest",

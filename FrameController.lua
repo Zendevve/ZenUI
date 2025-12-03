@@ -76,3 +76,9 @@ function FrameController:FadeTo(alpha, duration)
     if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
         return
     end
+
+    -- Smooth interruption: if animating to opposite direction, start from current position
+    local newTarget = Utils.Clamp(alpha, 0, 1)
+    if self.animating and newTarget ~= self.targetAlpha then
+        -- Interrupting animation - start from current position for smooth transition
+        self.startAlpha = self.currentAlpha

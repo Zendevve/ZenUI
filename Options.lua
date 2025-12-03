@@ -115,6 +115,3 @@ end)
 --------------------------------------------------------------------------------
 local fadedAlphaSlider = CreateSlider("ZenHUDOptionsFadedAlpha", OptionsPanel,
     "Faded Opacity (Resting Alpha)", 0.0, 1.0, 0.1)
-fadedAlphaSlider:SetPoint("TOPLEFT", fadeSlider, "BOTTOMLEFT", 0, -24)
-fadedAlphaSlider:SetWidth(300)
-

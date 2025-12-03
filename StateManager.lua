@@ -56,21 +56,3 @@ function StateManager:OnZoneChanged()
             end
         end)
         return
-    end
-
-    -- Outside debounce window - update immediately
-    self.lastZoneTime = now
-    self:SetResting(IsResting())
-end
-
-function StateManager:Update()
-    -- Don't run until addon is fully loaded
-    if not ZenHUD.loaded then return end
-    if not Config:Get("enabled") then return end
-
-    local time = Utils.GetTime()
-    local inGrace = false
-    local graceReason = nil
-
-    -- Check grace periods
-    for reason, deadline in pairs(self.graceUntil) do
