@@ -56,7 +56,3 @@ function Failsafe:Start()
         end)
     end
 
-    self.elapsed = 0
-    self.timer:Show()
-end
-

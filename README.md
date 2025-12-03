@@ -92,9 +92,3 @@ ZenHUD/
 ```
 
 4. Launch WoW â†’  ZenHUD activates automatically after 5 seconds
-
----
-
-## Usage
-
-### Slash Commands

@@ -56,3 +56,23 @@ function FrameController:FadeTo(alpha, duration)
         if alpha == fadedAlpha and self.animating and self.targetAlpha == 1 then
             self.deferFadeOut = true
             self.deferReason = "deferred_buff_fadeout"
+            return
+        end
+
+        -- If fading OUT and a fade IN is requested, defer the IN
+        if alpha == 1 and self.animating and self.targetAlpha == fadedAlpha then
+            self.deferFadeIn = true
+            self.deferReason = "deferred_buff_fadein"
+            return
+        end
+    end
+
+    -- Don't force show conditional frames
+    if alpha > 0 and self.conditional and not self.frame:IsShown() then
+        return
+    end
+
+    -- Skip if already at target AND not animating
+    if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
+        return
+    end

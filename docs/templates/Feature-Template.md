@@ -10,3 +10,9 @@
 *   **{{Rule 1}}**: {{Description}}
 *   **{{Rule 2}}**: {{Description}}
 *   **Constraint**: {{Constraint}}
+
+## 3. User Flows / Interaction
+{{Description of how the user interacts with this feature. Use Mermaid diagrams if complex.}}
+
+```mermaid
+graph TD

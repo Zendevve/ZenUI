@@ -74,14 +74,3 @@ function StateManager:Update()
 
     -- Check grace periods
     for reason, deadline in pairs(self.graceUntil) do
-        if deadline > time then
-            inGrace = true
-            graceReason = reason
-            break
-        end
-    end
-
-    -- Determine visibility with clear priority
-    local shouldShow = self.inCombat
-        or (Config:Get("showOnTarget") and self.hasLivingTarget)
-        or self.mouseoverUI
