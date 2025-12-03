@@ -57,22 +57,3 @@ local Config = {
         zoneOverrides = {
             alwaysShowInDungeons = true,
             alwaysShowInRaids = true,
-            alwaysShowInArena = true,
-            alwaysShowInBattleground = true,
-        },
-
-        -- Profiles
-        activeProfile = "Default",
-    },
-
-    -- Profile storage (separate from settings)
-    profiles = {},
-}
-
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenHUDDB) ~= "table" then
-        ZenHUDDB = self:Clone(self.defaults)
-    else
-        -- Merge with defaults for any missing keys
-        for k, v in pairs(self.defaults) do

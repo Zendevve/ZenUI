@@ -13,3 +13,4 @@ local Config = ZenHUD.Config  -- Already exported by Config.lua
 local Utils = {}
 
 function Utils.Print(msg, debugOnly)
+    if debugOnly and not Config:Get("debug") then return end
