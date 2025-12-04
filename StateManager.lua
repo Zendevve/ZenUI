@@ -74,3 +74,45 @@ function StateManager:Update()
 
     -- Check grace periods
     for reason, deadline in pairs(self.graceUntil) do
+        if deadline > time then
+            inGrace = true
+            graceReason = reason
+            break
+        end
+    end
+
+    -- Determine visibility with clear priority
+    local shouldShow = self.inCombat
+        or (Config:Get("showOnTarget") and self.hasLivingTarget)
+        or self.mouseoverUI
+        or inGrace
+        or self.isResting
+        or self.inVehicle
+        or Config:ShouldShowInZone()  -- Zone-based override (dungeons, raids, etc.)
+
+    -- Only call Show/Hide if decision has changed (avoid redundant calls)
+    if shouldShow ~= self.lastVisibilityDecision then
+        self.lastVisibilityDecision = shouldShow
+
+        if shouldShow then
+            local priority = self.inCombat or self.hasLivingTarget or self.mouseoverUI
+            Utils.Print(string.format("Showing UI (combat=%s, target=%s, mouseover=%s, grace=%s, resting=%s, vehicle=%s)",
+                tostring(self.inCombat), tostring(self.hasLivingTarget), tostring(self.mouseoverUI),
+                graceReason or "none", tostring(self.isResting), tostring(self.inVehicle)), true)
+            if ZenHUD.FrameManager then
+                ZenHUD.FrameManager:ShowAll(priority)
+            end
+        else
+            Utils.Print("Hiding UI", true)
+            if ZenHUD.FrameManager then
+                ZenHUD.FrameManager:HideAll()
+            end
+        end
+    end
+end
+
+function StateManager:SetCombat(inCombat)
+    self.inCombat = inCombat
+
+    if inCombat then
+        -- Entering combat - clear all grace periods for immediate UI response

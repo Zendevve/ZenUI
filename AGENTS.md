@@ -67,7 +67,3 @@ If no new rule is detected â†’ do not update the file.
 <!-- CUSTOMIZE (remove after): your build/test/format commands -->
 
 - build: `noop` (Lua)
-- test: `noop`
-- format: `noop`
-
-### Task Delivery (ALL TASKS)

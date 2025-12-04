@@ -28,3 +28,10 @@ button:SetHighlightTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight"
 
 local overlay = button:CreateTexture(nil, "OVERLAY")
 overlay:SetSize(53, 53)
+overlay:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+overlay:SetPoint("TOPLEFT")
+
+local icon = button:CreateTexture(nil, "BACKGROUND")
+icon:SetSize(20, 20)
+icon:SetTexture("Interface\\Icons\\Spell_Nature_Sleep")  -- Zen-like icon
+icon:SetPoint("CENTER", 0, 1)
