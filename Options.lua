@@ -83,3 +83,18 @@ end)
 local targetCheck = CreateCheckbox("ZenHUDOptionsTarget", OptionsPanel,
     "Show UI when targeting", "Automatically show UI when you have a living target")
 targetCheck:SetPoint("TOPLEFT", debugCheck, "BOTTOMLEFT", 0, -8)
+
+targetCheck:SetScript("OnClick", function(self)
+    local showOnTarget = self:GetChecked()
+    Config:Set("showOnTarget", showOnTarget)
+    Utils.Print(string.format("Show on target: %s", showOnTarget and "enabled" or "disabled"))
+    if ZenHUD.StateManager then
+        ZenHUD.StateManager:Update()
+    end
+end)
+
+--------------------------------------------------------------------------------
+-- Fade Time Slider
+--------------------------------------------------------------------------------
+local fadeSlider = CreateSlider("ZenHUDOptionsFadeTime", OptionsPanel,
+    "Fade Animation Duration", 0.1, 2.0, 0.1)

@@ -67,3 +67,54 @@ function Failsafe:Stop()
     self.elapsed = 0
 end
 
+ZenHUD.Failsafe = Failsafe
+
+--------------------------------------------------------------------------------
+-- Frame Manager Implementation
+--------------------------------------------------------------------------------
+local FrameManager = {
+    controllers = {},
+    updateFrame = nil,
+}
+
+-- Frames to control
+-- Frame Group Mappings
+local FRAME_GROUPS = {
+    -- Action Bars
+    MainMenuBar = "actionBars",
+    MultiBarBottomLeft = "actionBars",
+    MultiBarBottomRight = "actionBars",
+    MultiBarLeft = "actionBars",
+    MultiBarRight = "actionBars",
+    PetActionBarFrame = "actionBars",
+    ShapeshiftBarFrame = "actionBars",
+    VehicleMenuBar = "actionBars",
+    BonusActionBarFrame = "actionBars",
+
+    -- Unit Frames
+    PlayerFrame = "unitFrames",
+    PetFrame = "unitFrames",
+    TargetFrameToT = "unitFrames",
+    RuneFrame = "unitFrames",
+    PetCastingBarFrame = "unitFrames",
+
+    -- Buffs
+    BuffFrame = "buffs",
+    TemporaryEnchantFrame = "buffs",
+
+    -- Quest
+    WatchFrame = "quest",
+    QuestWatchFrame = "quest",
+    QuestTimerFrame = "quest",
+
+    -- Chat
+    ChatFrameMenuButton = "chat",
+    ChatFrame1UpButton = "chat",
+    ChatFrame1DownButton = "chat",
+    ChatFrame1BottomButton = "chat",
+
+    -- Misc (everything else defaults to misc if not in this list)
+    MainMenuExpBar = "misc",
+    MainMenuBarMaxLevelBar = "misc",
+    ReputationWatchBar = "misc",
+    MainMenuBarArtFrame = "misc",

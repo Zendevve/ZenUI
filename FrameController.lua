@@ -65,11 +65,3 @@ function FrameController:FadeTo(alpha, duration)
             self.deferReason = "deferred_buff_fadein"
             return
         end
-    end
-
-    -- Don't force show conditional frames
-    if alpha > 0 and self.conditional and not self.frame:IsShown() then
-        return
-    end
-
-    -- Skip if already at target AND not animating

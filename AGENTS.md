@@ -71,8 +71,3 @@ If no new rule is detected â†’ do not update the file.
 - format: `noop`
 
 ### Task Delivery (ALL TASKS)
-
-<!-- CUSTOMIZE (remove after): your task workflow -->
-
-- Read assignment, inspect code and docs before planning
-- Write multi-step plan before implementation

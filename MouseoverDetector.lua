@@ -49,6 +49,3 @@ function MouseoverDetector:CreateHotspots()
 end
 
 -- ElvUI hotspot patterns
-local ELVUI_HOTSPOT_PATTERNS = {
-    "ElvUI_Bar%d+",
-    "ElvUI_StanceBar",
