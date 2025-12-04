@@ -8,4 +8,3 @@ Run `luacheck` before every commit to catch:
 *   Global variable leaks (Critical in WoW AddOns).
 *   Undefined variables.
 *   Syntax errors (Lua 5.1 compatibility).
-

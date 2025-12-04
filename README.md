@@ -97,11 +97,3 @@ ZenHUD/
 
 ## Usage
 
-### Slash Commands
-
-```
-/ZenHUD              Show help
-/ZenHUD options      Open settings panel
-/ZenHUD toggle       Enable/disable addon
-/ZenHUD status       Show current state
-/ZenHUD frames       List controlled frames

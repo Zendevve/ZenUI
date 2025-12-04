@@ -102,17 +102,3 @@ function StateManager:Update()
             if ZenHUD.FrameManager then
                 ZenHUD.FrameManager:ShowAll(priority)
             end
-        else
-            Utils.Print("Hiding UI", true)
-            if ZenHUD.FrameManager then
-                ZenHUD.FrameManager:HideAll()
-            end
-        end
-    end
-end
-
-function StateManager:SetCombat(inCombat)
-    self.inCombat = inCombat
-
-    if inCombat then
-        -- Entering combat - clear all grace periods for immediate UI response

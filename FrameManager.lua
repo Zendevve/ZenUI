@@ -109,3 +109,4 @@ local FRAME_GROUPS = {
 
     -- Chat
     ChatFrameMenuButton = "chat",
+    ChatFrame1UpButton = "chat",
