@@ -148,3 +148,16 @@ SlashCmdList["ZenHUD"] = function(msg)
         if enabled then
             StateManager:Update()
         end
+
+    elseif cmd == "debug" then
+        local debug = not Config:Get("debug")
+        Config:Set("debug", debug)
+        Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
+
+    elseif cmd == "status" then
+        ShowStatus()
+
+    elseif cmd == "frames" then
+        ListFrames()
+
+    elseif cmd == "settings" then

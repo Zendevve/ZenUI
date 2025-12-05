@@ -60,25 +60,3 @@ local Config = {
             alwaysShowInArena = true,
             alwaysShowInBattleground = true,
         },
-
-        -- Profiles
-        activeProfile = "Default",
-    },
-
-    -- Profile storage (separate from settings)
-    profiles = {},
-}
-
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenHUDDB) ~= "table" then
-        ZenHUDDB = self:Clone(self.defaults)
-    else
-        -- Merge with defaults for any missing keys
-        for k, v in pairs(self.defaults) do
-            if ZenHUDDB[k] == nil then
-                ZenHUDDB[k] = type(v) == "table" and self:Clone(v) or v
-            end
-        end
-    end
-

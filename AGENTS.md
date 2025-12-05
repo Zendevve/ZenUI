@@ -47,3 +47,19 @@ If no new rule is detected â†’ do not update the file.
 
 **Ignore (do NOT add):**
 
+- temporary scope (only for now, just this time, for this task) or similar
+- one-off exceptions
+- context-specific instructions for current task only
+
+**Rule format:**
+
+- One instruction per bullet
+- Tie to category (Testing, Code, Docs, etc.)
+- Capture WHY, not just what
+- Remove obsolete rules when superseded
+
+---
+
+## Rules to follow (Mandatory, no exceptions)
+
+### Commands
