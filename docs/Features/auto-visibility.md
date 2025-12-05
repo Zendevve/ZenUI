@@ -24,3 +24,7 @@ stateDiagram-v2
     Hidden --> Visible: Combat / Target / Mouseover
     Visible --> GracePeriod: Condition Lost
     GracePeriod --> Hidden: Timer Expired
+    GracePeriod --> Visible: Condition Regained
+```
+
+## 4. Technical Design (Summary)

@@ -58,5 +58,3 @@ local Config = {
             alwaysShowInDungeons = true,
             alwaysShowInRaids = true,
             alwaysShowInArena = true,
-            alwaysShowInBattleground = true,
-        },
