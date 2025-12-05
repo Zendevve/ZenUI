@@ -103,3 +103,35 @@ local FRAME_GROUPS = {
     TemporaryEnchantFrame = "buffs",
 
     -- Quest
+    WatchFrame = "quest",
+    QuestWatchFrame = "quest",
+    QuestTimerFrame = "quest",
+
+    -- Chat
+    ChatFrameMenuButton = "chat",
+    ChatFrame1UpButton = "chat",
+    ChatFrame1DownButton = "chat",
+    ChatFrame1BottomButton = "chat",
+
+    -- Misc (everything else defaults to misc if not in this list)
+    MainMenuExpBar = "misc",
+    MainMenuBarMaxLevelBar = "misc",
+    ReputationWatchBar = "misc",
+    MainMenuBarArtFrame = "misc",
+    CharacterMicroButton = "misc",
+    SpellbookMicroButton = "misc",
+    TalentMicroButton = "misc",
+    QuestLogMicroButton = "misc",
+    SocialsMicroButton = "misc",
+    WorldMapMicroButton = "misc",
+    MainMenuMicroButton = "misc",
+    HelpMicroButton = "misc",
+    MainMenuBarBackpackButton = "misc",
+    CharacterBag0Slot = "misc",
+    CharacterBag1Slot = "misc",
+    CharacterBag2Slot = "misc",
+    CharacterBag3Slot = "misc",
+    KeyRingButton = "misc",
+}
+
+-- Frames to control (List for iteration)

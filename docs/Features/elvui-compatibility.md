@@ -11,13 +11,3 @@ Enable ZenHUD's automatic visibility system to work with popular ElvUI and Tukui
 *   **FadeOnly**: ElvUI action bars use `fadeOnly` mode (alpha only) to avoid taint.
 *   **Toggleable**: Users can disable the `elvui` frame group via Options if conflicts arise.
 *   **No Blizzard Conflict**: If ElvUI is loaded, Blizzard frames are typically hidden by ElvUI itself; ZenHUD won't interfere.
-
-## 3. User Flows / Interaction
-1.  **ElvUI Installed**: User launches WoW -> ElvUI loads -> ZenHUD detects via `ADDON_LOADED` -> ZenHUD registers ElvUI frames after 2s delay.
-2.  **Without ElvUI**: No ElvUI -> ZenHUD only controls Blizzard frames.
-
-## 4. Technical Design (Summary)
-*   **Detection Event**: `ADDON_LOADED` for "ElvUI" or "Tukui".
-*   **Frame Patterns**: `ELVUI_FRAME_PATTERNS` table in `FrameManager.lua`.
-*   **Registration**: `FrameManager:RegisterElvUIFrames()` scans `_G` for matching frames.
-*   **Config**: `frameGroups.elvui` defaults to `true`.

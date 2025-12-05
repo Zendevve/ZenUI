@@ -112,3 +112,11 @@ end)
 
 --------------------------------------------------------------------------------
 -- Faded Opacity Slider
+--------------------------------------------------------------------------------
+local fadedAlphaSlider = CreateSlider("ZenHUDOptionsFadedAlpha", OptionsPanel,
+    "Faded Opacity (Resting Alpha)", 0.0, 1.0, 0.1)
+fadedAlphaSlider:SetPoint("TOPLEFT", fadeSlider, "BOTTOMLEFT", 0, -24)
+fadedAlphaSlider:SetWidth(300)
+
+local fadedAlphaValue = fadedAlphaSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+fadedAlphaValue:SetPoint("TOP", fadedAlphaSlider, "BOTTOM", 0, 0)

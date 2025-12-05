@@ -50,3 +50,28 @@ If no new rule is detected â†’ do not update the file.
 - temporary scope (only for now, just this time, for this task) or similar
 - one-off exceptions
 - context-specific instructions for current task only
+
+**Rule format:**
+
+- One instruction per bullet
+- Tie to category (Testing, Code, Docs, etc.)
+- Capture WHY, not just what
+- Remove obsolete rules when superseded
+
+---
+
+## Rules to follow (Mandatory, no exceptions)
+
+### Commands
+
+<!-- CUSTOMIZE (remove after): your build/test/format commands -->
+
+- build: `noop` (Lua)
+- test: `noop`
+- format: `noop`
+
+### Task Delivery (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your task workflow -->
+
+- Read assignment, inspect code and docs before planning

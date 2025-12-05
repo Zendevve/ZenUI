@@ -27,4 +27,3 @@ stateDiagram-v2
     GracePeriod --> Visible: Condition Regained
 ```
 
-## 4. Technical Design (Summary)

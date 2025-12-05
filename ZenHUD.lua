@@ -159,10 +159,3 @@ SlashCmdList["ZenHUD"] = function(msg)
 
     elseif cmd == "frames" then
         ListFrames()
-
-    elseif cmd == "settings" then
-        ShowSettings()
-
-    elseif cmd == "fade" then
-        local value = tonumber(args[2])
-        if not value or value <= 0 then
