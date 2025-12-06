@@ -92,3 +92,22 @@ ZenHUD/
 ```
 
 4. Launch WoW â†’  ZenHUD activates automatically after 5 seconds
+
+---
+
+## Usage
+
+### Slash Commands
+
+```
+/ZenHUD              Show help
+/ZenHUD options      Open settings panel
+/ZenHUD toggle       Enable/disable addon
+/ZenHUD status       Show current state
+/ZenHUD frames       List controlled frames
+/ZenHUD debug        Toggle debug messages
+```
+
+### Minimap Button
+
+| Click | Action |

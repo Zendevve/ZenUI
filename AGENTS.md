@@ -67,18 +67,3 @@ If no new rule is detected â†’ do not update the file.
 <!-- CUSTOMIZE (remove after): your build/test/format commands -->
 
 - build: `noop` (Lua)
-- test: `noop`
-- format: `noop`
-
-### Task Delivery (ALL TASKS)
-
-<!-- CUSTOMIZE (remove after): your task workflow -->
-
-- Read assignment, inspect code and docs before planning
-- Write multi-step plan before implementation
-- Implement code and tests together
-- Run tests in layers: new â†’ related suite â†’ broader regressions
-- After all tests pass: run format, then build
-- Summarize changes and test results before marking complete
-- Always run required builds and tests yourself; do not ask the user to execute them (explicit user directive).
-

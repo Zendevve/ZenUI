@@ -13,3 +13,4 @@ WoW AddOns often devolve into monolithic "spaghetti code" files (`Core.lua` with
 ## Decision
 We adopted a **Modular Object-Oriented** approach using Lua metatables.
 The codebase is split into distinct modules with single responsibilities:
+1.  **Config**: Settings & SavedVariables.
