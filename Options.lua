@@ -120,3 +120,24 @@ fadedAlphaSlider:SetWidth(300)
 
 local fadedAlphaValue = fadedAlphaSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 fadedAlphaValue:SetPoint("TOP", fadedAlphaSlider, "BOTTOM", 0, 0)
+
+fadedAlphaSlider:SetScript("OnValueChanged", function(self, value)
+    fadedAlphaValue:SetText(string.format("%d%%", value * 100))
+    Config:Set("fadedAlpha", value)
+    -- Force update to apply new alpha immediately if resting
+    if ZenHUD.StateManager then ZenHUD.StateManager:Update() end
+end)
+
+--------------------------------------------------------------------------------
+-- Grace Period Sliders
+--------------------------------------------------------------------------------
+-- Combat Grace Period
+local combatGraceSlider = CreateSlider("ZenHUDOptionsCombatGrace", OptionsPanel,
+    "Post-Combat Grace Period", 0, 15, 0.5)
+combatGraceSlider:SetPoint("TOPLEFT", fadedAlphaSlider, "BOTTOMLEFT", 0, -24)
+combatGraceSlider:SetWidth(300)
+
+local combatGraceValue = combatGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+combatGraceValue:SetPoint("TOP", combatGraceSlider, "BOTTOM", 0, 0)
+
+combatGraceSlider:SetScript("OnValueChanged", function(self, value)

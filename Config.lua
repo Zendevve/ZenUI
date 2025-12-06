@@ -46,3 +46,13 @@ local Config = {
             buffs = true,
             quest = true,
             misc = true,
+            elvui = true,  -- ElvUI frames (if detected)
+        },
+
+        -- Minimap button
+        showMinimapButton = true,
+        minimapAngle = 220,
+
+        -- Zone-based behavior
+        zoneOverrides = {
+            alwaysShowInDungeons = true,

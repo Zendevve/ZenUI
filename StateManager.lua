@@ -123,3 +123,7 @@ function StateManager:SetCombat(inCombat)
     else
         -- Leaving combat - start grace period with timer callback
         local grace = Config:Get("gracePeriods").combat
+        self.graceUntil.combat = Utils.GetTime() + grace
+
+        Utils.Print(string.format("Combat: LEAVING combat, %.1fs grace period", grace), true)
+

@@ -132,6 +132,3 @@ local FRAME_GROUPS = {
     CharacterBag2Slot = "misc",
     CharacterBag3Slot = "misc",
     KeyRingButton = "misc",
-}
-
--- Frames to control (List for iteration)
