@@ -56,3 +56,13 @@ local Config = {
         -- Zone-based behavior
         zoneOverrides = {
             alwaysShowInDungeons = true,
+            alwaysShowInRaids = true,
+            alwaysShowInArena = true,
+            alwaysShowInBattleground = true,
+        },
+
+        -- Profiles
+        activeProfile = "Default",
+    },
+
+    -- Profile storage (separate from settings)
