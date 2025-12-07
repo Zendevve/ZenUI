@@ -11,4 +11,3 @@ local Config = ZenHUD.Config  -- Already exported by Config.lua
 -- Utilities
 --------------------------------------------------------------------------------
 local Utils = {}
-

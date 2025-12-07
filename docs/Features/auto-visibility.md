@@ -18,5 +18,3 @@ To automatically manage user interface visibility based on game state, ensuring 
 3.  **Targeting**: Player selects a target -> UI Fades In.
 4.  **Mouseover**: Player moves mouse to bottom/side of screen -> UI Fades In.
 5.  **Idle**: Player enters an Inn -> UI Fades In (Resting state).
-
-```mermaid
