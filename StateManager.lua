@@ -110,17 +110,3 @@ function StateManager:Update()
         end
     end
 end
-
-function StateManager:SetCombat(inCombat)
-    self.inCombat = inCombat
-
-    if inCombat then
-        -- Entering combat - clear all grace periods for immediate UI response
-        for k in pairs(self.graceUntil) do
-            self.graceUntil[k] = 0
-        end
-        Utils.Print("Combat: ENTERING combat", true)
-    else
-        -- Leaving combat - start grace period with timer callback
-        local grace = Config:Get("gracePeriods").combat
-        self.graceUntil.combat = Utils.GetTime() + grace

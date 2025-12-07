@@ -70,3 +70,6 @@ function MouseoverDetector:CreateElvUIHotspots()
                 if string.match(frameName, "^" .. pattern .. "$") or frameName == pattern then
                     CreateHoverHotspot(frameObj, frameName)
                     break
+                end
+            end
+        end

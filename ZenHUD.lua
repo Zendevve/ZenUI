@@ -154,21 +154,3 @@ SlashCmdList["ZenHUD"] = function(msg)
         Config:Set("debug", debug)
         Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
 
-    elseif cmd == "status" then
-        ShowStatus()
-
-    elseif cmd == "frames" then
-        ListFrames()
-
-    elseif cmd == "settings" then
-        ShowSettings()
-
-    elseif cmd == "fade" then
-        local value = tonumber(args[2])
-        if not value or value <= 0 then
-            Utils.Print("Usage: /ZenHUD fade <seconds>")
-            Utils.Print("Example: /ZenHUD fade 0.5")
-            return
-        end
-
-        Config:Set("fadeTime", value)

@@ -16,6 +16,3 @@
 
 ```mermaid
 graph TD
-    A[Start] --> B{Condition}
-    B -->|Yes| C[Result 1]
-    B -->|No| D[Result 2]

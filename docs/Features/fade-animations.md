@@ -10,7 +10,3 @@ To provide smooth, professional-grade transitions between visible and hidden sta
 *   **Smoothness**: Alpha must interpolate linearly over `config.fadeTime`.
 *   **Interruption**: If a fade is interrupted (e.g., fading out, then sudden combat), it must reverse from the *current* alpha, not snap to 0 or 1.
 *   **BuffFrame Flicker**: Standard BuffFrames in WotLK flicker if hidden/shown rapidly. Use "Deferred Fading" to handle this specific frame.
-*   **Performance**: Hide the frame completely (`frame:Hide()`) when alpha reaches 0 to save CPU cycles.
-
-## 3. User Flows / Interaction
-1.  **Fade Out**: StateManager says Hide -> Frame Alpha 1.0 -> 0.9... -> 0.0 -> Frame Hidden.

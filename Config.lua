@@ -52,3 +52,8 @@ local Config = {
         -- Minimap button
         showMinimapButton = true,
         minimapAngle = 220,
+
+        -- Zone-based behavior
+        zoneOverrides = {
+            alwaysShowInDungeons = true,
+            alwaysShowInRaids = true,

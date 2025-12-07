@@ -29,3 +29,5 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
     -- Re-fetch StateManager if needed
     StateManager = ZenHUD.StateManager
     local Utils = ZenHUD.Utils
+
+    if event == "PLAYER_ENTERING_WORLD" then

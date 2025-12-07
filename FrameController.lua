@@ -52,3 +52,45 @@ function FrameController:FadeTo(alpha, duration)
 
     if isBuffFrame then
         -- If fading IN and a fade OUT is requested, defer the OUT
+        local fadedAlpha = Config:Get("fadedAlpha")
+        if alpha == fadedAlpha and self.animating and self.targetAlpha == 1 then
+            self.deferFadeOut = true
+            self.deferReason = "deferred_buff_fadeout"
+            return
+        end
+
+        -- If fading OUT and a fade IN is requested, defer the IN
+        if alpha == 1 and self.animating and self.targetAlpha == fadedAlpha then
+            self.deferFadeIn = true
+            self.deferReason = "deferred_buff_fadein"
+            return
+        end
+    end
+
+    -- Don't force show conditional frames
+    if alpha > 0 and self.conditional and not self.frame:IsShown() then
+        return
+    end
+
+    -- Skip if already at target AND not animating
+    if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
+        return
+    end
+
+    -- Smooth interruption: if animating to opposite direction, start from current position
+    local newTarget = Utils.Clamp(alpha, 0, 1)
+    if self.animating and newTarget ~= self.targetAlpha then
+        -- Interrupting animation - start from current position for smooth transition
+        self.startAlpha = self.currentAlpha
+    else
+        self.startAlpha = self.currentAlpha
+    end
+
+    self.targetAlpha = newTarget
+    self.duration = math.max(0.05, duration or Config:Get("fadeTime"))
+    self.elapsed = 0
+    self.animating = true
+
+    -- Prepare for fade-in
+    if alpha > self.currentAlpha then
+        self.frame:Show()
