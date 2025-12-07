@@ -52,24 +52,3 @@ local Config = {
         -- Minimap button
         showMinimapButton = true,
         minimapAngle = 220,
-
-        -- Zone-based behavior
-        zoneOverrides = {
-            alwaysShowInDungeons = true,
-            alwaysShowInRaids = true,
-            alwaysShowInArena = true,
-            alwaysShowInBattleground = true,
-        },
-
-        -- Profiles
-        activeProfile = "Default",
-    },
-
-    -- Profile storage (separate from settings)
-    profiles = {},
-}
-
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenHUDDB) ~= "table" then
-        ZenHUDDB = self:Clone(self.defaults)

@@ -75,4 +75,3 @@ ZenHUD.Failsafe = Failsafe
 local FrameManager = {
     controllers = {},
     updateFrame = nil,
-}

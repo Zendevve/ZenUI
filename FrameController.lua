@@ -49,3 +49,6 @@ end
 function FrameController:FadeTo(alpha, duration)
     -- Buff frame anti-flicker logic
     local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+
+    if isBuffFrame then
+        -- If fading IN and a fade OUT is requested, defer the OUT
