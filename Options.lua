@@ -106,3 +106,5 @@ local fadeValue = fadeSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight
 fadeValue:SetPoint("TOP", fadeSlider, "BOTTOM", 0, 0)
 
 fadeSlider:SetScript("OnValueChanged", function(self, value)
+    fadeValue:SetText(string.format("%.1f seconds", value))
+    Config:Set("fadeTime", value)

@@ -20,3 +20,6 @@ graph TD
     B -->|Yes| C[Result 1]
     B -->|No| D[Result 2]
 ```
+
+## 4. Technical Design (Summary)
+*   **Components**: {{List components involved}}

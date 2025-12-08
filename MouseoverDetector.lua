@@ -73,9 +73,3 @@ function MouseoverDetector:CreateElvUIHotspots()
                 end
             end
         end
-    end
-end
-
-local function IsUIFrame(name)
-    if not name then return false end
-

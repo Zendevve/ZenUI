@@ -141,3 +141,29 @@ SlashCmdList["ZenHUD"] = function(msg)
         InterfaceOptionsFrame_OpenToCategory("ZenHUD")  -- Called twice due to Blizzard bug
         Utils.Print("Opening options panel...")
 
+    elseif cmd == "toggle" then
+        local enabled = not Config:Get("enabled")
+        Config:Set("enabled", enabled)
+        Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
+        if enabled then
+            StateManager:Update()
+        end
+
+    elseif cmd == "debug" then
+        local debug = not Config:Get("debug")
+        Config:Set("debug", debug)
+        Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
+
+    elseif cmd == "status" then
+        ShowStatus()
+
+    elseif cmd == "frames" then
+        ListFrames()
+
+    elseif cmd == "settings" then
+        ShowSettings()
+
+    elseif cmd == "fade" then
+        local value = tonumber(args[2])
+        if not value or value <= 0 then
+            Utils.Print("Usage: /ZenHUD fade <seconds>")

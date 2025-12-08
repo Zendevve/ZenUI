@@ -21,3 +21,4 @@ To automatically manage user interface visibility based on game state, ensuring 
 
 ```mermaid
 stateDiagram-v2
+    Hidden --> Visible: Combat / Target / Mouseover
