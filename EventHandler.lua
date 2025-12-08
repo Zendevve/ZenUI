@@ -24,3 +24,15 @@ EventHandler:RegisterEvent("UNIT_ENTERED_VEHICLE")
 EventHandler:RegisterEvent("UNIT_EXITED_VEHICLE")
 EventHandler:RegisterEvent("PLAYER_FLAGS_CHANGED")
 EventHandler:RegisterEvent("ADDON_LOADED")  -- For ElvUI detection
+
+EventHandler:SetScript("OnEvent", function(self, event, ...)
+    -- Re-fetch StateManager if needed
+    StateManager = ZenHUD.StateManager
+    local Utils = ZenHUD.Utils
+
+    if event == "PLAYER_ENTERING_WORLD" then
+        ZenHUD:Initialize()
+
+    elseif event == "PLAYER_REGEN_DISABLED" then
+        StateManager:SetCombat(true)
+
