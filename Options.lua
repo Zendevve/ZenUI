@@ -164,16 +164,3 @@ targetGraceSlider:SetScript("OnValueChanged", function(self, value)
 end)
 
 -- Mouseover Grace Period
-local mouseoverGraceSlider = CreateSlider("ZenHUDOptionsMouseoverGrace", OptionsPanel,
-    "Post-Mouseover Grace Period", 0, 10, 0.5)
-mouseoverGraceSlider:SetPoint("TOPLEFT", targetGraceSlider, "BOTTOMLEFT", 0, -24)
-mouseoverGraceSlider:SetWidth(300)
-
-local mouseoverGraceValue = mouseoverGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-mouseoverGraceValue:SetPoint("TOP", mouseoverGraceSlider, "BOTTOM", 0, 0)
-
-mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
-    mouseoverGraceValue:SetText(string.format("%.1f seconds", value))
-    local grace = Config:Get("gracePeriods")
-    grace.mouseover = value
-    Config:Set("gracePeriods", grace)  -- Persist change

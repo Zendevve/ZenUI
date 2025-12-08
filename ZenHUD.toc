@@ -5,4 +5,3 @@
 ## Version: 1.2.0-wotlk
 ## SavedVariables: ZenHUDDB
 ## SavedVariablesPerCharacter: ZenHUDCharDB
-

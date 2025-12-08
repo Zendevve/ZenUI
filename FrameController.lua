@@ -77,5 +77,3 @@ function FrameController:FadeTo(alpha, duration)
         return
     end
 
-    -- Smooth interruption: if animating to opposite direction, start from current position
-    local newTarget = Utils.Clamp(alpha, 0, 1)
