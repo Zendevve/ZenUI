@@ -40,4 +40,3 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
         StateManager:SetCombat(false)
 
     elseif event == "PLAYER_TARGET_CHANGED" then
-        local hasTarget = UnitExists("target")

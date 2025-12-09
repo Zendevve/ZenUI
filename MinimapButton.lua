@@ -54,3 +54,4 @@ end
 
 local function OnDragStart(self)
     self:StartMoving()
+    self.isMoving = true

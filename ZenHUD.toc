@@ -6,3 +6,4 @@
 ## SavedVariables: ZenHUDDB
 ## SavedVariablesPerCharacter: ZenHUDCharDB
 
+# Load order is important - modules first, then main file

@@ -87,9 +87,3 @@ function StateManager:Update()
         or self.mouseoverUI
         or inGrace
         or self.isResting
-        or self.inVehicle
-        or Config:ShouldShowInZone()  -- Zone-based override (dungeons, raids, etc.)
-
-    -- Only call Show/Hide if decision has changed (avoid redundant calls)
-    if shouldShow ~= self.lastVisibilityDecision then
-        self.lastVisibilityDecision = shouldShow

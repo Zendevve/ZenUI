@@ -55,3 +55,9 @@ If no new rule is detected â†’ do not update the file.
 
 - One instruction per bullet
 - Tie to category (Testing, Code, Docs, etc.)
+- Capture WHY, not just what
+- Remove obsolete rules when superseded
+
+---
+
+## Rules to follow (Mandatory, no exceptions)

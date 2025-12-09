@@ -73,3 +73,4 @@ function MouseoverDetector:CreateElvUIHotspots()
                 end
             end
         end
+    end

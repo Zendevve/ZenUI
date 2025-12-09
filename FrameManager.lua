@@ -134,3 +134,8 @@ local FRAME_GROUPS = {
     KeyRingButton = "misc",
 }
 
+-- Frames to control (List for iteration)
+local CONTROLLED_FRAMES = {
+    "MainMenuBar", "MultiBarBottomLeft", "MultiBarBottomRight",
+    "MultiBarLeft", "MultiBarRight", "PetActionBarFrame", "ShapeshiftBarFrame",
+    "MainMenuExpBar", "MainMenuBarMaxLevelBar", "ReputationWatchBar",
