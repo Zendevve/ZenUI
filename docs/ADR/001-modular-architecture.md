@@ -17,9 +17,3 @@ The codebase is split into distinct modules with single responsibilities:
 2.  **Utils**: Helper functions.
 3.  **StateManager**: "The Brain" - decides *what* should happen.
 4.  **FrameManager**: "The Conductor" - orchestrates lists of frames.
-5.  **FrameController**: "The Worker" - handles individual frame logic/animation.
-6.  **EventHandler**: "The Ear" - listens to game events.
-
-## Alternatives Considered
-*   **Monolithic (`ZenHUD.lua` only)**: Rejected. Too hard to maintain.
-*   **Functional/Procedural**: Rejected. Managing state for 50+ individual frames (alpha, visibility, animation progress) is messy without Frame objects.

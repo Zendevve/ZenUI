@@ -123,3 +123,8 @@ To hide the minimap button, use `/ZenHUD minimap` (toggle).
 | Setting | Command | Example |
 |---------|---------|---------|
 | Fade Time | `/ZenHUD fade <sec>` | `/ZenHUD fade 0.5` |
+| Combat Grace | `/ZenHUD grace combat <sec>` | `/ZenHUD grace combat 10` |
+| Target Grace | `/ZenHUD grace target <sec>` | `/ZenHUD grace target 3` |
+
+Or use **`/ZenHUD options`** for a visual settings panel.
+
