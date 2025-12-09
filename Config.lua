@@ -69,9 +69,3 @@ local Config = {
     profiles = {},
 }
 
-function Config:Initialize()
-    -- Initialize account-wide settings
-    if type(ZenHUDDB) ~= "table" then
-        ZenHUDDB = self:Clone(self.defaults)
-    else
-        -- Merge with defaults for any missing keys

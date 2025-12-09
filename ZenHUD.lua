@@ -122,9 +122,3 @@ local function ListFrames()
 end
 
 SlashCmdList["ZenHUD"] = function(msg)
-    msg = string.lower(msg or "")
-
-    -- Split message into arguments
-    local args = {}
-    for word in string.gmatch(msg, "%S+") do
-        table.insert(args, word)

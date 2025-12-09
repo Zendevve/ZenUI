@@ -15,5 +15,3 @@ We adopted a **Modular Object-Oriented** approach using Lua metatables.
 The codebase is split into distinct modules with single responsibilities:
 1.  **Config**: Settings & SavedVariables.
 2.  **Utils**: Helper functions.
-3.  **StateManager**: "The Brain" - decides *what* should happen.
-4.  **FrameManager**: "The Conductor" - orchestrates lists of frames.
