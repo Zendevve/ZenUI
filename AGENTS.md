@@ -58,3 +58,6 @@ If no new rule is detected â†’ do not update the file.
 - Capture WHY, not just what
 - Remove obsolete rules when superseded
 
+---
+
+## Rules to follow (Mandatory, no exceptions)

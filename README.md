@@ -127,3 +127,10 @@ To hide the minimap button, use `/ZenHUD minimap` (toggle).
 | Target Grace | `/ZenHUD grace target <sec>` | `/ZenHUD grace target 3` |
 
 Or use **`/ZenHUD options`** for a visual settings panel.
+
+---
+
+## Configuration
+
+Edit `WTF/Account/<Account>/SavedVariables/ZenHUD.lua`:
+

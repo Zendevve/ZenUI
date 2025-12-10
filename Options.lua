@@ -152,35 +152,3 @@ local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
     "Post-Target Grace Period", 0, 10, 0.5)
 targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
 targetGraceSlider:SetWidth(300)
-
-local targetGraceValue = targetGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-targetGraceValue:SetPoint("TOP", targetGraceSlider, "BOTTOM", 0, 0)
-
-targetGraceSlider:SetScript("OnValueChanged", function(self, value)
-    targetGraceValue:SetText(string.format("%.1f seconds", value))
-    local grace = Config:Get("gracePeriods")
-    grace.target = value
-    Config:Set("gracePeriods", grace)  -- Persist change
-end)
-
--- Mouseover Grace Period
-local mouseoverGraceSlider = CreateSlider("ZenHUDOptionsMouseoverGrace", OptionsPanel,
-    "Post-Mouseover Grace Period", 0, 10, 0.5)
-mouseoverGraceSlider:SetPoint("TOPLEFT", targetGraceSlider, "BOTTOMLEFT", 0, -24)
-mouseoverGraceSlider:SetWidth(300)
-
-local mouseoverGraceValue = mouseoverGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-mouseoverGraceValue:SetPoint("TOP", mouseoverGraceSlider, "BOTTOM", 0, 0)
-
-mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
-    mouseoverGraceValue:SetText(string.format("%.1f seconds", value))
-    local grace = Config:Get("gracePeriods")
-    grace.mouseover = value
-    Config:Set("gracePeriods", grace)  -- Persist change
-end)
-
---------------------------------------------------------------------------------
--- Character Settings Toggle
---------------------------------------------------------------------------------
-local charSettingsBtn = CreateFrame("Button", "ZenHUDOptionsCharSettings", OptionsPanel, "UIPanelButtonTemplate")
-charSettingsBtn:SetSize(200, 24)

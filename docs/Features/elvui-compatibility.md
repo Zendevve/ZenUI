@@ -17,3 +17,5 @@ Enable ZenHUD's automatic visibility system to work with popular ElvUI and Tukui
 2.  **Without ElvUI**: No ElvUI -> ZenHUD only controls Blizzard frames.
 
 ## 4. Technical Design (Summary)
+*   **Detection Event**: `ADDON_LOADED` for "ElvUI" or "Tukui".
+*   **Frame Patterns**: `ELVUI_FRAME_PATTERNS` table in `FrameManager.lua`.

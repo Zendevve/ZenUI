@@ -86,7 +86,3 @@ function Config:Initialize()
     if type(ZenHUDCharDB) ~= "table" then
         ZenHUDCharDB = {}
     end
-end
-
-function Config:Clone(tbl)
-    local copy = {}
