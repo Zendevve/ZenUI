@@ -95,20 +95,3 @@ local FRAME_GROUPS = {
     PlayerFrame = "unitFrames",
     PetFrame = "unitFrames",
     TargetFrameToT = "unitFrames",
-    RuneFrame = "unitFrames",
-    PetCastingBarFrame = "unitFrames",
-
-    -- Buffs
-    BuffFrame = "buffs",
-    TemporaryEnchantFrame = "buffs",
-
-    -- Quest
-    WatchFrame = "quest",
-    QuestWatchFrame = "quest",
-    QuestTimerFrame = "quest",
-
-    -- Chat
-    ChatFrameMenuButton = "chat",
-    ChatFrame1UpButton = "chat",
-    ChatFrame1DownButton = "chat",
-    ChatFrame1BottomButton = "chat",

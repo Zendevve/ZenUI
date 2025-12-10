@@ -27,6 +27,3 @@ stateDiagram-v2
     GracePeriod --> Visible: Condition Regained
 ```
 
-## 4. Technical Design (Summary)
-*   **Components**: `StateManager.lua` (Decision Engine), `FrameManager.lua` (Orchestrator).
-*   **Data Model**:

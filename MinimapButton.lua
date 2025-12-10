@@ -41,6 +41,3 @@ pushed:SetSize(BUTTON_SIZE, BUTTON_SIZE)
 pushed:SetTexture("Interface\\Minimap\\UI-Minimap-ZoomButton-Highlight")
 button:SetPushedTexture(pushed)
 
---------------------------------------------------------------------------------
--- Position management (drag to move around minimap)
---------------------------------------------------------------------------------
