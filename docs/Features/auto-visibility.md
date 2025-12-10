@@ -30,4 +30,3 @@ stateDiagram-v2
 ## 4. Technical Design (Summary)
 *   **Components**: `StateManager.lua` (Decision Engine), `FrameManager.lua` (Orchestrator).
 *   **Data Model**:
-    *   `StateManager.inCombat` (boolean)

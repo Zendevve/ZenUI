@@ -9,9 +9,3 @@
     ```
 3.  **Folder Name**: The folder MUST be named `ZenHUD` for the `.toc` file to load correctly.
 
-## 2. Tools
-*   **Editor**: VS Code is recommended.
-*   **Extensions**:
-    *   `sumneko.lua` (Lua Language Server) - Highly recommended for syntax checking.
-    *   `ketho.wow-api` (World of Warcraft API) - For API intellisense.
-*   **Linter**: `luacheck` (install via luarocks or use the extension).

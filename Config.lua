@@ -69,3 +69,6 @@ local Config = {
     profiles = {},
 }
 
+function Config:Initialize()
+    -- Initialize account-wide settings
+    if type(ZenHUDDB) ~= "table" then

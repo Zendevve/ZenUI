@@ -122,3 +122,22 @@ local function ListFrames()
 end
 
 SlashCmdList["ZenHUD"] = function(msg)
+    msg = string.lower(msg or "")
+
+    -- Split message into arguments
+    local args = {}
+    for word in string.gmatch(msg, "%S+") do
+        table.insert(args, word)
+    end
+
+    local cmd = args[1] or ""
+
+    if cmd == "" or cmd == "help" then
+        ShowHelp()
+
+    elseif cmd == "options" or cmd == "config" or cmd == "settings" then
+        -- Open the Blizzard Interface Options panel
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")  -- Called twice due to Blizzard bug
+        Utils.Print("Opening options panel...")
+

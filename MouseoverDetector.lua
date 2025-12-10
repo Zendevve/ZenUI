@@ -67,13 +67,3 @@ function MouseoverDetector:CreateElvUIHotspots()
     for frameName, frameObj in pairs(_G) do
         if type(frameObj) == "table" and frameObj.GetName then
             for _, pattern in ipairs(ELVUI_HOTSPOT_PATTERNS) do
-                if string.match(frameName, "^" .. pattern .. "$") or frameName == pattern then
-                    CreateHoverHotspot(frameObj, frameName)
-                    break
-                end
-            end
-        end
-    end
-end
-
-local function IsUIFrame(name)
