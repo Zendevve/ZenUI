@@ -125,21 +125,3 @@ To hide the minimap button, use `/ZenHUD minimap` (toggle).
 | Fade Time | `/ZenHUD fade <sec>` | `/ZenHUD fade 0.5` |
 | Combat Grace | `/ZenHUD grace combat <sec>` | `/ZenHUD grace combat 10` |
 | Target Grace | `/ZenHUD grace target <sec>` | `/ZenHUD grace target 3` |
-
-Or use **`/ZenHUD options`** for a visual settings panel.
-
----
-
-## Configuration
-
-Edit `WTF/Account/<Account>/SavedVariables/ZenHUD.lua`:
-
-```lua
-ZenHUDDB = {
-    enabled = true,
-    fadeTime = 0.8,           -- Animation duration
-    fadedAlpha = 0.0,         -- Hidden opacity (0.0 = invisible)
-    gracePeriods = {
-        combat = 8.0,         -- Post-combat delay
-        target = 2.0,         -- Post-target delay
-        mouseover = 2.0,      -- Post-mouseover delay

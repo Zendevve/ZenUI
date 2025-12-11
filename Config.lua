@@ -77,3 +77,21 @@ function Config:Initialize()
         -- Merge with defaults for any missing keys
         for k, v in pairs(self.defaults) do
             if ZenHUDDB[k] == nil then
+                ZenHUDDB[k] = type(v) == "table" and self:Clone(v) or v
+            end
+        end
+    end
+
+    -- Initialize per-character settings
+    if type(ZenHUDCharDB) ~= "table" then
+        ZenHUDCharDB = {}
+    end
+end
+
+function Config:Clone(tbl)
+    local copy = {}
+    for k, v in pairs(tbl) do
+        copy[k] = type(v) == "table" and self:Clone(v) or v
+    end
+    return copy
+end

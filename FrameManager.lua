@@ -100,3 +100,15 @@ local FRAME_GROUPS = {
 
     -- Buffs
     BuffFrame = "buffs",
+    TemporaryEnchantFrame = "buffs",
+
+    -- Quest
+    WatchFrame = "quest",
+    QuestWatchFrame = "quest",
+    QuestTimerFrame = "quest",
+
+    -- Chat
+    ChatFrameMenuButton = "chat",
+    ChatFrame1UpButton = "chat",
+    ChatFrame1DownButton = "chat",
+    ChatFrame1BottomButton = "chat",
