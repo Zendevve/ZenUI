@@ -151,4 +151,3 @@ end)
 local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
     "Post-Target Grace Period", 0, 10, 0.5)
 targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
-targetGraceSlider:SetWidth(300)

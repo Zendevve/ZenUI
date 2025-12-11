@@ -18,3 +18,6 @@ To provide smooth, professional-grade transitions between visible and hidden sta
 3.  **Interrupt**: Fading Out (at 0.5) -> Combat Starts -> Fading In (0.5 -> 1.0).
 
 ## 4. Technical Design (Summary)
+*   **Components**: `FrameController.lua`.
+*   **Logic**: Per-frame update loop managed by `FrameManager`.
+*   **Variables**: `currentAlpha`, `targetAlpha`, `startAlpha`, `duration`.

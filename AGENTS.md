@@ -61,3 +61,39 @@ If no new rule is detected â†’ do not update the file.
 ---
 
 ## Rules to follow (Mandatory, no exceptions)
+
+### Commands
+
+<!-- CUSTOMIZE (remove after): your build/test/format commands -->
+
+- build: `noop` (Lua)
+- test: `noop`
+- format: `noop`
+
+### Task Delivery (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your task workflow -->
+
+- Read assignment, inspect code and docs before planning
+- Write multi-step plan before implementation
+- Implement code and tests together
+- Run tests in layers: new â†’ related suite â†’ broader regressions
+- After all tests pass: run format, then build
+- Summarize changes and test results before marking complete
+- Always run required builds and tests yourself; do not ask the user to execute them (explicit user directive).
+
+### Documentation (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your docs location -->
+
+- All docs live in `docs/` (or `.wiki/`)
+- Update feature docs when behaviour changes
+- Update ADRs when architecture changes
+- Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
+
+### Testing (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your test structure -->
+
+- Every behaviour change needs sufficient automated tests to cover its cases; one is the minimum, not the target
+- Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors

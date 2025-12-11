@@ -85,8 +85,3 @@ local function IsUIFrame(name)
     end
 
     -- Blizzard Action buttons
-    if string.find(name, "ActionButton") or string.find(name, "MultiBar") or
-       string.find(name, "PetActionButton") or string.find(name, "ShapeshiftButton") then
-        return true
-    end
-

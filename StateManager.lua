@@ -122,3 +122,23 @@ function StateManager:SetCombat(inCombat)
         Utils.Print("Combat: ENTERING combat", true)
     else
         -- Leaving combat - start grace period with timer callback
+        local grace = Config:Get("gracePeriods").combat
+        self.graceUntil.combat = Utils.GetTime() + grace
+
+        Utils.Print(string.format("Combat: LEAVING combat, %.1fs grace period", grace), true)
+
+        -- Timer callback to hide UI after grace expires
+        Utils.After(grace, function()
+            -- Clear this grace period and force update
+            self.graceUntil.combat = 0
+            Utils.Print("Combat grace expired, updating visibility", true)
+            self:Update()
+        end)
+    end
+
+    self:Update()
+end
+
+function StateManager:SetTarget(hasTarget, isAlive)
+    local hadLivingTarget = self.hasLivingTarget
+    self.hasLivingTarget = hasTarget and isAlive

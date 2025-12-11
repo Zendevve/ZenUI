@@ -50,15 +50,3 @@ local function UpdatePosition()
     local x = math.cos(radian) * BUTTON_RADIUS
     local y = math.sin(radian) * BUTTON_RADIUS
     button:SetPoint("CENTER", Minimap, "CENTER", x, y)
-end
-
-local function OnDragStart(self)
-    self:StartMoving()
-    self.isMoving = true
-end
-
-local function OnDragStop(self)
-    self:StopMovingOrSizing()
-    self.isMoving = false
-
-    -- Calculate angle from minimap center
