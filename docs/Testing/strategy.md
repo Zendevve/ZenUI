@@ -9,4 +9,3 @@ Run `luacheck` before every commit to catch:
 *   Undefined variables.
 *   Syntax errors (Lua 5.1 compatibility).
 
-## 2. Manual Testing Layers

@@ -8,4 +8,3 @@ Related Features: {{Links to docs/Features/*}}
 ---
 
 ## Context
-{{Current situation, constraints, problems.}}

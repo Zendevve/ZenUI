@@ -126,3 +126,79 @@ SlashCmdList["ZenHUD"] = function(msg)
 
     -- Split message into arguments
     local args = {}
+    for word in string.gmatch(msg, "%S+") do
+        table.insert(args, word)
+    end
+
+    local cmd = args[1] or ""
+
+    if cmd == "" or cmd == "help" then
+        ShowHelp()
+
+    elseif cmd == "options" or cmd == "config" or cmd == "settings" then
+        -- Open the Blizzard Interface Options panel
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")  -- Called twice due to Blizzard bug
+        Utils.Print("Opening options panel...")
+
+    elseif cmd == "toggle" then
+        local enabled = not Config:Get("enabled")
+        Config:Set("enabled", enabled)
+        Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
+        if enabled then
+            StateManager:Update()
+        end
+
+    elseif cmd == "debug" then
+        local debug = not Config:Get("debug")
+        Config:Set("debug", debug)
+        Utils.Print(string.format("Debug mode %s", debug and "enabled" or "disabled"))
+
+    elseif cmd == "status" then
+        ShowStatus()
+
+    elseif cmd == "frames" then
+        ListFrames()
+
+    elseif cmd == "settings" then
+        ShowSettings()
+
+    elseif cmd == "fade" then
+        local value = tonumber(args[2])
+        if not value or value <= 0 then
+            Utils.Print("Usage: /ZenHUD fade <seconds>")
+            Utils.Print("Example: /ZenHUD fade 0.5")
+            return
+        end
+
+        Config:Set("fadeTime", value)
+        Utils.Print(string.format("Fade time set to %.2fs", value))
+
+    elseif cmd == "grace" then
+        local graceType = args[2]  -- combat, target, or mouseover
+        local value = tonumber(args[3])
+
+        if not graceType or not value or value < 0 then
+            Utils.Print("Usage: /ZenHUD grace <type> <seconds>")
+            Utils.Print("Types: combat, target, mouseover")
+            Utils.Print("Example: /ZenHUD grace combat 10.0")
+            return
+        end
+
+        local grace = Config:Get("gracePeriods")
+        if not grace[graceType] then
+            Utils.Print(string.format("Unknown grace type: %s", graceType))
+            Utils.Print("Valid types: combat, target, mouseover")
+            return
+        end
+
+        grace[graceType] = value
+        Utils.Print(string.format("Grace period (%s) set to %.1fs", graceType, value))
+
+    elseif cmd == "character" then
+        local enabled = Config:ToggleCharacterSettings()
+        if enabled then
+            Utils.Print("Switched to character-specific settings")
+            Utils.Print("Settings will now be saved per-character")
+        else
+            Utils.Print("Switched to account-wide settings")

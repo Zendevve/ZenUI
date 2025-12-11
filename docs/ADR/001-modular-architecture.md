@@ -20,5 +20,3 @@ The codebase is split into distinct modules with single responsibilities:
 5.  **FrameController**: "The Worker" - handles individual frame logic/animation.
 6.  **EventHandler**: "The Ear" - listens to game events.
 
-## Alternatives Considered
-*   **Monolithic (`ZenHUD.lua` only)**: Rejected. Too hard to maintain.
