@@ -191,14 +191,3 @@ SlashCmdList["ZenHUD"] = function(msg)
             Utils.Print("Valid types: combat, target, mouseover")
             return
         end
-
-        grace[graceType] = value
-        Utils.Print(string.format("Grace period (%s) set to %.1fs", graceType, value))
-
-    elseif cmd == "character" then
-        local enabled = Config:ToggleCharacterSettings()
-        if enabled then
-            Utils.Print("Switched to character-specific settings")
-            Utils.Print("Settings will now be saved per-character")
-        else
-            Utils.Print("Switched to account-wide settings")

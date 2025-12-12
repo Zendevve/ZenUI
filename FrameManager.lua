@@ -131,3 +131,20 @@ local FRAME_GROUPS = {
     CharacterBag1Slot = "misc",
     CharacterBag2Slot = "misc",
     CharacterBag3Slot = "misc",
+    KeyRingButton = "misc",
+}
+
+-- Frames to control (List for iteration)
+local CONTROLLED_FRAMES = {
+    "MainMenuBar", "MultiBarBottomLeft", "MultiBarBottomRight",
+    "MultiBarLeft", "MultiBarRight", "PetActionBarFrame", "ShapeshiftBarFrame",
+    "MainMenuExpBar", "MainMenuBarMaxLevelBar", "ReputationWatchBar",
+    "MainMenuBarArtFrame",
+    "CharacterMicroButton", "SpellbookMicroButton", "TalentMicroButton",
+    "QuestLogMicroButton", "SocialsMicroButton", "WorldMapMicroButton",
+    "MainMenuMicroButton", "HelpMicroButton",
+    "MainMenuBarBackpackButton", "CharacterBag0Slot", "CharacterBag1Slot",
+    "CharacterBag2Slot", "CharacterBag3Slot", "KeyRingButton",
+    "PlayerFrame", "PetFrame", "TargetFrameToT",
+    "BuffFrame", "TemporaryEnchantFrame",
+    "WatchFrame", "QuestWatchFrame",

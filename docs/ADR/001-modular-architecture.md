@@ -16,7 +16,3 @@ The codebase is split into distinct modules with single responsibilities:
 1.  **Config**: Settings & SavedVariables.
 2.  **Utils**: Helper functions.
 3.  **StateManager**: "The Brain" - decides *what* should happen.
-4.  **FrameManager**: "The Conductor" - orchestrates lists of frames.
-5.  **FrameController**: "The Worker" - handles individual frame logic/animation.
-6.  **EventHandler**: "The Ear" - listens to game events.
-
