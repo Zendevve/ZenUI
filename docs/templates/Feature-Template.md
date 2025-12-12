@@ -24,3 +24,4 @@ graph TD
 ## 4. Technical Design (Summary)
 *   **Components**: {{List components involved}}
 *   **Data Model**: {{Key data structures}}
+

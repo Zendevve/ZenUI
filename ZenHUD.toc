@@ -5,3 +5,5 @@
 ## Version: 1.2.0-wotlk
 ## SavedVariables: ZenHUDDB
 ## SavedVariablesPerCharacter: ZenHUDCharDB
+
+# Load order is important - modules first, then main file
