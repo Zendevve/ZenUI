@@ -86,19 +86,3 @@ If no new rule is detected â†’ do not update the file.
 
 <!-- CUSTOMIZE (remove after): your docs location -->
 
-- All docs live in `docs/` (or `.wiki/`)
-- Update feature docs when behaviour changes
-- Update ADRs when architecture changes
-- Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
-
-### Testing (ALL TASKS)
-
-<!-- CUSTOMIZE (remove after): your test structure -->
-
-- Every behaviour change needs sufficient automated tests to cover its cases; one is the minimum, not the target
-- Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors
-- Integration tests must exercise real flows end-to-end, not just call endpoints in isolation
-- Prefer integration/API/UI tests over unit tests
-- No mocks for internal systems (DB, queues, caches) â€” use containers
-- Mocks only for external third-party systems
-- Never delete or weaken a test to make it pass

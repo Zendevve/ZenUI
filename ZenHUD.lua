@@ -191,3 +191,8 @@ SlashCmdList["ZenHUD"] = function(msg)
             Utils.Print("Valid types: combat, target, mouseover")
             return
         end
+
+        grace[graceType] = value
+        Utils.Print(string.format("Grace period (%s) set to %.1fs", graceType, value))
+
+    elseif cmd == "character" then

@@ -18,3 +18,7 @@ function Utils.Print(msg, debugOnly)
 end
 
 function Utils.Clamp(value, min, max)
+    return math.max(min, math.min(max, value))
+end
+
+function Utils.GetTime()

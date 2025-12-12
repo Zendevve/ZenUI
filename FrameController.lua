@@ -76,35 +76,3 @@ function FrameController:FadeTo(alpha, duration)
     if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
         return
     end
-
-    -- Smooth interruption: if animating to opposite direction, start from current position
-    local newTarget = Utils.Clamp(alpha, 0, 1)
-    if self.animating and newTarget ~= self.targetAlpha then
-        -- Interrupting animation - start from current position for smooth transition
-        self.startAlpha = self.currentAlpha
-    else
-        self.startAlpha = self.currentAlpha
-    end
-
-    self.targetAlpha = newTarget
-    self.duration = math.max(0.05, duration or Config:Get("fadeTime"))
-    self.elapsed = 0
-    self.animating = true
-
-    -- Prepare for fade-in
-    if alpha > self.currentAlpha then
-        self.frame:Show()
-        self.frame:SetAlpha(self.currentAlpha)
-    end
-end
-
-function FrameController:Update(dt)
-    if not self.animating then return end
-
-    self.elapsed = self.elapsed + dt
-    local progress = math.min(1, self.elapsed / self.duration)
-
-    -- Linear interpolation from start to target
-    self.currentAlpha = self.startAlpha + (self.targetAlpha - self.startAlpha) * progress
-    self.frame:SetAlpha(self.currentAlpha)
-
