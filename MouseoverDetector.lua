@@ -77,3 +77,9 @@ function MouseoverDetector:CreateElvUIHotspots()
 end
 
 local function IsUIFrame(name)
+    if not name then return false end
+
+    -- Hover hotspots (always active, even when frames are hidden)
+    if string.find(name, "^ZenHUD_Hover_") then
+        return true
+    end

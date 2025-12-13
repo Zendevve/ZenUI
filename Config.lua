@@ -91,9 +91,3 @@ end
 function Config:Clone(tbl)
     local copy = {}
     for k, v in pairs(tbl) do
-        copy[k] = type(v) == "table" and self:Clone(v) or v
-    end
-    return copy
-end
-
-function Config:Get(key)

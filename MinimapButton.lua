@@ -58,3 +58,9 @@ local function OnDragStart(self)
 end
 
 local function OnDragStop(self)
+    self:StopMovingOrSizing()
+    self.isMoving = false
+
+    -- Calculate angle from minimap center
+    local mx, my = Minimap:GetCenter()
+    local bx, by = self:GetCenter()

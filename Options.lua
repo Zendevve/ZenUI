@@ -143,3 +143,12 @@ combatGraceValue:SetPoint("TOP", combatGraceSlider, "BOTTOM", 0, 0)
 combatGraceSlider:SetScript("OnValueChanged", function(self, value)
     combatGraceValue:SetText(string.format("%.1f seconds", value))
     local grace = Config:Get("gracePeriods")
+    grace.combat = value
+    Config:Set("gracePeriods", grace)  -- Persist change
+end)
+
+-- Target Grace Period
+local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
+    "Post-Target Grace Period", 0, 10, 0.5)
+targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
+targetGraceSlider:SetWidth(300)

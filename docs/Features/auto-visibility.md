@@ -30,3 +30,7 @@ stateDiagram-v2
 ## 4. Technical Design (Summary)
 *   **Components**: `StateManager.lua` (Decision Engine), `FrameManager.lua` (Orchestrator).
 *   **Data Model**:
+    *   `StateManager.inCombat` (boolean)
+    *   `StateManager.graceUntil` (table of timestamps)
+*   **Events**: `PLAYER_REGEN_DISABLED` (Combat Start), `PLAYER_TARGET_CHANGED`, `UPDATE_MOUSEOVER_UNIT`.
+

@@ -36,7 +36,3 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
     elseif event == "PLAYER_REGEN_DISABLED" then
         StateManager:SetCombat(true)
 
-    elseif event == "PLAYER_REGEN_ENABLED" then
-        StateManager:SetCombat(false)
-
-    elseif event == "PLAYER_TARGET_CHANGED" then

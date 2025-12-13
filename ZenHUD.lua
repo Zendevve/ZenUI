@@ -198,17 +198,3 @@ SlashCmdList["ZenHUD"] = function(msg)
     elseif cmd == "character" then
         local enabled = Config:ToggleCharacterSettings()
         if enabled then
-            Utils.Print("Switched to character-specific settings")
-            Utils.Print("Settings will now be saved per-character")
-        else
-            Utils.Print("Switched to account-wide settings")
-            Utils.Print("Settings will be shared across all characters")
-        end
-
-    elseif cmd == "reload" then
-        Config:Initialize()
-        Utils.Print("Configuration reloaded")
-        StateManager:Update()
-
-    elseif cmd == "minimap" then
-        local show = not Config:Get("showMinimapButton")

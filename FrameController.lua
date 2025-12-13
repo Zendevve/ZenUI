@@ -76,3 +76,4 @@ function FrameController:FadeTo(alpha, duration)
     if not self.animating and math.abs(self.currentAlpha - alpha) < 0.01 then
         return
     end
+
