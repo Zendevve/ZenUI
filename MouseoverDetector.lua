@@ -61,25 +61,3 @@ local ELVUI_HOTSPOT_PATTERNS = {
 }
 
 function MouseoverDetector:CreateElvUIHotspots()
-    -- Only run if ElvUI or Tukui is loaded
-    if not (_G.ElvUI or _G.Tukui) then return end
-
-    for frameName, frameObj in pairs(_G) do
-        if type(frameObj) == "table" and frameObj.GetName then
-            for _, pattern in ipairs(ELVUI_HOTSPOT_PATTERNS) do
-                if string.match(frameName, "^" .. pattern .. "$") or frameName == pattern then
-                    CreateHoverHotspot(frameObj, frameName)
-                    break
-                end
-            end
-        end
-    end
-end
-
-local function IsUIFrame(name)
-    if not name then return false end
-
-    -- Hover hotspots (always active, even when frames are hidden)
-    if string.find(name, "^ZenHUD_Hover_") then
-        return true
-    end

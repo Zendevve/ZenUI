@@ -20,3 +20,9 @@ Enable ZenHUD's automatic visibility system to work with popular ElvUI and Tukui
 *   **Detection Event**: `ADDON_LOADED` for "ElvUI" or "Tukui".
 *   **Frame Patterns**: `ELVUI_FRAME_PATTERNS` table in `FrameManager.lua`.
 *   **Registration**: `FrameManager:RegisterElvUIFrames()` scans `_G` for matching frames.
+*   **Config**: `frameGroups.elvui` defaults to `true`.
+
+## 5. Test Scenarios (Verification)
+| ID | Description | Setup | Action | Expected Result |
+| :--- | :--- | :--- | :--- | :--- |
+| **01** | **ElvUI Detection** | ElvUI installed | Load game | Chat: "Detected ElvUI, registering frames..." |

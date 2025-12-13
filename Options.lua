@@ -152,3 +152,7 @@ local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
     "Post-Target Grace Period", 0, 10, 0.5)
 targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
 targetGraceSlider:SetWidth(300)
+
+local targetGraceValue = targetGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+targetGraceValue:SetPoint("TOP", targetGraceSlider, "BOTTOM", 0, 0)
+

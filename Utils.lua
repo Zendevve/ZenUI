@@ -17,3 +17,6 @@ function Utils.Print(msg, debugOnly)
     DEFAULT_CHAT_FRAME:AddMessage("|cFF66C2FF[ZenHUD]|r " .. msg)
 end
 
+function Utils.Clamp(value, min, max)
+    return math.max(min, math.min(max, value))
+end

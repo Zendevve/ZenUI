@@ -151,3 +151,8 @@ ZenHUDDB = {
         elvui = true,         -- Control ElvUI frames
     },
 }
+```
+
+---
+
+## ElvUI / Tukui Support

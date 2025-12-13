@@ -144,3 +144,30 @@ local CONTROLLED_FRAMES = {
     "QuestLogMicroButton", "SocialsMicroButton", "WorldMapMicroButton",
     "MainMenuMicroButton", "HelpMicroButton",
     "MainMenuBarBackpackButton", "CharacterBag0Slot", "CharacterBag1Slot",
+    "CharacterBag2Slot", "CharacterBag3Slot", "KeyRingButton",
+    "PlayerFrame", "PetFrame", "TargetFrameToT",
+    "BuffFrame", "TemporaryEnchantFrame",
+    "WatchFrame", "QuestWatchFrame",
+    "ChatFrameMenuButton", "ChatFrame1UpButton", "ChatFrame1DownButton",
+    "ChatFrame1BottomButton",
+    "PetCastingBarFrame",
+    "VehicleMenuBar", "RuneFrame", "QuestTimerFrame", "BonusActionBarFrame",
+}
+
+-- Conditional frames (don't force show)
+local CONDITIONAL_FRAMES = {
+    PetFrame = true,
+    TargetFrameToT = true,
+    PetCastingBarFrame = true,
+    VehicleMenuBar = true,
+    RuneFrame = true,
+    BonusActionBarFrame = true,
+}
+
+--------------------------------------------------------------------------------
+-- ElvUI / Tukui Frame Detection
+--------------------------------------------------------------------------------
+-- Known ElvUI frame name patterns to search for
+local ELVUI_FRAME_PATTERNS = {
+    -- Action Bars (ElvUI uses ElvUI_Bar1 through ElvUI_Bar10)
+    { pattern = "ElvUI_Bar%d+", group = "elvui", fadeOnly = true },

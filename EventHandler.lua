@@ -31,8 +31,3 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
     local Utils = ZenHUD.Utils
 
     if event == "PLAYER_ENTERING_WORLD" then
-        ZenHUD:Initialize()
-
-    elseif event == "PLAYER_REGEN_DISABLED" then
-        StateManager:SetCombat(true)
-
