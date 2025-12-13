@@ -156,3 +156,9 @@ targetGraceSlider:SetWidth(300)
 local targetGraceValue = targetGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
 targetGraceValue:SetPoint("TOP", targetGraceSlider, "BOTTOM", 0, 0)
 
+targetGraceSlider:SetScript("OnValueChanged", function(self, value)
+    targetGraceValue:SetText(string.format("%.1f seconds", value))
+    local grace = Config:Get("gracePeriods")
+    grace.target = value
+    Config:Set("gracePeriods", grace)  -- Persist change
+end)

@@ -77,3 +77,6 @@ If no new rule is detected â†’ do not update the file.
 - Read assignment, inspect code and docs before planning
 - Write multi-step plan before implementation
 - Implement code and tests together
+- Run tests in layers: new â†’ related suite â†’ broader regressions
+- After all tests pass: run format, then build
+- Summarize changes and test results before marking complete
