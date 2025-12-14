@@ -157,5 +157,3 @@ local CONTROLLED_FRAMES = {
 -- Conditional frames (don't force show)
 local CONDITIONAL_FRAMES = {
     PetFrame = true,
-    TargetFrameToT = true,
-    PetCastingBarFrame = true,

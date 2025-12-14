@@ -147,21 +147,3 @@ combatGraceSlider:SetScript("OnValueChanged", function(self, value)
     Config:Set("gracePeriods", grace)  -- Persist change
 end)
 
--- Target Grace Period
-local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
-    "Post-Target Grace Period", 0, 10, 0.5)
-targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
-targetGraceSlider:SetWidth(300)
-
-local targetGraceValue = targetGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-targetGraceValue:SetPoint("TOP", targetGraceSlider, "BOTTOM", 0, 0)
-
-targetGraceSlider:SetScript("OnValueChanged", function(self, value)
-    targetGraceValue:SetText(string.format("%.1f seconds", value))
-    local grace = Config:Get("gracePeriods")
-    grace.target = value
-    Config:Set("gracePeriods", grace)  -- Persist change
-end)
-
--- Mouseover Grace Period
-local mouseoverGraceSlider = CreateSlider("ZenHUDOptionsMouseoverGrace", OptionsPanel,

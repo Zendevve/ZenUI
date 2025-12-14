@@ -104,3 +104,6 @@ ZenHUD/
 /ZenHUD options      Open settings panel
 /ZenHUD toggle       Enable/disable addon
 /ZenHUD status       Show current state
+/ZenHUD frames       List controlled frames
+/ZenHUD debug        Toggle debug messages
+```
