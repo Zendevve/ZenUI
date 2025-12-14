@@ -21,4 +21,3 @@ To provide smooth, professional-grade transitions between visible and hidden sta
 *   **Components**: `FrameController.lua`.
 *   **Logic**: Per-frame update loop managed by `FrameManager`.
 *   **Variables**: `currentAlpha`, `targetAlpha`, `startAlpha`, `duration`.
-

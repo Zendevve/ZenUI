@@ -104,23 +104,3 @@ ZenHUD/
 /ZenHUD options      Open settings panel
 /ZenHUD toggle       Enable/disable addon
 /ZenHUD status       Show current state
-/ZenHUD frames       List controlled frames
-/ZenHUD debug        Toggle debug messages
-```
-
-### Minimap Button
-
-| Click | Action |
-|-------|--------|
-| **Left** | Toggle ZenHUD on/off |
-| **Right** | Open options panel |
-| **Drag** | Reposition around minimap |
-
-To hide the minimap button, use `/ZenHUD minimap` (toggle).
-
-### Settings
-
-| Setting | Command | Example |
-|---------|---------|---------|
-| Fade Time | `/ZenHUD fade <sec>` | `/ZenHUD fade 0.5` |
-| Combat Grace | `/ZenHUD grace combat <sec>` | `/ZenHUD grace combat 10` |

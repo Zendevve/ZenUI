@@ -197,3 +197,9 @@ SlashCmdList["ZenHUD"] = function(msg)
 
     elseif cmd == "character" then
         local enabled = Config:ToggleCharacterSettings()
+        if enabled then
+            Utils.Print("Switched to character-specific settings")
+            Utils.Print("Settings will now be saved per-character")
+        else
+            Utils.Print("Switched to account-wide settings")
+            Utils.Print("Settings will be shared across all characters")

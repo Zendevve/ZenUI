@@ -162,3 +162,6 @@ targetGraceSlider:SetScript("OnValueChanged", function(self, value)
     grace.target = value
     Config:Set("gracePeriods", grace)  -- Persist change
 end)
+
+-- Mouseover Grace Period
+local mouseoverGraceSlider = CreateSlider("ZenHUDOptionsMouseoverGrace", OptionsPanel,

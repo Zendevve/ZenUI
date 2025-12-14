@@ -38,3 +38,4 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
 
     elseif event == "PLAYER_REGEN_ENABLED" then
         StateManager:SetCombat(false)
+
