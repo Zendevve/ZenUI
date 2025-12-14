@@ -149,11 +149,3 @@ local CONTROLLED_FRAMES = {
     "BuffFrame", "TemporaryEnchantFrame",
     "WatchFrame", "QuestWatchFrame",
     "ChatFrameMenuButton", "ChatFrame1UpButton", "ChatFrame1DownButton",
-    "ChatFrame1BottomButton",
-    "PetCastingBarFrame",
-    "VehicleMenuBar", "RuneFrame", "QuestTimerFrame", "BonusActionBarFrame",
-}
-
--- Conditional frames (don't force show)
-local CONDITIONAL_FRAMES = {
-    PetFrame = true,

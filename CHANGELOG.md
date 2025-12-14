@@ -8,5 +8,3 @@
 - **Zone-Based Auto-Show** â€” Always show UI in dungeons, raids, arenas, BGs
 - **ElvUI / Tukui Compatibility** â€” Dynamic frame detection and registration
 - **Frame Group Toggles** â€” Enable/disable control of specific frame groups
-- **`/ZenHUD options`** â€” Opens settings panel directly
-- **`/ZenHUD minimap`** â€” Toggle minimap button visibility

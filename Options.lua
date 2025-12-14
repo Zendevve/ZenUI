@@ -147,3 +147,67 @@ combatGraceSlider:SetScript("OnValueChanged", function(self, value)
     Config:Set("gracePeriods", grace)  -- Persist change
 end)
 
+-- Target Grace Period
+local targetGraceSlider = CreateSlider("ZenHUDOptionsTargetGrace", OptionsPanel,
+    "Post-Target Grace Period", 0, 10, 0.5)
+targetGraceSlider:SetPoint("TOPLEFT", combatGraceSlider, "BOTTOMLEFT", 0, -24)
+targetGraceSlider:SetWidth(300)
+
+local targetGraceValue = targetGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+targetGraceValue:SetPoint("TOP", targetGraceSlider, "BOTTOM", 0, 0)
+
+targetGraceSlider:SetScript("OnValueChanged", function(self, value)
+    targetGraceValue:SetText(string.format("%.1f seconds", value))
+    local grace = Config:Get("gracePeriods")
+    grace.target = value
+    Config:Set("gracePeriods", grace)  -- Persist change
+end)
+
+-- Mouseover Grace Period
+local mouseoverGraceSlider = CreateSlider("ZenHUDOptionsMouseoverGrace", OptionsPanel,
+    "Post-Mouseover Grace Period", 0, 10, 0.5)
+mouseoverGraceSlider:SetPoint("TOPLEFT", targetGraceSlider, "BOTTOMLEFT", 0, -24)
+mouseoverGraceSlider:SetWidth(300)
+
+local mouseoverGraceValue = mouseoverGraceSlider:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+mouseoverGraceValue:SetPoint("TOP", mouseoverGraceSlider, "BOTTOM", 0, 0)
+
+mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
+    mouseoverGraceValue:SetText(string.format("%.1f seconds", value))
+    local grace = Config:Get("gracePeriods")
+    grace.mouseover = value
+    Config:Set("gracePeriods", grace)  -- Persist change
+end)
+
+--------------------------------------------------------------------------------
+-- Character Settings Toggle
+--------------------------------------------------------------------------------
+local charSettingsBtn = CreateFrame("Button", "ZenHUDOptionsCharSettings", OptionsPanel, "UIPanelButtonTemplate")
+charSettingsBtn:SetSize(200, 24)
+charSettingsBtn:SetPoint("TOPLEFT", mouseoverGraceSlider, "BOTTOMLEFT", 0, -24)
+charSettingsBtn:SetText("Use Character-Specific Settings")
+
+local charSettingsLabel = OptionsPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+charSettingsLabel:SetPoint("LEFT", charSettingsBtn, "RIGHT", 8, 0)
+charSettingsLabel:SetText("(Currently: Account-Wide)")
+
+charSettingsBtn:SetScript("OnClick", function(self)
+    local enabled = Config:ToggleCharacterSettings()
+    if enabled then
+        Utils.Print("Switched to character-specific settings")
+        charSettingsLabel:SetText("(Currently: Character-Specific)")
+    else
+        Utils.Print("Switched to account-wide settings")
+        charSettingsLabel:SetText("(Currently: Account-Wide)")
+    end
+end)
+
+--------------------------------------------------------------------------------
+-- Frame Group Toggles
+--------------------------------------------------------------------------------
+local frameGroupsTitle = OptionsPanel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+frameGroupsTitle:SetPoint("TOPLEFT", charSettingsBtn, "BOTTOMLEFT", 0, -24)
+frameGroupsTitle:SetText("Frame Groups (toggle which groups ZenHUD controls)")
+
+-- Store checkboxes for refresh
+local frameGroupChecks = {}
