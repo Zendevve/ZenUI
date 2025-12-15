@@ -173,4 +173,3 @@ local mouseoverGraceValue = mouseoverGraceSlider:CreateFontString(nil, "ARTWORK"
 mouseoverGraceValue:SetPoint("TOP", mouseoverGraceSlider, "BOTTOM", 0, 0)
 
 mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
-    mouseoverGraceValue:SetText(string.format("%.1f seconds", value))

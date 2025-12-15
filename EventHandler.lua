@@ -43,6 +43,3 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
         local hasTarget = UnitExists("target")
         local isAlive = hasTarget and not UnitIsDeadOrGhost("target")
         StateManager:SetTarget(hasTarget, isAlive)
-
-    elseif event == "PLAYER_UPDATE_RESTING" then
-        StateManager:SetResting(IsResting())

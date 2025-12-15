@@ -11,3 +11,4 @@ Run `luacheck` before every commit to catch:
 
 ## 2. Manual Testing Layers
 ### Level 1: "Reload" Test
+*   Type `/reload` in game.

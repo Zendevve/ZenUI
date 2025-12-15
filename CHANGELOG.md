@@ -10,3 +10,4 @@
 - **Frame Group Toggles** â€” Enable/disable control of specific frame groups
 - **`/ZenHUD options`** â€” Opens settings panel directly
 - **`/ZenHUD minimap`** â€” Toggle minimap button visibility
+

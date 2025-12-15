@@ -124,3 +124,45 @@ function StateManager:SetCombat(inCombat)
         -- Leaving combat - start grace period with timer callback
         local grace = Config:Get("gracePeriods").combat
         self.graceUntil.combat = Utils.GetTime() + grace
+
+        Utils.Print(string.format("Combat: LEAVING combat, %.1fs grace period", grace), true)
+
+        -- Timer callback to hide UI after grace expires
+        Utils.After(grace, function()
+            -- Clear this grace period and force update
+            self.graceUntil.combat = 0
+            Utils.Print("Combat grace expired, updating visibility", true)
+            self:Update()
+        end)
+    end
+
+    self:Update()
+end
+
+function StateManager:SetTarget(hasTarget, isAlive)
+    local hadLivingTarget = self.hasLivingTarget
+    self.hasLivingTarget = hasTarget and isAlive
+
+    if hasTarget and isAlive then
+        -- Acquired living target - clear grace
+        self.graceUntil.target = 0
+        Utils.Print("Target: acquired living target", true)
+    elseif not hasTarget and hadLivingTarget then
+        -- Lost living target - start grace period with timer callback
+        local grace = Config:Get("gracePeriods").target
+        self.graceUntil.target = Utils.GetTime() + grace
+
+        Utils.Print(string.format("Target: lost target, %.1fs grace period", grace), true)
+
+        -- Timer callback to hide UI after grace expires
+        Utils.After(grace, function()
+            -- Clear this grace period and force update
+            self.graceUntil.target = 0
+            Utils.Print("Target grace expired, updating visibility", true)
+            self:Update()
+        end)
+    end
+
+    self:Update()
+end
+
