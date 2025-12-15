@@ -21,5 +21,3 @@ Enable ZenHUD's automatic visibility system to work with popular ElvUI and Tukui
 *   **Frame Patterns**: `ELVUI_FRAME_PATTERNS` table in `FrameManager.lua`.
 *   **Registration**: `FrameManager:RegisterElvUIFrames()` scans `_G` for matching frames.
 *   **Config**: `frameGroups.elvui` defaults to `true`.
-
-## 5. Test Scenarios (Verification)

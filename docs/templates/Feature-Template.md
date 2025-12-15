@@ -20,3 +20,12 @@ graph TD
     B -->|Yes| C[Result 1]
     B -->|No| D[Result 2]
 ```
+
+## 4. Technical Design (Summary)
+*   **Components**: {{List components involved}}
+*   **Data Model**: {{Key data structures}}
+
+## 5. Test Scenarios (Verification)
+| ID | Description | Setup | Action | Expected Result |
+| :--- | :--- | :--- | :--- | :--- |
+| **01** | {{Scenario Name}} | {{Prerequisites}} | {{Step-by-step}} | {{Outcome}} |

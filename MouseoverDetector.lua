@@ -86,13 +86,3 @@ local function IsUIFrame(name)
 
     -- Blizzard Action buttons
     if string.find(name, "ActionButton") or string.find(name, "MultiBar") or
-       string.find(name, "PetActionButton") or string.find(name, "ShapeshiftButton") then
-        return true
-    end
-
-    -- Blizzard Action bar containers
-    if name == "MainMenuBar" or name == "PetActionBarFrame" or name == "ShapeshiftBarFrame" then
-        return true
-    end
-
-    -- Blizzard Player frame
