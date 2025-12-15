@@ -108,3 +108,15 @@ ZenHUD/
 /ZenHUD debug        Toggle debug messages
 ```
 
+### Minimap Button
+
+| Click | Action |
+|-------|--------|
+| **Left** | Toggle ZenHUD on/off |
+| **Right** | Open options panel |
+| **Drag** | Reposition around minimap |
+
+To hide the minimap button, use `/ZenHUD minimap` (toggle).
+
+### Settings
+

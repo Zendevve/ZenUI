@@ -10,3 +10,5 @@ Run `luacheck` before every commit to catch:
 *   Syntax errors (Lua 5.1 compatibility).
 
 ## 2. Manual Testing Layers
+### Level 1: "Reload" Test
+*   Type `/reload` in game.
