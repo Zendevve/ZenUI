@@ -23,3 +23,7 @@ Enable ZenHUD's automatic visibility system to work with popular ElvUI and Tukui
 *   **Config**: `frameGroups.elvui` defaults to `true`.
 
 ## 5. Test Scenarios (Verification)
+| ID | Description | Setup | Action | Expected Result |
+| :--- | :--- | :--- | :--- | :--- |
+| **01** | **ElvUI Detection** | ElvUI installed | Load game | Chat: "Detected ElvUI, registering frames..." |
+| **02** | **Frame Registration** | ElvUI installed | `/ZenHUD frames` | List includes `ElvUI_Bar1`, `ElvUF_Player`, etc. |

@@ -16,3 +16,4 @@
     *   `ketho.wow-api` (World of Warcraft API) - For API intellisense.
 *   **Linter**: `luacheck` (install via luarocks or use the extension).
 
+## 3. Workflow

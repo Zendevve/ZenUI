@@ -52,3 +52,12 @@ local function UpdatePosition()
     button:SetPoint("CENTER", Minimap, "CENTER", x, y)
 end
 
+local function OnDragStart(self)
+    self:StartMoving()
+    self.isMoving = true
+end
+
+local function OnDragStop(self)
+    self:StopMovingOrSizing()
+    self.isMoving = false
+

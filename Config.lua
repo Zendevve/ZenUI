@@ -96,3 +96,14 @@ function Config:Clone(tbl)
     return copy
 end
 
+function Config:Get(key)
+    -- If using character settings and key exists in character DB, use it
+    if ZenHUDDB.useCharacterSettings and ZenHUDCharDB[key] ~= nil then
+        return ZenHUDCharDB[key]
+    end
+    -- Otherwise use account-wide setting
+    return ZenHUDDB[key]
+end
+
+function Config:Set(key, value)
+    -- Set to appropriate DB based on mode

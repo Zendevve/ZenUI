@@ -92,6 +92,3 @@ If no new rule is detected â†’ do not update the file.
 - Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
 
 ### Testing (ALL TASKS)
-
-<!-- CUSTOMIZE (remove after): your test structure -->
-
