@@ -102,4 +102,3 @@ function FrameController:Update(dt)
     if not self.animating then return end
 
     self.elapsed = self.elapsed + dt
-    local progress = math.min(1, self.elapsed / self.duration)

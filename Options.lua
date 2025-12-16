@@ -173,3 +173,21 @@ local mouseoverGraceValue = mouseoverGraceSlider:CreateFontString(nil, "ARTWORK"
 mouseoverGraceValue:SetPoint("TOP", mouseoverGraceSlider, "BOTTOM", 0, 0)
 
 mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
+    mouseoverGraceValue:SetText(string.format("%.1f seconds", value))
+    local grace = Config:Get("gracePeriods")
+    grace.mouseover = value
+    Config:Set("gracePeriods", grace)  -- Persist change
+end)
+
+--------------------------------------------------------------------------------
+-- Character Settings Toggle
+--------------------------------------------------------------------------------
+local charSettingsBtn = CreateFrame("Button", "ZenHUDOptionsCharSettings", OptionsPanel, "UIPanelButtonTemplate")
+charSettingsBtn:SetSize(200, 24)
+charSettingsBtn:SetPoint("TOPLEFT", mouseoverGraceSlider, "BOTTOMLEFT", 0, -24)
+charSettingsBtn:SetText("Use Character-Specific Settings")
+
+local charSettingsLabel = OptionsPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
+charSettingsLabel:SetPoint("LEFT", charSettingsBtn, "RIGHT", 8, 0)
+charSettingsLabel:SetText("(Currently: Account-Wide)")
+
