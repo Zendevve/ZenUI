@@ -179,3 +179,7 @@ SlashCmdList["ZenHUD"] = function(msg)
         local value = tonumber(args[3])
 
         if not graceType or not value or value < 0 then
+            Utils.Print("Usage: /ZenHUD grace <type> <seconds>")
+            Utils.Print("Types: combat, target, mouseover")
+            Utils.Print("Example: /ZenHUD grace combat 10.0")
+            return

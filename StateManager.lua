@@ -132,10 +132,3 @@ function StateManager:SetCombat(inCombat)
             -- Clear this grace period and force update
             self.graceUntil.combat = 0
             Utils.Print("Combat grace expired, updating visibility", true)
-            self:Update()
-        end)
-    end
-
-    self:Update()
-end
-

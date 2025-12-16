@@ -72,3 +72,8 @@ function MouseoverDetector:CreateElvUIHotspots()
                     break
                 end
             end
+        end
+    end
+end
+
+local function IsUIFrame(name)

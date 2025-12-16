@@ -84,3 +84,14 @@ If no new rule is detected â†’ do not update the file.
 
 ### Documentation (ALL TASKS)
 
+<!-- CUSTOMIZE (remove after): your docs location -->
+
+- All docs live in `docs/` (or `.wiki/`)
+- Update feature docs when behaviour changes
+- Update ADRs when architecture changes
+- Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
+
+### Testing (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your test structure -->
+
