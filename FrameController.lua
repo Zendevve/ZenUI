@@ -98,3 +98,19 @@ function FrameController:FadeTo(alpha, duration)
     end
 end
 
+function FrameController:Update(dt)
+    if not self.animating then return end
+
+    self.elapsed = self.elapsed + dt
+    local progress = math.min(1, self.elapsed / self.duration)
+
+    -- Linear interpolation from start to target
+    self.currentAlpha = self.startAlpha + (self.targetAlpha - self.startAlpha) * progress
+    self.frame:SetAlpha(self.currentAlpha)
+
+    -- Animation complete
+    if progress >= 1 then
+        self.animating = false
+        self.currentAlpha = self.targetAlpha
+        self.frame:SetAlpha(self.targetAlpha)
+

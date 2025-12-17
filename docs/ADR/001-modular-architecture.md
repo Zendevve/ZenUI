@@ -26,3 +26,4 @@ The codebase is split into distinct modules with single responsibilities:
 
 ## Consequences
 ### Positive
+*   **Testability**: Logic is isolated. `StateManager` can be tested independently of `FrameManager`.
