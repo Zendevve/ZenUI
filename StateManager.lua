@@ -159,3 +159,10 @@ function StateManager:SetTarget(hasTarget, isAlive)
             -- Clear this grace period and force update
             self.graceUntil.target = 0
             Utils.Print("Target grace expired, updating visibility", true)
+            self:Update()
+        end)
+    end
+
+    self:Update()
+end
+

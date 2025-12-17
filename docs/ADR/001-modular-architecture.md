@@ -22,4 +22,3 @@ The codebase is split into distinct modules with single responsibilities:
 
 ## Alternatives Considered
 *   **Monolithic (`ZenHUD.lua` only)**: Rejected. Too hard to maintain.
-*   **Functional/Procedural**: Rejected. Managing state for 50+ individual frames (alpha, visibility, animation progress) is messy without Frame objects.

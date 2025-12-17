@@ -150,23 +150,3 @@ local CONTROLLED_FRAMES = {
     "WatchFrame", "QuestWatchFrame",
     "ChatFrameMenuButton", "ChatFrame1UpButton", "ChatFrame1DownButton",
     "ChatFrame1BottomButton",
-    "PetCastingBarFrame",
-    "VehicleMenuBar", "RuneFrame", "QuestTimerFrame", "BonusActionBarFrame",
-}
-
--- Conditional frames (don't force show)
-local CONDITIONAL_FRAMES = {
-    PetFrame = true,
-    TargetFrameToT = true,
-    PetCastingBarFrame = true,
-    VehicleMenuBar = true,
-    RuneFrame = true,
-    BonusActionBarFrame = true,
-}
-
---------------------------------------------------------------------------------
--- ElvUI / Tukui Frame Detection
---------------------------------------------------------------------------------
--- Known ElvUI frame name patterns to search for
-local ELVUI_FRAME_PATTERNS = {
-    -- Action Bars (ElvUI uses ElvUI_Bar1 through ElvUI_Bar10)

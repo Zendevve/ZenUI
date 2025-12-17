@@ -186,7 +186,3 @@ SlashCmdList["ZenHUD"] = function(msg)
         end
 
         local grace = Config:Get("gracePeriods")
-        if not grace[graceType] then
-            Utils.Print(string.format("Unknown grace type: %s", graceType))
-            Utils.Print("Valid types: combat, target, mouseover")
-            return

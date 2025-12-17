@@ -79,3 +79,23 @@ If no new rule is detected â†’ do not update the file.
 - Implement code and tests together
 - Run tests in layers: new â†’ related suite â†’ broader regressions
 - After all tests pass: run format, then build
+- Summarize changes and test results before marking complete
+- Always run required builds and tests yourself; do not ask the user to execute them (explicit user directive).
+
+### Documentation (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your docs location -->
+
+- All docs live in `docs/` (or `.wiki/`)
+- Update feature docs when behaviour changes
+- Update ADRs when architecture changes
+- Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
+
+### Testing (ALL TASKS)
+
+<!-- CUSTOMIZE (remove after): your test structure -->
+
+- Every behaviour change needs sufficient automated tests to cover its cases; one is the minimum, not the target
+- Each public API endpoint has at least one test; complex endpoints have tests for different inputs and errors
+- Integration tests must exercise real flows end-to-end, not just call endpoints in isolation
+- Prefer integration/API/UI tests over unit tests
