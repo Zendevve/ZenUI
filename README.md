@@ -140,3 +140,21 @@ ZenHUDDB = {
     fadeTime = 0.8,           -- Animation duration
     fadedAlpha = 0.0,         -- Hidden opacity (0.0 = invisible)
     gracePeriods = {
+        combat = 8.0,         -- Post-combat delay
+        target = 2.0,         -- Post-target delay
+        mouseover = 2.0,      -- Post-mouseover delay
+    },
+    frameGroups = {
+        actionBars = true,    -- Control action bars
+        unitFrames = true,    -- Control player/pet frames
+        buffs = true,         -- Control buff frames
+        elvui = true,         -- Control ElvUI frames
+    },
+}
+```
+
+---
+
+## ElvUI / Tukui Support
+
+ZenHUD automatically detects and controls ElvUI/Tukui frames:

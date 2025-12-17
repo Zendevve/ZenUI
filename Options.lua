@@ -209,3 +209,5 @@ local frameGroupsTitle = OptionsPanel:CreateFontString(nil, "ARTWORK", "GameFont
 frameGroupsTitle:SetPoint("TOPLEFT", charSettingsBtn, "BOTTOMLEFT", 0, -24)
 frameGroupsTitle:SetText("Frame Groups (toggle which groups ZenHUD controls)")
 
+-- Store checkboxes for refresh
+local frameGroupChecks = {}

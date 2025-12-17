@@ -35,3 +35,5 @@ stateDiagram-v2
 *   **Events**: `PLAYER_REGEN_DISABLED` (Combat Start), `PLAYER_TARGET_CHANGED`, `UPDATE_MOUSEOVER_UNIT`.
 
 ## 5. Test Scenarios (Verification)
+| ID | Description | Setup | Action | Expected Result |
+| :--- | :--- | :--- | :--- | :--- |

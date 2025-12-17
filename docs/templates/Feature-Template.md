@@ -26,6 +26,3 @@ graph TD
 *   **Data Model**: {{Key data structures}}
 
 ## 5. Test Scenarios (Verification)
-| ID | Description | Setup | Action | Expected Result |
-| :--- | :--- | :--- | :--- | :--- |
-| **01** | {{Scenario Name}} | {{Prerequisites}} | {{Step-by-step}} | {{Outcome}} |

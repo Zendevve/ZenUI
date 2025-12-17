@@ -90,9 +90,3 @@ local function IsUIFrame(name)
         return true
     end
 
-    -- Blizzard Action bar containers
-    if name == "MainMenuBar" or name == "PetActionBarFrame" or name == "ShapeshiftBarFrame" then
-        return true
-    end
-
-    -- Blizzard Player frame

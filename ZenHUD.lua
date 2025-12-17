@@ -173,3 +173,20 @@ SlashCmdList["ZenHUD"] = function(msg)
 
         Config:Set("fadeTime", value)
         Utils.Print(string.format("Fade time set to %.2fs", value))
+
+    elseif cmd == "grace" then
+        local graceType = args[2]  -- combat, target, or mouseover
+        local value = tonumber(args[3])
+
+        if not graceType or not value or value < 0 then
+            Utils.Print("Usage: /ZenHUD grace <type> <seconds>")
+            Utils.Print("Types: combat, target, mouseover")
+            Utils.Print("Example: /ZenHUD grace combat 10.0")
+            return
+        end
+
+        local grace = Config:Get("gracePeriods")
+        if not grace[graceType] then
+            Utils.Print(string.format("Unknown grace type: %s", graceType))
+            Utils.Print("Valid types: combat, target, mouseover")
+            return
