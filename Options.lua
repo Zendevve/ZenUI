@@ -187,6 +187,3 @@ charSettingsBtn:SetSize(200, 24)
 charSettingsBtn:SetPoint("TOPLEFT", mouseoverGraceSlider, "BOTTOMLEFT", 0, -24)
 charSettingsBtn:SetText("Use Character-Specific Settings")
 
-local charSettingsLabel = OptionsPanel:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
-charSettingsLabel:SetPoint("LEFT", charSettingsBtn, "RIGHT", 8, 0)
-charSettingsLabel:SetText("(Currently: Account-Wide)")

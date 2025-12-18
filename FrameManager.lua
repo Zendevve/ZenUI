@@ -157,3 +157,17 @@ local CONTROLLED_FRAMES = {
 -- Conditional frames (don't force show)
 local CONDITIONAL_FRAMES = {
     PetFrame = true,
+    TargetFrameToT = true,
+    PetCastingBarFrame = true,
+    VehicleMenuBar = true,
+    RuneFrame = true,
+    BonusActionBarFrame = true,
+}
+
+--------------------------------------------------------------------------------
+-- ElvUI / Tukui Frame Detection
+--------------------------------------------------------------------------------
+-- Known ElvUI frame name patterns to search for
+local ELVUI_FRAME_PATTERNS = {
+    -- Action Bars (ElvUI uses ElvUI_Bar1 through ElvUI_Bar10)
+    { pattern = "ElvUI_Bar%d+", group = "elvui", fadeOnly = true },
