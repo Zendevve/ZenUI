@@ -23,5 +23,3 @@ end
 
 function Utils.GetTime()
     return GetTime and GetTime() or 0
-end
-

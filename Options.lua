@@ -179,11 +179,3 @@ mouseoverGraceSlider:SetScript("OnValueChanged", function(self, value)
     Config:Set("gracePeriods", grace)  -- Persist change
 end)
 
---------------------------------------------------------------------------------
--- Character Settings Toggle
---------------------------------------------------------------------------------
-local charSettingsBtn = CreateFrame("Button", "ZenHUDOptionsCharSettings", OptionsPanel, "UIPanelButtonTemplate")
-charSettingsBtn:SetSize(200, 24)
-charSettingsBtn:SetPoint("TOPLEFT", mouseoverGraceSlider, "BOTTOMLEFT", 0, -24)
-charSettingsBtn:SetText("Use Character-Specific Settings")
-
