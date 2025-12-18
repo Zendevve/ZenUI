@@ -89,3 +89,4 @@ function FrameController:FadeTo(alpha, duration)
     self.targetAlpha = newTarget
     self.duration = math.max(0.05, duration or Config:Get("fadeTime"))
     self.elapsed = 0
+    self.animating = true

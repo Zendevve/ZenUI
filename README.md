@@ -156,3 +156,5 @@ ZenHUDDB = {
 ---
 
 ## ElvUI / Tukui Support
+
+ZenHUD automatically detects and controls ElvUI/Tukui frames:
