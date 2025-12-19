@@ -170,3 +170,4 @@ local CONDITIONAL_FRAMES = {
 -- Known ElvUI frame name patterns to search for
 local ELVUI_FRAME_PATTERNS = {
     -- Action Bars (ElvUI uses ElvUI_Bar1 through ElvUI_Bar10)
+    { pattern = "ElvUI_Bar%d+", group = "elvui", fadeOnly = true },

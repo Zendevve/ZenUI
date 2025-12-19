@@ -144,3 +144,17 @@ ZenHUDDB = {
         target = 2.0,         -- Post-target delay
         mouseover = 2.0,      -- Post-mouseover delay
     },
+    frameGroups = {
+        actionBars = true,    -- Control action bars
+        unitFrames = true,    -- Control player/pet frames
+        buffs = true,         -- Control buff frames
+        elvui = true,         -- Control ElvUI frames
+    },
+}
+```
+
+---
+
+## ElvUI / Tukui Support
+
+ZenHUD automatically detects and controls ElvUI/Tukui frames:

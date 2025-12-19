@@ -95,9 +95,3 @@ function FrameController:FadeTo(alpha, duration)
     if alpha > self.currentAlpha then
         self.frame:Show()
         self.frame:SetAlpha(self.currentAlpha)
-    end
-end
-
-function FrameController:Update(dt)
-    if not self.animating then return end
-

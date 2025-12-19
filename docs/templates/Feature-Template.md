@@ -25,6 +25,3 @@ graph TD
 *   **Components**: {{List components involved}}
 *   **Data Model**: {{Key data structures}}
 
-## 5. Test Scenarios (Verification)
-| ID | Description | Setup | Action | Expected Result |
-| :--- | :--- | :--- | :--- | :--- |
