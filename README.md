@@ -18,18 +18,7 @@
 
 ---
 
-## Table of Contents
-
-- [Why ZenHUD?](#why-ZenHUD)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Configuration](#configuration)
-- [ElvUI / Tukui Support](#elvui--tukui-support)
-- [Architecture](#architecture)
-- [Contributing](#contributing)
-- [Code of Conduct](#code-of-conduct)
-- [License](#license)
+[Why ZenHUD?](#why-Zenhud) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Configuration](#configuration) • [Architecture](#architecture)
 
 ---
 
@@ -40,58 +29,34 @@
 > **Solution**: ZenHUD serves as an intelligent display driver. It automatically hides your action bars, unit frames, and buffs when they are irrelevant, and instantly restores them when combat starts, you target an entity, or mouse over the UI area.
 
 | Feature | ZenHUD | Manual Hiding | Other Addons |
-|---------|:-----:|:-------------:|:------------:|
-| Zero Configuration | ✅ | ❌ | ⚠️ |
-| Combat Safety | ✅ Instant | ❌ | ⚠️ |
-| Smooth Animations | ✅ | ❌ | ⚠️ |
-| ElvUI Support | ✅ | N/A | ❌ |
-| Lightweight (~900 LOC) | ✅ | N/A | ❌ |
+| :--- | :---: | :---: | :---: |
+| **Zero Configuration** | ✅ | ❌ | ⚠️ |
+| **Combat Safety** | ✅ Instant (0ms) | ❌ | ⚠️ |
+| **ElvUI Detection** | ✅ Native | N/A | ❌ |
+| **Performance** | ✅ Event-Driven | N/A | ⚠️ Polling |
 
 ---
 
 ## Features
 
 ### Smart Automation
-- **Combat**: UI appears instantly (0ms latency) when combat starts to ensure safety.
-- **Targeting**: UI shows automatically when you select a valid target.
-- **Mouseover**: Hovering over the bottom or side bar areas gracefully fades them in.
-- **Resting**: Full UI visibility is maintained in cities and inns for convenience.
+- **Combat**: UI appears instantly (0ms latency) via `PLAYER_REGEN_DISABLED` event.
+- **Targeting**: UI shows automatically when you select a valid, living target.
+- **Hover Hotspots**: Main maintains invisible "Hotspot" frames over UI areas. When your mouse enters these empty spaces, the UI fades in. No CPU polling required.
+- **Zone Awareness**: Automatically keeps UI shown in Dungeons, Raids, Arenas, and Battlegrounds (Configurable).
 
-### Performance
-- **Throttled Detection**: Uses 20Hz polling for mouseover detection to reduce CPU cycles compared to standard 60Hz loops.
-- **FadeOnly Mode**: For ElvUI users, ZenHUD manipulates alpha channels only, preventing "Action Blocked by AddOn" taint errors.
-- **Single Update Loop**: All logic runs in a unified controller to minimize overhead.
-
-### Customization
-- **Frame Groups**: Toggle visibility logic for Action Bars, Unit Frames, and Buffs independently.
-- **Fade Time**: Configurable animation duration (0.1s - 2.0s).
-- **Faded Opacity**: "Ghost Mode" support (e.g., set hidden opacity to 20% instead of 0%).
-- **Per-Character Settings**: Support for alt-specific configurations.
+### Performance Architecture
+- **Zero-Polling**: Unlike other addons that check `MouseIsOver()` 60 times a second, ZenHUD uses `OnEnter`/`OnLeave` scripts on invisible frames.
+- **FadeOnly Mode**: Detects ElvUI and switches to Alpha-channel manipulation to prevent "Action Blocked" taint errors.
+- **Debounced Zone Checks**: Zone changes are debounced (0.6s) to prevent script thrashing during loading screens.
 
 ---
 
 ## Installation
 
-### Prerequisites
-- World of Warcraft **3.3.5a** (WotLK Client)
-- No external dependencies required.
-
-### Steps
-
-1. **Download** the latest release artifact from the [Releases Page](https://github.com/Zendevve/ZenHUD/releases).
-2. **Extract** the contents to your AddOns directory:
-   ```bash
-   <WoW Root>/Interface/AddOns/ZenHUD/
-   ```
-3. **Verify** the folder structure:
-   ```text
-   ZenHUD/
-     ├── ZenHUD.toc
-     ├── ZenHUD.lua
-     ├── Config.lua
-     └── ...
-   ```
-4. **Launch** World of Warcraft. ZenHUD will initialize automatically upon login.
+1. **Download** the latest release from the [Releases Page](https://github.com/Zendevve/ZenHUD/releases).
+2. **Extract** to `<WoW Root>/Interface/AddOns/ZenHUD/`.
+3. **Verify** you see `ZenHUD.toc` and `Config.lua`.
 
 ---
 
@@ -106,95 +71,82 @@
 
 ### Slash Commands
 
-| Command | Description |
-|:---|:---|
-| `/ZenHUD` | Show help menu |
-| `/ZenHUD options` | Open settings panel |
-| `/ZenHUD toggle` | Enable/disable addon |
-| `/ZenHUD status` | Print current internal state to chat |
-| `/ZenHUD frames` | List all frames currently under control |
-| `/ZenHUD debug` | Toggle verbose debug logging |
-
-### Minimap Button
-- **Left Click**: Toggle ZenHUD on/off.
-- **Right Click**: Open options panel.
-- **Drag**: Reposition around minimap.
-- **To Hide**: Use `/ZenHUD minimap` to toggle visibility.
+| Command | Arguments | Description |
+| :--- | :--- | :--- |
+| `/ZenHUD` | | Show help menu |
+| `/ZenHUD options` | | Open GUI settings |
+| `/ZenHUD toggle` | | Enable/disable addon |
+| `/ZenHUD fade` | `<seconds>` | Set animation duration |
+| `/ZenHUD grace` | `<type> <sec>` | Set grace period (combat, target, mouseover) |
+| `/ZenHUD character` | | Toggle Per-Character settings mode |
+| `/ZenHUD profile` | `save/load <name>` | Manage setting profiles |
+| `/ZenHUD minimap` | | Toggle minimap button |
+| `/ZenHUD status` | | Show debug status |
 
 ---
 
 ## Configuration
 
-Settings can be managed via the in-game GUI (`/ZenHUD options`) or by editing the `SavedVariables` file directly.
+Settings can be managed via `/ZenHUD options` or `Config.lua`.
 
-**File Path**: `WTF/Account/<AccountName>/SavedVariables/ZenHUD.lua`
+### Core Settings
 
-| Option | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| **enabled** | `boolean` | `true` | Master switch for the addon. |
-| **fadeTime** | `number` | `0.8` | Duration of the fade animation (in seconds). |
-| **fadedAlpha** | `number` | `0.0` | Opacity when UI is hidden (0.0 = invisible, 0.5 = ghost). |
-| **gracePeriods.combat** | `number` | `8.0` | Seconds to keep UI shown after leaving combat. |
-| **gracePeriods.target** | `number` | `2.0` | Seconds to keep UI shown after deselection. |
-| **gracePeriods.mouseover** | `number` | `2.0` | Seconds to keep UI shown after mouse leaves. |
-| **frameGroups.actionBars** | `boolean` | `true` | Manage Blizzard/ElvUI action bars. |
-| **frameGroups.unitFrames** | `boolean` | `true` | Manage Player, Target, Pet frames. |
-| **frameGroups.buffs** | `boolean` | `true` | Manage Buffs and Debuffs. |
+| Option | Default | Description |
+| :--- | :--- | :--- |
+| **fadeTime** | `0.8` | Animation duration in seconds. |
+| **fadedAlpha** | `0.0` | Opacity when hidden (0.0 = invisible, 0.2 = dim). |
+| **showOnTarget** | `true` | Show UI when you have a target. |
+
+### Zone Overrides
+By default, ZenHUD keeps the UI **always visible** in dangerous instances:
+- Dungeons
+- Raids
+- Arenas
+- Battlegrounds
+
+### Controlled Frames
+ZenHUD manages visibility for the following groups:
 
 <details>
-<summary><strong>Advanced Configuration (JSON Structure)</strong></summary>
+<summary><strong>View Frame List</strong></summary>
 
-```lua
-ZenHUDDB = {
-    enabled = true,
-    fadeTime = 0.8,
-    fadedAlpha = 0.0,
-    gracePeriods = {
-        combat = 8.0,
-        target = 2.0,
-        mouseover = 2.0,
-    },
-    frameGroups = {
-        actionBars = true,
-        unitFrames = true,
-        buffs = true,
-        elvui = true,
-    },
-}
-```
+| Group | Frames |
+| :--- | :--- |
+| **Action Bars** | `MainMenuBar`, `MultiBarBottomLeft/Right`, `MultiBarLeft/Right`, `PetActionBar`, `ShapeshiftBar`, `VehicleMenuBar` |
+| **Unit Frames** | `PlayerFrame`, `PetFrame`, `TargetFrameToT` |
+| **Chat** | `ChatFrameMenuButton`, `ChatFrame1` buttons |
+| **Quest** | `WatchFrame`, `QuestWatchFrame`, `QuestTimerFrame` |
+| **Misc** | `Minimap`, `BuffFrame`, `XPBar`, `ReputationBar`, `Bags` |
+
 </details>
 
 ---
 
 ## Architecture
 
-ZenHUD follows a strict event-driven architecture to minimize CPU usage (targeting <0.1% CPU utilization). It eschews `OnUpdate` loops for everything except animation interpolation and throttled mouse polling.
+ZenHUD uses a **State Machine** pattern coupled with **Event-Driven** inputs.
 
 ```mermaid
 graph TD;
-    A[WoW Events] -->|PLAYER_REGEN_DISABLED| B(EventHandler);
-    A -->|PLAYER_TARGET_CHANGED| B;
-    B -->|Update State| C{StateManager};
-    C -- Is Combat or Target? --> D[FrameManager];
-    D -->|Show/Hide| E[Blizzard Frames];
-    D -->|FadeIn/Out| F[ElvUI Frames];
-    G[MouseoverDetector] -->|"Hover (20Hz)"| C;
+    Events[WoW Events] -->|PLAYER_REGEN| EventHandler;
+    Events -->|PLAYER_TARGET| EventHandler;
+    Hotspots[Invisible Hotspots] -->|OnEnter/Leave| EventHandler;
+
+    EventHandler -->|Update| State{StateManager};
+
+    State -->|Check State| Logic[Visibility Logic];
+    Logic -- Combat/Target? --> Show;
+    Logic -- Resting/Grace? --> Show;
+    Logic -- Else --> Hide;
+
+    Show -->|Goal: 100%| FrameController;
+    Hide -->|Goal: 0%| FrameController;
+
+    FrameController -->|Fade Animation| UI[Blizzard / ElvUI Frames];
 ```
 
----
-
 ## Contributing
-
-We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details on development setup, code style, and submission process.
-
-## Code of Conduct
-
-Please review our [Code of Conduct](docs/CODE_OF_CONDUCT.md) before participating in the community.
-
-## ElvUI / Tukui Support
-
-ZenHUD automatically detects ElvUI/Tukui environments. It switches to a "Fade-Only" mode which manipulates the alpha channel instead of frame visibility (`:Show()`/`:Hide()`) to ensure compatibility with ElvUI's internal hook systems.
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for development setup and Lua style guides.
 
 ## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License. See [LICENSE](LICENSE).
