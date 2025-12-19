@@ -107,3 +107,55 @@ end
 
 function Config:Set(key, value)
     -- Set to appropriate DB based on mode
+    if ZenHUDDB.useCharacterSettings then
+        ZenHUDCharDB[key] = value
+    else
+        ZenHUDDB[key] = value
+    end
+end
+
+function Config:ToggleCharacterSettings()
+    ZenHUDDB.useCharacterSettings = not ZenHUDDB.useCharacterSettings
+    return ZenHUDDB.useCharacterSettings
+end
+
+function Config:IsUsingCharacterSettings()
+    return ZenHUDDB.useCharacterSettings == true
+end
+
+-- Check if we should always show UI in current zone type
+function Config:ShouldShowInZone()
+    local zoneOverrides = self:Get("zoneOverrides")
+    if not zoneOverrides then return false end
+
+    -- Check instance type
+    local inInstance, instanceType = IsInInstance()
+    if not inInstance then return false end
+
+    if instanceType == "party" and zoneOverrides.alwaysShowInDungeons then
+        return true
+    elseif instanceType == "raid" and zoneOverrides.alwaysShowInRaids then
+        return true
+    elseif instanceType == "arena" and zoneOverrides.alwaysShowInArena then
+        return true
+    elseif instanceType == "pvp" and zoneOverrides.alwaysShowInBattleground then
+        return true
+    end
+
+    return false
+end
+
+-- Check if a specific frame group is enabled
+function Config:IsFrameGroupEnabled(group)
+    local frameGroups = self:Get("frameGroups")
+    if not frameGroups then return true end
+    return frameGroups[group] ~= false
+end
+
+-- Get the minimum alpha for "hidden" frames
+function Config:GetFadedAlpha()
+    return self:Get("fadedAlpha") or 0.0
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.Config = Config

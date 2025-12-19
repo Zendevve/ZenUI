@@ -70,3 +70,66 @@ local function OnDragStop(self)
     UpdatePosition()
 end
 
+button:SetScript("OnDragStart", OnDragStart)
+button:SetScript("OnDragStop", OnDragStop)
+
+--------------------------------------------------------------------------------
+-- Click handlers
+--------------------------------------------------------------------------------
+button:SetScript("OnClick", function(self, btn)
+    if btn == "LeftButton" then
+        -- Toggle addon enabled
+        local enabled = not Config:Get("enabled")
+        Config:Set("enabled", enabled)
+        Utils.Print(string.format("Addon %s", enabled and "enabled" or "disabled"))
+        if enabled and ZenHUD.StateManager then
+            ZenHUD.StateManager:Update()
+        end
+    elseif btn == "RightButton" then
+        -- Open options panel
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")
+        InterfaceOptionsFrame_OpenToCategory("ZenHUD")  -- Called twice due to Blizzard bug
+    end
+end)
+
+button:SetScript("OnEnter", function(self)
+    GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+    GameTooltip:AddLine("ZenHUD")
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("|cFF00FF00Left-click|r to toggle addon", 1, 1, 1)
+    GameTooltip:AddLine("|cFF00FF00Right-click|r to open options", 1, 1, 1)
+    GameTooltip:AddLine("|cFF00FF00Drag|r to move button", 1, 1, 1)
+    GameTooltip:Show()
+end)
+
+button:SetScript("OnLeave", function(self)
+    GameTooltip:Hide()
+end)
+
+--------------------------------------------------------------------------------
+-- MinimapButton API
+--------------------------------------------------------------------------------
+function MinimapButton:Show()
+    button:Show()
+end
+
+function MinimapButton:Hide()
+    button:Hide()
+end
+
+function MinimapButton:Initialize()
+    UpdatePosition()
+
+    -- Show/hide based on config
+    if Config:Get("showMinimapButton") then
+        button:Show()
+    else
+        button:Hide()
+    end
+end
+
+-- Initialize on load
+MinimapButton:Initialize()
+
+-- Export to ZenHUD namespace
+ZenHUD.MinimapButton = MinimapButton

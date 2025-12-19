@@ -46,3 +46,69 @@ EventHandler:SetScript("OnEvent", function(self, event, ...)
 
     elseif event == "PLAYER_UPDATE_RESTING" then
         StateManager:SetResting(IsResting())
+
+        -- Failsafe timers to ensure UI shows when entering city
+        if IsResting() then
+            Utils.After(1.0, function()
+                if ZenHUD.loaded and IsResting() then
+                    StateManager:Update()
+                end
+            end)
+            Utils.After(3.5, function()
+                if ZenHUD.loaded and IsResting() then
+                    StateManager:Update()
+                end
+            end)
+        end
+
+    elseif event == "ZONE_CHANGED" or event == "ZONE_CHANGED_INDOORS" or event == "ZONE_CHANGED_NEW_AREA" then
+        -- Use debounced zone handling
+        StateManager:OnZoneChanged()
+
+    elseif event == "UNIT_AURA" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetMounted(IsMounted())
+        end
+
+    elseif event == "PLAYER_DEAD" then
+        StateManager:SetDead(true)
+
+    elseif event == "PLAYER_ALIVE" or event == "PLAYER_UNGHOST" then
+        StateManager:SetDead(UnitIsDeadOrGhost("player"))
+
+    elseif event == "PLAYER_CONTROL_LOST" or event == "PLAYER_CONTROL_GAINED" then
+        StateManager:SetTaxi(UnitOnTaxi("player"))
+
+    elseif event == "UNIT_ENTERED_VEHICLE" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetVehicle(true)
+        end
+
+    elseif event == "UNIT_EXITED_VEHICLE" then
+        local unit = ...
+        if unit == "player" then
+            StateManager:SetVehicle(false)
+        end
+
+    elseif event == "PLAYER_FLAGS_CHANGED" then
+        StateManager:SetAFK(UnitIsAFK("player") or UnitIsDND("player"))
+
+    elseif event == "ADDON_LOADED" then
+        local addon = ...
+        -- Re-scan for ElvUI/Tukui frames when they load
+        if addon == "ElvUI" or addon == "Tukui" then
+            if ZenHUD.FrameManager then
+                Utils.After(1.0, function()
+                    ZenHUD.FrameManager:InitializeElvUIFrames()
+                end)
+            end
+            if ZenHUD.MouseoverDetector then
+                Utils.After(1.0, function()
+                    ZenHUD.MouseoverDetector:CreateElvUIHotspots()
+                end)
+            end
+        end
+    end
+end)

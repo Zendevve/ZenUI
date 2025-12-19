@@ -112,3 +112,69 @@ If no new rule is detected → do not update the file.
 - Never delete or weaken a test to make it pass
 - Each test verifies a real flow or scenario, not just calls a function — tests without meaningful assertions are forbidden
 - Check code coverage to see which functionality is actually tested; coverage is for finding gaps, not a number to chase
+
+### WoW Addon (Lua) - Critical Rules
+
+- **NEVER truncate files** - Always verify file ends with proper closing structure (namespace export, closing `end`, etc.)
+- **TOC file integrity** - The `.toc` file MUST list ALL required Lua files in correct dependency order; missing files = complete addon failure
+- **Namespace exports** - Every module MUST export to the addon namespace (e.g., `ZenHUD.ModuleName = ModuleName`) or it cannot be referenced by other modules
+- **Load order matters** - Dependencies must load before dependents (Config → Utils → FrameController → FrameManager → etc.)
+- **Timer function** - WotLK 3.3.5a has no `C_Timer`; use `Utils.After()` pattern with CreateFrame OnUpdate scripts
+
+### MCAF Compliance
+
+- **ALWAYS** follow MCAF guidelines and practices as if they were law (explicit user directive, critical priority)
+- Read AGENTS.md and all relevant docs BEFORE making any changes
+- Create implementation plan for non-trivial changes
+- Document all changes in walkthrough after completion
+
+### Autonomy
+
+- Start work immediately — no permission seeking
+- Questions only for architecture blockers not covered by ADR
+- Report only when task is complete
+
+### Code Style
+
+<!-- CUSTOMIZE (remove after): your language/framework -->
+
+- Style rules: `.editorconfig`
+- No magic literals — extract to constants, enums, config
+
+### Critical (NEVER violate)
+
+- Never commit secrets, keys, connection strings
+- Never mock internal systems in integration tests
+- Never skip tests to make PR green
+- Never force push to main
+- Never approve or merge (human decision)
+- **NEVER leave files truncated** - Verify all functions are complete, all exports present
+
+### Boundaries
+
+**Always:**
+
+- Read AGENTS.md and docs before editing code
+- Run tests before commit
+- Verify TOC file includes all required modules (WoW addons)
+
+**Ask first:**
+
+<!-- CUSTOMIZE (remove after) -->
+
+- Changing public API contracts
+- Adding new dependencies
+- Modifying database schema
+- Deleting code files
+
+---
+
+## Preferences
+
+### Likes
+
+<!-- CUSTOMIZE (remove after) -->
+
+### Dislikes
+
+<!-- CUSTOMIZE (remove after) -->

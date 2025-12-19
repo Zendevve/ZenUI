@@ -25,3 +25,19 @@ function Utils.GetTime()
     return GetTime and GetTime() or 0
 end
 
+-- WotLK-compatible timer (C_Timer doesn't exist in 3.3.5a)
+-- Creates a temporary frame for delayed callback execution
+function Utils.After(delay, callback)
+    local frame = CreateFrame("Frame")
+    local elapsed = 0
+    frame:SetScript("OnUpdate", function(self, dt)
+        elapsed = elapsed + dt
+        if elapsed >= delay then
+            self:SetScript("OnUpdate", nil)
+            callback()
+        end
+    end)
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.Utils = Utils

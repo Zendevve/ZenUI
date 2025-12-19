@@ -218,3 +218,78 @@ SlashCmdList["ZenHUD"] = function(msg)
                 ZenHUD.MinimapButton:Show()
             else
                 ZenHUD.MinimapButton:Hide()
+            end
+        end
+        Utils.Print(string.format("Minimap button %s", show and "shown" or "hidden"))
+
+    elseif cmd == "profile" then
+        local action = args[2]
+        local profileName = args[3]
+
+        if action == "list" then
+            Utils.Print("Profiles: (feature coming soon)")
+        elseif action == "save" and profileName then
+            Utils.Print(string.format("Profile '%s' saved (feature coming soon)", profileName))
+        elseif action == "load" and profileName then
+            Utils.Print(string.format("Profile '%s' loaded (feature coming soon)", profileName))
+        elseif action == "delete" and profileName then
+            Utils.Print(string.format("Profile '%s' deleted (feature coming soon)", profileName))
+        else
+            Utils.Print("Usage: /ZenHUD profile <save|load|delete|list> [name]")
+        end
+
+    else
+        Utils.Print(string.format("Unknown command: %s", cmd))
+        ShowHelp()
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Initialization
+--------------------------------------------------------------------------------
+function ZenHUD:Initialize()
+    if self.loaded then return end
+
+    -- Initialize config
+    Config:Initialize()
+
+    Utils.Print(string.format("v%s loaded", VERSION))
+    Utils.Print(string.format("Startup delay: %.1fs", self.startupDelay), true)
+
+    -- Initialize frame management (but don't start yet)
+    FrameManager:Initialize()
+
+    -- Retry after 300ms for late-loading frames (some frames load after PEW)
+    Utils.After(0.3, function()
+        FrameManager:Initialize()
+    end)
+
+    MouseoverDetector:Initialize()
+
+    -- Create hover hotspots for all action bars
+    MouseoverDetector:CreateHotspots()
+
+    -- Delayed activation
+    Utils.After(self.startupDelay, function()
+        self.loaded = true
+
+        -- Set initial states
+        StateManager.inCombat = false
+        StateManager.hasLivingTarget = false
+        StateManager.isResting = IsResting()
+        StateManager.isMounted = IsMounted()
+        StateManager.isDead = UnitIsDeadOrGhost("player")
+        StateManager.onTaxi = UnitOnTaxi("player")
+        StateManager.inVehicle = false  -- Can't reliably detect on load
+        StateManager.isAFK = UnitIsAFK("player") or UnitIsDND("player")
+        StateManager.mouseoverUI = false
+
+        -- Force initial evaluation
+        StateManager:Update()
+
+        -- Start mouseover detection
+        MouseoverDetector:Start()
+
+        Utils.Print("Activated", true)
+    end)
+end

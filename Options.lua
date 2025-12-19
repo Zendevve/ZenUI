@@ -211,3 +211,75 @@ frameGroupsTitle:SetText("Frame Groups (toggle which groups ZenHUD controls)")
 
 -- Store checkboxes for refresh
 local frameGroupChecks = {}
+
+local frameGroupInfo = {
+    { key = "actionBars", label = "Action Bars" },
+    { key = "unitFrames", label = "Unit Frames" },
+    { key = "buffs", label = "Buffs" },
+    { key = "quest", label = "Quest Tracker" },
+    { key = "chat", label = "Chat Buttons" },
+    { key = "misc", label = "Misc (Bags, Micro menu, XP bar)" },
+    { key = "elvui", label = "ElvUI/Tukui (if detected)" },
+}
+
+local lastAnchor = frameGroupsTitle
+for i, info in ipairs(frameGroupInfo) do
+    local check = CreateCheckbox("ZenHUDOptionsFrameGroup" .. info.key, OptionsPanel,
+        info.label, "Toggle " .. info.label .. " visibility control")
+    check:SetPoint("TOPLEFT", lastAnchor, "BOTTOMLEFT", i == 1 and 16 or 0, -8)
+
+    check:SetScript("OnClick", function(self)
+        local frameGroups = Config:Get("frameGroups")
+        frameGroups[info.key] = self:GetChecked()
+        Config:Set("frameGroups", frameGroups)
+        Utils.Print(string.format("%s: %s", info.label, self:GetChecked() and "enabled" or "disabled"))
+    end)
+
+    frameGroupChecks[info.key] = check
+    lastAnchor = check
+end
+
+--------------------------------------------------------------------------------
+-- Refresh values when panel opens
+--------------------------------------------------------------------------------
+OptionsPanel.refresh = function()
+    -- Basic settings
+    enabledCheck:SetChecked(Config:Get("enabled"))
+    debugCheck:SetChecked(Config:Get("debug"))
+    targetCheck:SetChecked(Config:Get("showOnTarget"))
+
+    -- Sliders
+    fadeSlider:SetValue(Config:Get("fadeTime") or 0.8)
+    fadeValue:SetText(string.format("%.1f seconds", Config:Get("fadeTime") or 0.8))
+
+    fadedAlphaSlider:SetValue(Config:Get("fadedAlpha") or 0)
+    fadedAlphaValue:SetText(string.format("%d%%", (Config:Get("fadedAlpha") or 0) * 100))
+
+    local grace = Config:Get("gracePeriods")
+    combatGraceSlider:SetValue(grace.combat)
+    combatGraceValue:SetText(string.format("%.1f seconds", grace.combat))
+
+    targetGraceSlider:SetValue(grace.target)
+    targetGraceValue:SetText(string.format("%.1f seconds", grace.target))
+
+    mouseoverGraceSlider:SetValue(grace.mouseover)
+    mouseoverGraceValue:SetText(string.format("%.1f seconds", grace.mouseover))
+
+    -- Character settings label
+    if Config:IsUsingCharacterSettings() then
+        charSettingsLabel:SetText("(Currently: Character-Specific)")
+    else
+        charSettingsLabel:SetText("(Currently: Account-Wide)")
+    end
+
+    -- Frame groups
+    local frameGroups = Config:Get("frameGroups")
+    for key, check in pairs(frameGroupChecks) do
+        check:SetChecked(frameGroups[key] ~= false)
+    end
+end
+
+--------------------------------------------------------------------------------
+-- Register with Blizzard Interface Options
+--------------------------------------------------------------------------------
+InterfaceOptions_AddCategory(OptionsPanel)

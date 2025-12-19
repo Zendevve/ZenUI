@@ -171,3 +171,142 @@ local CONDITIONAL_FRAMES = {
 local ELVUI_FRAME_PATTERNS = {
     -- Action Bars (ElvUI uses ElvUI_Bar1 through ElvUI_Bar10)
     { pattern = "ElvUI_Bar%d+", group = "elvui", fadeOnly = true },
+    -- Unit Frames
+    { pattern = "ElvUF_Player", group = "elvui", conditional = false },
+    { pattern = "ElvUF_Target", group = "elvui", conditional = false },
+    { pattern = "ElvUF_Pet", group = "elvui", conditional = true },
+    -- Tukui equivalents
+    { pattern = "TukuiActionBar%d+", group = "elvui", fadeOnly = true },
+    { pattern = "TukuiPlayer", group = "elvui", conditional = false },
+    { pattern = "TukuiTarget", group = "elvui", conditional = false },
+}
+
+--------------------------------------------------------------------------------
+-- Frame Manager Functions
+--------------------------------------------------------------------------------
+function FrameManager:Initialize()
+    -- Initialize Blizzard frames
+    for _, frameName in ipairs(CONTROLLED_FRAMES) do
+        local frame = _G[frameName]
+        if frame and frame.SetAlpha and frame.Show and frame.Hide then
+            -- Check if frame group is enabled
+            local group = FRAME_GROUPS[frameName] or "misc"
+            if Config:IsFrameGroupEnabled(group) then
+                local controller = FrameController:New(frame)
+
+                if CONDITIONAL_FRAMES[frameName] then
+                    controller:SetConditional(true)
+                end
+
+                self.controllers[frame] = controller
+                Utils.Print("Controlling: " .. frameName, true)
+            end
+        else
+            Utils.Print("Skipped: " .. frameName .. " (not found)", true)
+        end
+    end
+
+    -- Detect and initialize ElvUI/Tukui frames
+    if _G.ElvUI or _G.Tukui then
+        self:InitializeElvUIFrames()
+    end
+
+    -- Create update frame for animations
+    if not self.updateFrame then
+        self.updateFrame = CreateFrame("Frame")
+        self.updateFrame:SetScript("OnUpdate", function(_, elapsed)
+            self:Update(elapsed)
+        end)
+    end
+
+    Utils.Print(string.format("Managing %d frames", self:Count()), true)
+end
+
+function FrameManager:InitializeElvUIFrames()
+    if not Config:IsFrameGroupEnabled("elvui") then return end
+
+    for frameName, frameObj in pairs(_G) do
+        if type(frameObj) == "table" and frameObj.SetAlpha and frameObj.Show and frameObj.Hide then
+            for _, patternInfo in ipairs(ELVUI_FRAME_PATTERNS) do
+                if string.match(frameName, "^" .. patternInfo.pattern .. "$") or frameName == patternInfo.pattern then
+                    if not self.controllers[frameObj] then
+                        local controller = FrameController:New(frameObj)
+                        if patternInfo.fadeOnly then
+                            controller:SetFadeOnly(true)
+                        end
+                        if patternInfo.conditional then
+                            controller:SetConditional(true)
+                        end
+                        self.controllers[frameObj] = controller
+                        Utils.Print("Controlling ElvUI frame: " .. frameName, true)
+                    end
+                    break
+                end
+            end
+        end
+    end
+end
+
+function FrameManager:Update(dt)
+    for _, controller in pairs(self.controllers) do
+        controller:Update(dt)
+    end
+end
+
+function FrameManager:ShowAll(priority)
+    -- Check for zone text - delay if active
+    if ZoneText.IsActive() then
+        Utils.Print("Zone text active - delaying show", true)
+        Failsafe:Start()
+        Utils.After(0.2, function()
+            if not ZoneText.IsActive() then
+                self:ShowAll(priority)
+            else
+                -- Retry with timeout
+                Utils.After(3.0, function()
+                    Failsafe:Stop()
+                    self:ShowAll(priority)
+                end)
+            end
+        end)
+        return
+    end
+
+    Failsafe:Stop()
+    for _, controller in pairs(self.controllers) do
+        controller:Show(priority)
+    end
+end
+
+function FrameManager:HideAll()
+    -- Check for zone text - delay if active
+    if ZoneText.IsActive() then
+        Utils.Print("Zone text active - delaying hide", true)
+        Utils.After(0.2, function()
+            if not ZoneText.IsActive() then
+                self:HideAll()
+            else
+                -- Retry with timeout
+                Utils.After(3.0, function()
+                    self:HideAll()
+                end)
+            end
+        end)
+        return
+    end
+
+    for _, controller in pairs(self.controllers) do
+        controller:Hide()
+    end
+end
+
+function FrameManager:Count()
+    local count = 0
+    for _ in pairs(self.controllers) do
+        count = count + 1
+    end
+    return count
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.FrameManager = FrameManager

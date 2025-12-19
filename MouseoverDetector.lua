@@ -96,3 +96,48 @@ local function IsUIFrame(name)
     end
 
     -- Blizzard Player frame
+    if name == "PlayerFrame" or string.find(name, "^PlayerFrame") then
+        return true
+    end
+
+    -- ElvUI / Tukui frames
+    if string.find(name, "^ElvUI_Bar") or string.find(name, "^ElvUF_") or
+       string.find(name, "^Tukui") then
+        return true
+    end
+
+    return false
+end
+
+function MouseoverDetector:Initialize()
+    self.checkFrame = CreateFrame("Frame")
+    self.checkFrame:SetScript("OnUpdate", function(_, elapsed)
+        self:Check()
+    end)
+    -- Start hidden, will be shown when addon activates
+    self.checkFrame:Hide()
+end
+
+function MouseoverDetector:Start()
+    if self.checkFrame then
+        self.checkFrame:Show()
+    end
+end
+
+function MouseoverDetector:Check()
+    local focus = GetMouseFocus()
+    local name = focus and focus.GetName and focus:GetName()
+    local isOver = IsUIFrame(name)
+
+    if isOver ~= self.lastState then
+        self.lastState = isOver
+        -- Re-fetch StateManager in case it wasn't available at load time
+        local StateManager = ZenHUD.StateManager
+        if StateManager then
+            StateManager:SetMouseover(isOver)
+        end
+    end
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.MouseoverDetector = MouseoverDetector

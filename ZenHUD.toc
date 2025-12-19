@@ -6,5 +6,25 @@
 ## SavedVariables: ZenHUDDB
 ## SavedVariablesPerCharacter: ZenHUDCharDB
 
-# Load order is important - modules first, then main file
+# Load order is important - dependencies must load before dependents
+# 1. Config.lua creates ZenHUD namespace and exports ZenHUD.Config
+# 2. Utils.lua requires Config, exports ZenHUD.Utils
+# 3. FrameController.lua requires Config, Utils
+# 4. FrameManager.lua requires Config, Utils, FrameController
+# 5. StateManager.lua requires Config, Utils
+# 6. MouseoverDetector.lua requires Utils, StateManager
+# 7. EventHandler.lua requires StateManager
+# 8. Options.lua requires Config, Utils (Blizzard options panel)
+# 9. MinimapButton.lua requires Config, Utils
+# 10. ZenHUD.lua main file references all modules
+
 Config.lua
+Utils.lua
+FrameController.lua
+FrameManager.lua
+StateManager.lua
+MouseoverDetector.lua
+EventHandler.lua
+Options.lua
+MinimapButton.lua
+ZenHUD.lua

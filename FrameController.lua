@@ -114,3 +114,46 @@ function FrameController:Update(dt)
         self.currentAlpha = self.targetAlpha
         self.frame:SetAlpha(self.targetAlpha)
 
+        local isBuffFrame = (self.name == "BuffFrame" or self.name == "TemporaryEnchantFrame")
+        local fadedAlpha = Config:Get("fadedAlpha") or 0
+
+        -- Execute deferred fade-out after fade-in completes (buff frames only)
+        if self.targetAlpha == 1 and self.deferFadeOut and isBuffFrame then
+            self.deferFadeOut = false
+            self.deferReason = nil
+            self:FadeTo(fadedAlpha, Config:Get("fadeTime"))
+            return
+        end
+
+        -- Execute deferred fade-in after fade-out completes (buff frames only)
+        if self.targetAlpha == fadedAlpha and self.deferFadeIn and isBuffFrame then
+            self.deferFadeIn = false
+            self.deferReason = nil
+            -- Show at faded alpha then fade in
+            self.frame:Show()
+            self.frame:SetAlpha(fadedAlpha)
+            self:FadeTo(1, Config:Get("fadeTime"))
+            return
+        end
+
+        -- Hide frame at end of fade-out for performance (unless fadeOnly)
+        if self.targetAlpha <= 0.01 and not self.fadeOnly then
+            self.frame:Hide()
+        end
+    end
+end
+
+function FrameController:Show(priority)
+    local duration = priority and 0.8 or Config:Get("fadeTime")
+    self:FadeTo(1, duration)
+    self.visible = true
+end
+
+function FrameController:Hide()
+    local fadedAlpha = Config:Get("fadedAlpha") or 0
+    self:FadeTo(fadedAlpha, Config:Get("fadeTime"))
+    self.visible = false
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.FrameController = FrameController

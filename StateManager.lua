@@ -166,3 +166,65 @@ function StateManager:SetTarget(hasTarget, isAlive)
     self:Update()
 end
 
+function StateManager:SetResting(isResting)
+    self.isResting = isResting
+    self:Update()
+end
+
+function StateManager:SetMounted(isMounted)
+    self.isMounted = isMounted
+    self:Update()
+end
+
+function StateManager:SetDead(isDead)
+    self.isDead = isDead
+    self:Update()
+end
+
+function StateManager:SetTaxi(onTaxi)
+    self.onTaxi = onTaxi
+    self:Update()
+end
+
+function StateManager:SetVehicle(inVehicle)
+    self.inVehicle = inVehicle
+    self:Update()
+end
+
+function StateManager:SetAFK(isAFK)
+    self.isAFK = isAFK
+    self:Update()
+end
+
+function StateManager:SetMouseover(mouseoverUI)
+    local wasMouseover = self.mouseoverUI
+    self.mouseoverUI = mouseoverUI
+
+    if mouseoverUI then
+        -- Entered UI - cancel grace period immediately for instant response
+        self.graceUntil.mouseover = 0
+        Utils.Print("Mouseover: entering UI area", true)
+    else
+        -- Left UI - start grace period with timer callback
+        if wasMouseover then
+            local grace = Config:Get("gracePeriods").mouseover
+            local now = Utils.GetTime()
+            self.graceUntil.mouseover = now + grace
+
+            Utils.Print(string.format("Mouseover: left UI, %.1fs grace period", grace), true)
+
+            -- Timer callback to hide UI after grace expires
+            Utils.After(grace, function()
+                -- Clear this grace period and force update
+                self.graceUntil.mouseover = 0
+                Utils.Print("Mouseover grace expired, updating visibility", true)
+                self:Update()
+            end)
+        end
+    end
+
+    self:Update()
+end
+
+-- Export to ZenHUD namespace
+ZenHUD.StateManager = StateManager
