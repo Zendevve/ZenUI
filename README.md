@@ -178,7 +178,7 @@ graph TD;
     C -- Is Combat or Target? --> D[FrameManager];
     D -->|Show/Hide| E[Blizzard Frames];
     D -->|FadeIn/Out| F[ElvUI Frames];
-    G[MouseoverDetector] -->|Hover (20Hz)| C;
+    G[MouseoverDetector] -->|"Hover (20Hz)"| C;
 ```
 
 ---
