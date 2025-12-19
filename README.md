@@ -28,6 +28,7 @@
 - [ElvUI / Tukui Support](#elvui--tukui-support)
 - [Architecture](#architecture)
 - [Contributing](#contributing)
+- [Code of Conduct](#code-of-conduct)
 - [License](#license)
 
 ---
@@ -97,6 +98,13 @@ ZenHUD/
 
 ## Usage
 
+### Demo
+
+> [!TIP]
+> **Action Required**: Replace this placeholder with a GIF or Screencast showing ZenHUD in action (e.g., entering combat, targeting a mob).
+>
+> `<img src="https://via.placeholder.com/600x400.png?text=Place+Demo+GIF+Here" alt="ZenHUD Demo" width="100%">`
+
 ### Slash Commands
 
 ```
@@ -132,28 +140,67 @@ Or use **`/ZenHUD options`** for a visual settings panel.
 
 ## Configuration
 
-Edit `WTF/Account/<Account>/SavedVariables/ZenHUD.lua`:
+Edit `WTF/Account/<Account>/SavedVariables/ZenHUD.lua` or use `/ZenHUD options`.
+
+| Option | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| **enabled** | `boolean` | `true` | Master switch for the addon. |
+| **fadeTime** | `number` | `0.8` | Duration of the fade animation (in seconds). |
+| **fadedAlpha** | `number` | `0.0` | Opacity when UI is hidden (0.0 = invisible, 0.5 = ghost). |
+| **gracePeriods.combat** | `number` | `8.0` | Seconds to keep UI shown after leaving combat. |
+| **gracePeriods.target** | `number` | `2.0` | Seconds to keep UI shown after deselection. |
+| **gracePeriods.mouseover** | `number` | `2.0` | Seconds to keep UI shown after mouse leaves. |
+| **frameGroups.actionBars** | `boolean` | `true` | Manage Blizzard/ElvUI action bars. |
+| **frameGroups.unitFrames** | `boolean` | `true` | Manage Player, Target, Pet frames. |
+| **frameGroups.buffs** | `boolean` | `true` | Manage Buffs and Debuffs. |
+
+<details>
+<summary><strong>Advanced Configuration (JSON)</strong></summary>
 
 ```lua
 ZenHUDDB = {
     enabled = true,
-    fadeTime = 0.8,           -- Animation duration
-    fadedAlpha = 0.0,         -- Hidden opacity (0.0 = invisible)
+    fadeTime = 0.8,
+    fadedAlpha = 0.0,
     gracePeriods = {
-        combat = 8.0,         -- Post-combat delay
-        target = 2.0,         -- Post-target delay
-        mouseover = 2.0,      -- Post-mouseover delay
+        combat = 8.0,
+        target = 2.0,
+        mouseover = 2.0,
     },
     frameGroups = {
-        actionBars = true,    -- Control action bars
-        unitFrames = true,    -- Control player/pet frames
-        buffs = true,         -- Control buff frames
-        elvui = true,         -- Control ElvUI frames
+        actionBars = true,
+        unitFrames = true,
+        buffs = true,
+        elvui = true,
     },
 }
 ```
+</details>
 
 ---
+
+## Architecture
+
+ZenHUD follows a strict event-driven architecture to minimize CPU usage (0.1% CPU).
+
+```mermaid
+graph TD;
+    A[WoW Events] -->|PLAYER_REGEN_DISABLED| B(EventHandler);
+    A -->|PLAYER_TARGET_CHANGED| B;
+    B -->|Update State| C{StateManager};
+    C -- Is Combat/Target? --> D[FrameManager];
+    D -->|Show/Hide| E[Blizzard Frames];
+    D -->|FadeIn/Out| F[ElvUI Frames];
+    G[MouseoverDetector] -->|Hover| C;
+```
+
+## Contributing
+
+We welcome contributions! Please see our [Contributing Guide](docs/CONTRIBUTING.md) for details on how to get started.
+
+## Code of Conduct
+
+Please review our [Code of Conduct](docs/CODE_OF_CONDUCT.md) before participating.
 
 ## ElvUI / Tukui Support
 

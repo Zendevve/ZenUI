@@ -90,6 +90,13 @@ If no new rule is detected â†’ do not update the file.
 - Update feature docs when behaviour changes
 - Update ADRs when architecture changes
 - Templates: `docs/templates/ADR-Template.md`, `docs/templates/Feature-Template.md`
+- **Strategic README Standards**:
+  - **RDD**: Write README/Specification before implementation
+  - **Structure**: Header (Value Prop) -> Badges -> ToC -> Prerequisites -> Installation -> Usage -> Config -> Contributing -> License
+  - **Visuals**: Usage section MUST include GIF/Video ("Show, Don't Tell"). Use `<picture>` for dark/light mode assets.
+  - **Diagrams**: Use Mermaid.js for architecture ("Docs as Code")
+  - **Badges**: Include Stability, Quality, Meta, Legal, Social, Activity
+  - **Tables**: Use Markdown tables for Configuration options (not code blocks)
 
 ### Testing (ALL TASKS)
 
